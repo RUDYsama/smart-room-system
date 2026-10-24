@@ -3,8 +3,8 @@
   "model": "reservations.customuser",
   "pk": 1,
   "fields": {
-    "password": "pbkdf2_sha256$1200000$azdbm2tkMWUYFUwdRtCS8C$TGC8IDQuwvUFJpiZNqK6OpTH2cRCkbGtnOLckRN8eQI=",
-    "last_login": null,
+    "password": "pbkdf2_sha256$1200000$gsEQXzh1JPDJmIrkwmgLrb$iujZmpH2juDaQpCwa+PeJplD2lbeuf8emdgiftfgW/4=",
+    "last_login": "2026-10-24T16:30:50.924Z",
     "is_superuser": true,
     "username": "admin",
     "first_name": "",
@@ -12,7 +12,7 @@
     "email": "admin@itds-organization.local",
     "is_staff": true,
     "is_active": true,
-    "date_joined": "2026-10-24T18:04:03.452Z",
+    "date_joined": "2026-10-21T15:11:43.390Z",
     "role": "admin",
     "membership_tier": "vip",
     "loyalty_points": 150,
@@ -28,7 +28,7 @@
   "model": "reservations.customuser",
   "pk": 2,
   "fields": {
-    "password": "pbkdf2_sha256$1200000$NYTcHMRIfkXJnp6SykcL1G$HaY4Y/NtWkAHGp/PIXKxLn68Nxz7cOGP8cfW6eTAjFc=",
+    "password": "pbkdf2_sha256$1200000$fGqCWSMSTtn5DwNuGpCG9w$B6lTkETkSjCD+3t4sd7MPyWJEcjLAgFVWALVRxc4OUc=",
     "last_login": null,
     "is_superuser": false,
     "username": "staff_member",
@@ -37,7 +37,7 @@
     "email": "facility@itds-organization.local",
     "is_staff": true,
     "is_active": true,
-    "date_joined": "2026-10-24T18:04:04.166Z",
+    "date_joined": "2026-10-21T15:11:43.964Z",
     "role": "staff",
     "membership_tier": "vip",
     "loyalty_points": 150,
@@ -53,8 +53,8 @@
   "model": "reservations.customuser",
   "pk": 3,
   "fields": {
-    "password": "pbkdf2_sha256$1200000$7hqa8G7SoKNh7abdWR9rTc$RDrCeHmGSVSGsQRcLvoalfA3yY+wDaVqB9xS5j4nFNk=",
-    "last_login": null,
+    "password": "pbkdf2_sha256$1200000$RFQYsWUps3PMYGGzi2Ly1F$V8QyhZ7mg6MRYPel1bQDkxF61/IWjpym0WDF0iyq+dY=",
+    "last_login": "2026-10-23T05:46:51.609Z",
     "is_superuser": false,
     "username": "john_doe",
     "first_name": "",
@@ -62,7 +62,7 @@
     "email": "john.doe@enterprise.local",
     "is_staff": false,
     "is_active": true,
-    "date_joined": "2026-10-24T18:04:04.852Z",
+    "date_joined": "2026-10-21T15:11:44.537Z",
     "role": "user",
     "membership_tier": "vip",
     "loyalty_points": 150,
@@ -78,7 +78,7 @@
   "model": "reservations.customuser",
   "pk": 4,
   "fields": {
-    "password": "pbkdf2_sha256$1200000$kvYwPP7OkVx0zxk3dHCZMi$qReGRzW2+D3L7hn7sG/q3w88LuozR05pYpilNszY47Y=",
+    "password": "pbkdf2_sha256$1200000$epMMH6wPmhl9hWDVON58IV$E4llHu7iPy83G48nnjSMrPeIM9JV66D03/spfCXyqXc=",
     "last_login": null,
     "is_superuser": false,
     "username": "jane_smith",
@@ -87,7 +87,7 @@
     "email": "jane.smith@enterprise.local",
     "is_staff": false,
     "is_active": true,
-    "date_joined": "2026-10-24T18:04:05.536Z",
+    "date_joined": "2026-10-21T15:11:45.102Z",
     "role": "user",
     "membership_tier": "vip",
     "loyalty_points": 150,
@@ -100,103 +100,245 @@
   }
 },
 {
+  "model": "reservations.customuser",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$ImXg09LBX9qdmjHnGVlnZh$zx9DgcN4Dv6ZD5vt2RZznwbyi2jCNiSR+JVqRhTSxdE=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "somchai_demo",
+    "first_name": "",
+    "last_name": "",
+    "email": "somchai@university.ac.th",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-21T17:09:53.844Z",
+    "role": "user",
+    "membership_tier": "vip",
+    "loyalty_points": 150,
+    "phone_number": "",
+    "department": "Computer Engineering",
+    "avatar": "",
+    "is_verified": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "reservations.customuser",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$q0VjQqryIqmqRKcWYgdKOS$niWIdyXj7veQrh7oJ3Aa9M1BAcSvsIRLUIh6nuAnXHc=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "somchai_demo2",
+    "first_name": "",
+    "last_name": "",
+    "email": "somchai2@university.ac.th",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-21T17:10:02.849Z",
+    "role": "user",
+    "membership_tier": "vip",
+    "loyalty_points": 150,
+    "phone_number": "",
+    "department": "Computer Engineering",
+    "avatar": "",
+    "is_verified": true,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "reservations.customuser",
+  "pk": 7,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$AFXilvOXAm2iXxYBbzVjWj$OtL4/ayueFMEVvWCP6HgfA0QjRR6kemizSzVyubLKNw=",
+    "last_login": "2026-10-24T13:58:23.248Z",
+    "is_superuser": false,
+    "username": "Rudy",
+    "first_name": "Rudy",
+    "last_name": "",
+    "email": "rtaxdt@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-22T18:51:50.269Z",
+    "role": "user",
+    "membership_tier": "vip",
+    "loyalty_points": 1250,
+    "phone_number": "0955584167",
+    "department": "ฝ่ายพัฒนานวัตกรรมดิจิทัล",
+    "avatar": "avatars/Honkai___Star_Rail.jpg",
+    "is_verified": true,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "reservations.emailotp",
+  "pk": 1,
+  "fields": {
+    "user": 5,
+    "email": "somchai@university.ac.th",
+    "otp_code": "714886",
+    "created_at": "2026-10-21T17:09:54.418Z",
+    "expires_at": "2026-10-21T17:19:54.418Z",
+    "is_used": false
+  }
+},
+{
+  "model": "reservations.emailotp",
+  "pk": 2,
+  "fields": {
+    "user": 6,
+    "email": "somchai2@university.ac.th",
+    "otp_code": "683443",
+    "created_at": "2026-10-21T17:10:03.437Z",
+    "expires_at": "2026-10-21T17:20:03.436Z",
+    "is_used": true
+  }
+},
+{
+  "model": "reservations.emailotp",
+  "pk": 3,
+  "fields": {
+    "user": 7,
+    "email": "rtaxdt@gmail.com",
+    "otp_code": "356336",
+    "created_at": "2026-10-22T18:51:50.710Z",
+    "expires_at": "2026-10-22T19:01:50.709Z",
+    "is_used": true
+  }
+},
+{
   "model": "reservations.room",
   "pk": 1,
   "fields": {
-    "name": "Grand Auditorium",
-    "room_number": "A-301",
-    "building": "Tower A",
-    "floor": 3,
-    "capacity": 150,
-    "price_per_hour": "500.00",
+    "name": "The Artisan Cafe & Private Lounge",
+    "room_number": "CF-101",
+    "building": "Lifestyle Pavilion",
+    "floor": 1,
+    "capacity": 15,
+    "price_per_hour": "350.00",
     "price_unit": "hour",
-    "image": "",
-    "room_type": "auditorium",
-    "tags": "",
-    "amenities": "4K Laser Projector, Surround Sound System, Dual Wireless Mics, Interactive Stage Podium",
+    "image": "rooms/private_cafe.png",
+    "room_type": "meeting",
+    "tags": "สถานที่ทำงาน, จัดกิจกรรม",
+    "amenities": "Espresso & Brew Bar, High-Speed Wi-Fi 6, Luxury Lounge Sofas, Acoustic Soundproofing, Ambient BGM",
     "is_active": true,
-    "created_at": "2026-10-24T18:04:06.255Z",
-    "updated_at": "2026-10-24T18:04:06.255Z"
+    "created_at": "2026-10-21T15:11:45.661Z",
+    "updated_at": "2026-10-23T21:36:35.511Z"
   }
 },
 {
   "model": "reservations.room",
   "pk": 2,
   "fields": {
-    "name": "Executive Boardroom",
-    "room_number": "B-402",
-    "building": "Tower B",
-    "floor": 4,
-    "capacity": 22,
-    "price_per_hour": "500.00",
-    "price_unit": "hour",
-    "image": "",
+    "name": "The Horizon Vacation Villa & Retreat",
+    "room_number": "VL-201",
+    "building": "Hillside Residence",
+    "floor": 2,
+    "capacity": 6,
+    "price_per_hour": "3500.00",
+    "price_unit": "day",
+    "image": "rooms/vacation_villa.png",
     "room_type": "meeting",
-    "tags": "",
-    "amenities": "85-inch 4K Display, Polycom Video Conferencing, High-speed Wi-Fi, Conference Phone, Ergonomic Chairs",
+    "tags": "บ้านพัก",
+    "amenities": "Panoramic View Balcony, Private Jacuzzi & Pool, Full Kitchenette & BBQ Grill, Smart Home Automation, Master Bedroom Suites",
     "is_active": true,
-    "created_at": "2026-10-24T18:04:06.518Z",
-    "updated_at": "2026-10-24T18:04:06.518Z"
+    "created_at": "2026-10-21T15:11:45.673Z",
+    "updated_at": "2026-10-23T21:36:35.514Z"
   }
 },
 {
   "model": "reservations.room",
   "pk": 3,
   "fields": {
-    "name": "Advanced Computing Laboratory",
-    "room_number": "A-205",
-    "building": "Tower A",
-    "floor": 2,
-    "capacity": 45,
-    "price_per_hour": "500.00",
+    "name": "Nexus Multipurpose Activity Hall",
+    "room_number": "AC-301",
+    "building": "Creative Complex",
+    "floor": 1,
+    "capacity": 100,
+    "price_per_hour": "1000.00",
     "price_unit": "hour",
-    "image": "",
-    "room_type": "lab",
-    "tags": "",
-    "amenities": "45 RTX Workstations, Gigabit Ethernet, Instructor Overhead Monitor, Network Rack Access",
+    "image": "rooms/activity_space.png",
+    "room_type": "auditorium",
+    "tags": "จัดกิจกรรม",
+    "amenities": "Modular Partition Layout, High-Output PA System, Portable Stage & Risers, 4K Projection Mapping, Workshop Craft Tables",
     "is_active": true,
-    "created_at": "2026-10-24T18:04:06.778Z",
-    "updated_at": "2026-10-24T18:04:06.778Z"
+    "created_at": "2026-10-21T15:11:45.685Z",
+    "updated_at": "2026-10-23T21:36:35.518Z"
   }
 },
 {
   "model": "reservations.room",
   "pk": 4,
   "fields": {
-    "name": "Lecture Classroom Alpha",
-    "room_number": "C-501",
-    "building": "Tower C",
-    "floor": 5,
-    "capacity": 60,
-    "price_per_hour": "500.00",
+    "name": "Executive Workstation & Smart Office Suite",
+    "room_number": "WS-205",
+    "building": "Innovation Tower",
+    "floor": 2,
+    "capacity": 24,
+    "price_per_hour": "650.00",
     "price_unit": "hour",
-    "image": "",
-    "room_type": "classroom",
-    "tags": "",
-    "amenities": "Dual Whiteboards, Full HD Ceiling Projector, Centralized Air Conditioning, Sound Amplification",
+    "image": "rooms/office_workstations.jpg",
+    "room_type": "lab",
+    "tags": "สถานที่ทำงาน",
+    "amenities": "24 Ultra-Performance Workstations, Dual 4K Monitors, 10Gbps Dedicated Fiber, Ergonomic Herman Miller Chairs, Meeting Pods",
     "is_active": true,
-    "created_at": "2026-10-24T18:04:07.036Z",
-    "updated_at": "2026-10-24T18:04:07.036Z"
+    "created_at": "2026-10-21T15:11:45.696Z",
+    "updated_at": "2026-10-23T21:36:35.522Z"
   }
 },
 {
   "model": "reservations.room",
   "pk": 5,
   "fields": {
-    "name": "Agile Sprint Room",
-    "room_number": "B-108",
-    "building": "Tower B",
-    "floor": 1,
-    "capacity": 12,
-    "price_per_hour": "500.00",
-    "price_unit": "hour",
-    "image": "",
+    "name": "The Jade Pavilion Oriental Heritage Suite",
+    "room_number": "CH-302",
+    "building": "Oriental Court",
+    "floor": 3,
+    "capacity": 2,
+    "price_per_hour": "1500.00",
+    "price_unit": "day",
+    "image": "rooms/oriental_suite.jpeg",
     "room_type": "meeting",
-    "tags": "",
-    "amenities": "Glass Whiteboard Walls, 65-inch Mobile Smart Monitor, Standing Desks, Power Pods",
+    "tags": "ห้องพัก",
+    "amenities": "King-Size Luxury Bed, Authentic Chinese Rosewood Furniture, Traditional Kung Fu Tea Station, Courtyard Garden View, Private En-suite Bath",
     "is_active": true,
-    "created_at": "2026-10-24T18:04:07.295Z",
-    "updated_at": "2026-10-24T18:04:07.295Z"
+    "created_at": "2026-10-21T15:11:45.708Z",
+    "updated_at": "2026-10-23T21:36:35.526Z"
+  }
+},
+{
+  "model": "reservations.room",
+  "pk": 6,
+  "fields": {
+    "name": "Grand Performing Arts Theater",
+    "room_number": "TH-501",
+    "building": "Cultural Arts Center",
+    "floor": 1,
+    "capacity": 300,
+    "price_per_hour": "1800.00",
+    "price_unit": "hour",
+    "image": "rooms/grand_theater.png",
+    "room_type": "auditorium",
+    "tags": "โรงละคร",
+    "amenities": "Proscenium Main Stage, Automated Flying Rigging, Dolby Atmos Cinema Audio, DMX Intelligent Stage Lighting, Green Rooms & Dressing Suites",
+    "is_active": true,
+    "created_at": "2026-10-21T19:52:00.489Z",
+    "updated_at": "2026-10-23T21:36:35.530Z"
+  }
+},
+{
+  "model": "reservations.roomimage",
+  "pk": 1,
+  "fields": {
+    "room": 3,
+    "image": "rooms/activity_space.png",
+    "caption": "มุมมองภายในเพิ่มเติม",
+    "order": 0,
+    "created_at": "2026-10-24T07:55:37.723Z"
   }
 },
 {
@@ -205,22 +347,22 @@
   "fields": {
     "user": 3,
     "room": 2,
-    "title": "Q4 System Architecture Review",
+    "title": "Executive Strategy Retreat & Quarterly Planning",
     "purpose": "Quarterly system design review and microservice migration sync",
-    "start_time": "2026-10-25T10:00:00Z",
-    "end_time": "2026-10-25T12:00:00Z",
+    "start_time": "2026-10-22T10:00:00Z",
+    "end_time": "2026-10-22T12:00:00Z",
     "stay_days": 1,
     "stay_nights": 1,
     "status": "APPROVED",
     "attendees_count": 14,
     "rejection_reason": "",
-    "access_pin": "",
+    "access_pin": "849201",
     "coupon_code": "",
-    "total_price": "0.00",
+    "total_price": "5000.00",
     "payment_card": null,
     "payment_status": "PAID",
-    "created_at": "2026-10-24T18:04:07.517Z",
-    "updated_at": "2026-10-24T18:04:07.517Z"
+    "created_at": "2026-10-21T15:11:45.720Z",
+    "updated_at": "2026-10-23T21:36:35.577Z"
   }
 },
 {
@@ -229,22 +371,22 @@
   "fields": {
     "user": 4,
     "room": 3,
-    "title": "Machine Learning Workshop Lecture",
+    "title": "Creative Design Sprint & Team Workshop",
     "purpose": "Hands-on PyTorch training for senior computer science cohort",
-    "start_time": "2026-10-25T14:00:00Z",
-    "end_time": "2026-10-25T16:00:00Z",
+    "start_time": "2026-10-22T14:00:00Z",
+    "end_time": "2026-10-22T16:00:00Z",
     "stay_days": 1,
     "stay_nights": 1,
     "status": "PENDING",
     "attendees_count": 38,
     "rejection_reason": "",
-    "access_pin": "",
+    "access_pin": "282421",
     "coupon_code": "",
-    "total_price": "0.00",
+    "total_price": "2400.00",
     "payment_card": null,
     "payment_status": "PAID",
-    "created_at": "2026-10-24T18:04:08.085Z",
-    "updated_at": "2026-10-24T18:04:08.085Z"
+    "created_at": "2026-10-21T15:11:45.758Z",
+    "updated_at": "2026-10-23T21:36:35.582Z"
   }
 },
 {
@@ -253,22 +395,70 @@
   "fields": {
     "user": 3,
     "room": 1,
-    "title": "Ad-hoc Gaming Tournament",
+    "title": "Private Artisan Coffee Tasting Session",
     "purpose": "Informal department social gaming session",
-    "start_time": "2026-10-24T10:00:00Z",
-    "end_time": "2026-10-24T12:00:00Z",
+    "start_time": "2026-10-21T10:00:00Z",
+    "end_time": "2026-10-21T12:00:00Z",
     "stay_days": 1,
     "stay_nights": 1,
     "status": "REJECTED",
     "attendees_count": 50,
     "rejection_reason": "Auditorium is reserved strictly for academic and official department symposiums.",
-    "access_pin": "",
+    "access_pin": "363024",
     "coupon_code": "",
-    "total_price": "0.00",
+    "total_price": "1000.00",
     "payment_card": null,
     "payment_status": "PAID",
-    "created_at": "2026-10-24T18:04:08.460Z",
-    "updated_at": "2026-10-24T18:04:08.460Z"
+    "created_at": "2026-10-21T15:11:45.781Z",
+    "updated_at": "2026-10-23T21:36:35.587Z"
+  }
+},
+{
+  "model": "reservations.booking",
+  "pk": 4,
+  "fields": {
+    "user": 7,
+    "room": 2,
+    "title": "พักผ่อนประจำปี Exclusive Vacation Retreat",
+    "purpose": "พักผ่อนและทำงานนอกสถานที่ร่วมกับครอบครัว",
+    "start_time": "2026-10-26T07:36:35.571Z",
+    "end_time": "2026-10-26T11:36:35.571Z",
+    "stay_days": 1,
+    "stay_nights": 1,
+    "status": "APPROVED",
+    "attendees_count": 4,
+    "rejection_reason": "",
+    "access_pin": "729143",
+    "coupon_code": "VHNEW20",
+    "total_price": "8000.00",
+    "payment_card": 1,
+    "payment_status": "PAID",
+    "created_at": "2026-10-23T21:36:35.572Z",
+    "updated_at": "2026-10-23T21:36:35.592Z"
+  }
+},
+{
+  "model": "reservations.booking",
+  "pk": 5,
+  "fields": {
+    "user": 7,
+    "room": 1,
+    "title": "ทดสอบจองคาเฟ่จัดประชุมทีมยุทธศาสตร์",
+    "purpose": "ประชุมวางแผนโครงการจริง",
+    "start_time": "2026-11-01T06:00:00Z",
+    "end_time": "2026-11-01T09:00:00Z",
+    "stay_days": 1,
+    "stay_nights": 1,
+    "status": "PENDING",
+    "attendees_count": 5,
+    "rejection_reason": "",
+    "access_pin": "474451",
+    "coupon_code": "VHNEW20",
+    "total_price": "1200.00",
+    "payment_card": 1,
+    "payment_status": "PAID",
+    "created_at": "2026-10-23T21:42:58.774Z",
+    "updated_at": "2026-10-23T21:42:58.774Z"
   }
 },
 {
@@ -315,11 +505,11 @@
     "min_spend": "1000.00",
     "applicable_category": "all",
     "max_discount_amount": "600.00",
-    "expires_at": "2026-12-31T16:59:59Z",
+    "expires_at": "2026-12-31T23:59:59Z",
     "terms": "ใช้ได้สำหรับสมาชิกใหม่ทุกท่านในการจองครั้งแรก\nส่วนลด 20% สูงสุดไม่เกิน ฿600 เมื่อมียอดจองขั้นต่ำ ฿1,000\nใช้ได้กับการจองสถานที่ทุกประเภท\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.\nจำกัด 1 สิทธิ์ ต่อ 1 บัญชีผู้ใช้งานตลอดระยะเวลาแคมเปญ",
     "order": 1,
     "is_active": true,
-    "created_at": "2026-10-24T18:04:37.128Z"
+    "created_at": "2026-10-23T17:53:32.958Z"
   }
 },
 {
@@ -336,11 +526,11 @@
     "min_spend": "2500.00",
     "applicable_category": "villa",
     "max_discount_amount": "1500.00",
-    "expires_at": "2026-12-31T16:59:59Z",
+    "expires_at": "2026-12-31T23:59:59Z",
     "terms": "สิทธิพิเศษเฉพาะการจองในหมวดหมู่บ้านพักและพูลวิลล่า (Villa)\nส่วนลด 25% สูงสุด ฿1,500 เมื่อมียอดจองขั้นต่ำ ฿2,500\nสามารถใช้ได้กับการเข้าพักทุกวัน ทั้งวันธรรมดาและวันหยุด\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.\nไม่สามารถแลกเปลี่ยนเป็นเงินสดหรือโอนสิทธิ์ให้ผู้อื่นได้",
     "order": 2,
     "is_active": true,
-    "created_at": "2026-10-24T18:04:37.306Z"
+    "created_at": "2026-10-23T17:53:32.962Z"
   }
 },
 {
@@ -357,11 +547,11 @@
     "min_spend": "800.00",
     "applicable_category": "room",
     "max_discount_amount": "400.00",
-    "expires_at": "2026-12-31T16:59:59Z",
+    "expires_at": "2026-12-31T23:59:59Z",
     "terms": "ใช้ได้สำหรับการจองห้องพักในหมวด Suite & Deluxe Room\nส่วนลด 10% สูงสุด ฿400 เมื่อมียอดจองขั้นต่ำ ฿800\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.\nจำกัด 1 สิทธิ์ ต่อการจอง 1 ครั้ง",
     "order": 3,
     "is_active": true,
-    "created_at": "2026-10-24T18:04:37.484Z"
+    "created_at": "2026-10-23T17:53:32.966Z"
   }
 },
 {
@@ -378,11 +568,11 @@
     "min_spend": "3000.00",
     "applicable_category": "event",
     "max_discount_amount": "2000.00",
-    "expires_at": "2026-12-31T16:59:59Z",
+    "expires_at": "2026-12-31T23:59:59Z",
     "terms": "ใช้ได้เฉพาะการจองห้องจัดเลี้ยงและโถงกิจกรรมอเนกประสงค์ (Event Hall)\nส่วนลด 15% สูงสุด ฿2,000 เมื่อมียอดจองขั้นต่ำ ฿3,000\nรวมสิ่งอำนวยความสะดวกพื้นฐาน โต๊ะ เก้าอี้ และระบบเสียง\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.",
     "order": 4,
     "is_active": true,
-    "created_at": "2026-10-24T18:04:37.662Z"
+    "created_at": "2026-10-23T17:53:32.970Z"
   }
 },
 {
@@ -399,11 +589,11 @@
     "min_spend": "4000.00",
     "applicable_category": "theater",
     "max_discount_amount": "3000.00",
-    "expires_at": "2026-12-31T16:59:59Z",
+    "expires_at": "2026-12-31T23:59:59Z",
     "terms": "ใช้ได้สำหรับการจองโรงละครและการแสดง (Grand Theater)\nส่วนลด 20% สูงสุด ฿3,000 เมื่อมียอดจองขั้นต่ำ ฿4,000\nต้องทำการจองล่วงหน้าอย่างน้อย 24 ชั่วโมงก่อนเริ่มใช้งาน\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.",
     "order": 5,
     "is_active": true,
-    "created_at": "2026-10-24T18:04:37.841Z"
+    "created_at": "2026-10-23T17:53:32.977Z"
   }
 },
 {
@@ -420,11 +610,11 @@
     "min_spend": "300.00",
     "applicable_category": "work",
     "max_discount_amount": "500.00",
-    "expires_at": "2026-12-31T16:59:59Z",
+    "expires_at": "2026-12-31T23:59:59Z",
     "terms": "รับสิทธิ์ใช้งาน Executive Workstation ฟรี 1 ชั่วโมงแรก\nมูลค่าส่วนลดสูงสุด ฿500 เมื่อมียอดจองขั้นต่ำ ฿300\nใช้ได้เฉพาะในหมวดหมู่สถานที่ทำงาน (Workstation)\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.\nจำกัด 1 สิทธิ์ ต่อ 1 บัญชีผู้ใช้งาน",
     "order": 6,
     "is_active": true,
-    "created_at": "2026-10-24T18:04:38.020Z"
+    "created_at": "2026-10-23T17:53:32.981Z"
   }
 },
 {
@@ -441,11 +631,11 @@
     "min_spend": "200.00",
     "applicable_category": "work",
     "max_discount_amount": "100.00",
-    "expires_at": "2026-12-31T16:59:59Z",
+    "expires_at": "2026-12-31T23:59:59Z",
     "terms": "รับฟรี Signature Drink มูลค่าสูงสุด ฿100 ที่ The Artisan Cafe\nเมื่อมียอดใช้บริการหรือจองสถานที่ขั้นต่ำ ฿200\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.\nสามารถแลกรับได้ที่เคาน์เตอร์คาเฟ่ในวันที่เข้าใช้งาน",
     "order": 7,
     "is_active": true,
-    "created_at": "2026-10-24T18:04:38.198Z"
+    "created_at": "2026-10-23T17:53:32.985Z"
   }
 },
 {
@@ -462,11 +652,11 @@
     "min_spend": "1000.00",
     "applicable_category": "work",
     "max_discount_amount": "500.00",
-    "expires_at": "2026-12-31T16:59:59Z",
+    "expires_at": "2026-12-31T23:59:59Z",
     "terms": "ส่วนลด 10% สำหรับห้องประชุม & เลานจ์ส่วนตัว\nส่วนลดสูงสุด ฿500 เมื่อมียอดจองขั้นต่ำ ฿1,000\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.",
     "order": 8,
     "is_active": true,
-    "created_at": "2026-10-24T18:04:38.379Z"
+    "created_at": "2026-10-23T17:53:32.989Z"
   }
 },
 {
@@ -483,11 +673,11 @@
     "min_spend": "5000.00",
     "applicable_category": "all",
     "max_discount_amount": "2500.00",
-    "expires_at": "2026-12-31T16:59:59Z",
+    "expires_at": "2026-12-31T23:59:59Z",
     "terms": "ส่วนลดพิเศษ 30% สำหรับการจองสถานที่แบบเต็มวัน (เหมาวัน)\nส่วนลดสูงสุด ฿2,500 เมื่อมียอดจองขั้นต่ำ ฿5,000\nใช้ได้กับสถานที่ทุกประเภทที่เปิดให้บริการแบบเต็มวัน\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.\nไม่สามารถใช้ร่วมกับคูปองส่วนลดอื่นๆ ในบิลเดียวกันได้",
     "order": 9,
     "is_active": true,
-    "created_at": "2026-10-24T18:04:38.557Z"
+    "created_at": "2026-10-23T17:53:32.993Z"
   }
 },
 {
@@ -504,11 +694,94 @@
     "min_spend": "2000.00",
     "applicable_category": "villa,room",
     "max_discount_amount": "1000.00",
-    "expires_at": "2026-12-31T16:59:59Z",
+    "expires_at": "2026-12-31T23:59:59Z",
     "terms": "ส่วนลดพิเศษ 15% สำหรับการจองช่วงสุดสัปดาห์ (ศุกร์ - อาทิตย์)\nส่วนลดสูงสุด ฿1,000 เมื่อมียอดจองขั้นต่ำ ฿2,000\nใช้ได้กับหมวดหมู่บ้านพักและห้องพัก\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.",
     "order": 10,
     "is_active": true,
-    "created_at": "2026-10-24T18:04:38.737Z"
+    "created_at": "2026-10-23T17:53:32.996Z"
+  }
+},
+{
+  "model": "reservations.usercoupon",
+  "pk": 1,
+  "fields": {
+    "user": 7,
+    "coupon": 1,
+    "claimed_at": "2026-10-23T19:04:08.862Z",
+    "is_used": true,
+    "used_at": "2026-10-23T21:42:58.768Z"
+  }
+},
+{
+  "model": "reservations.usercoupon",
+  "pk": 2,
+  "fields": {
+    "user": 7,
+    "coupon": 2,
+    "claimed_at": "2026-10-24T06:29:51.331Z",
+    "is_used": false,
+    "used_at": null
+  }
+},
+{
+  "model": "reservations.usercoupon",
+  "pk": 3,
+  "fields": {
+    "user": 7,
+    "coupon": 3,
+    "claimed_at": "2026-10-24T06:29:51.337Z",
+    "is_used": false,
+    "used_at": null
+  }
+},
+{
+  "model": "reservations.usercoupon",
+  "pk": 4,
+  "fields": {
+    "user": 7,
+    "coupon": 4,
+    "claimed_at": "2026-10-24T06:29:51.341Z",
+    "is_used": false,
+    "used_at": null
+  }
+},
+{
+  "model": "reservations.usercoupon",
+  "pk": 5,
+  "fields": {
+    "user": 7,
+    "coupon": 6,
+    "claimed_at": "2026-10-24T06:29:51.346Z",
+    "is_used": false,
+    "used_at": null
+  }
+},
+{
+  "model": "reservations.paymentcard",
+  "pk": 1,
+  "fields": {
+    "user": 7,
+    "card_brand": "visa",
+    "cardholder_name": "Rudy",
+    "last_four": "4242",
+    "exp_month": "12",
+    "exp_year": "28",
+    "is_default": true,
+    "created_at": "2026-10-23T21:14:03.104Z"
+  }
+},
+{
+  "model": "reservations.paymentcard",
+  "pk": 2,
+  "fields": {
+    "user": 7,
+    "card_brand": "mastercard",
+    "cardholder_name": "Rudy",
+    "last_four": "8891",
+    "exp_month": "08",
+    "exp_year": "27",
+    "is_default": false,
+    "created_at": "2026-10-23T21:14:03.108Z"
   }
 },
 {
@@ -526,8 +799,8 @@
     "target_url": "#venuesGridAnchor",
     "order": 1,
     "is_active": true,
-    "created_at": "2026-10-24T18:04:38.917Z",
-    "updated_at": "2026-10-24T18:04:38.917Z"
+    "created_at": "2026-10-24T08:26:12.098Z",
+    "updated_at": "2026-10-24T14:09:09.388Z"
   }
 },
 {
@@ -545,8 +818,8 @@
     "target_url": "javascript:showVenueDetail('5')",
     "order": 1,
     "is_active": true,
-    "created_at": "2026-10-24T18:04:39.096Z",
-    "updated_at": "2026-10-24T18:04:39.096Z"
+    "created_at": "2026-10-24T09:07:10.839Z",
+    "updated_at": "2026-10-24T14:09:09.396Z"
   }
 },
 {
@@ -564,8 +837,8 @@
     "target_url": "javascript:showVenueDetail('2')",
     "order": 2,
     "is_active": true,
-    "created_at": "2026-10-24T18:04:39.275Z",
-    "updated_at": "2026-10-24T18:04:39.275Z"
+    "created_at": "2026-10-24T09:07:10.850Z",
+    "updated_at": "2026-10-24T14:09:09.402Z"
   }
 },
 {
@@ -583,8 +856,8 @@
     "target_url": "javascript:showVenueDetail('6')",
     "order": 3,
     "is_active": true,
-    "created_at": "2026-10-24T18:04:39.453Z",
-    "updated_at": "2026-10-24T18:04:39.453Z"
+    "created_at": "2026-10-24T09:07:10.859Z",
+    "updated_at": "2026-10-24T14:09:09.409Z"
   }
 },
 {
@@ -602,8 +875,8 @@
     "target_url": "javascript:showVenueDetail('3')",
     "order": 4,
     "is_active": true,
-    "created_at": "2026-10-24T18:04:39.631Z",
-    "updated_at": "2026-10-24T18:04:39.631Z"
+    "created_at": "2026-10-24T09:07:10.871Z",
+    "updated_at": "2026-10-24T14:09:09.416Z"
   }
 },
 {
@@ -621,8 +894,8 @@
     "target_url": "javascript:showVenueDetail('4')",
     "order": 5,
     "is_active": true,
-    "created_at": "2026-10-24T18:04:39.809Z",
-    "updated_at": "2026-10-24T18:04:39.809Z"
+    "created_at": "2026-10-24T09:07:10.880Z",
+    "updated_at": "2026-10-24T14:09:09.423Z"
   }
 }
 ]

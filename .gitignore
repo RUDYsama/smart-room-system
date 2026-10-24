@@ -10,7 +10,6 @@ __pycache__/
 *.sqlite3
 *.db
 staticfiles/
-media/
 venv/
 ITDS_Site/
 ITDS_Site/venv/
