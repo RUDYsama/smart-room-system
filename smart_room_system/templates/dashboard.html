@@ -1,0 +1,1387 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="th" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{% static 'images/void_hunter.png' %}">
+    <title>VH - Vacation & Hotel | ระบบจองห้องและสถานที่</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+        .hero-banner {
+            background-color: #0b1120;
+        }
+        #heroContentInner {
+            will-change: opacity, transform;
+        }
+        @keyframes waveFlowSlow {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(-35%); }
+            100% { transform: translateX(0); }
+        }
+        @keyframes waveFlowMid {
+            0% { transform: translateX(-30%); }
+            50% { transform: translateX(0); }
+            100% { transform: translateX(-30%); }
+        }
+        .animate-wave-slow {
+            animation: waveFlowSlow 18s ease-in-out infinite;
+            will-change: transform;
+        }
+        .animate-wave-mid {
+            animation: waveFlowMid 13s ease-in-out infinite;
+            will-change: transform;
+        }
+        @keyframes uprightGridDrift {
+            0% { background-position: 0 0; }
+            100% { background-position: 40px 40px; }
+        }
+        .animate-upright-grid {
+            background-color: #f8fafc;
+            background-image: 
+                linear-gradient(to right, rgba(148, 163, 184, 0.35) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(148, 163, 184, 0.35) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: uprightGridDrift 14s linear infinite;
+            opacity: 0.75;
+        }
+        .workflow-card-transition {
+            transition: transform 900ms cubic-bezier(0.2, 1, 0.3, 1), box-shadow 700ms ease;
+            will-change: transform;
+        }
+        @media (max-width: 767px) {
+            #workflowCard-0, #workflowCard-1, #workflowCard-2 {
+                transform: none !important;
+                z-index: 1 !important;
+            }
+        }
+        .room-nav-tab {
+            -webkit-font-smoothing: subpixel-antialiased;
+            -moz-osx-font-smoothing: auto;
+            transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 180ms ease;
+        }
+        .room-nav-tab:active,
+        .room-nav-tab.tab-trigger-pop {
+            transform: scale(0.96) !important;
+        }
+        @media (min-width: 768px) {
+            .parallelogram-container {
+                position: relative;
+            }
+            .parallelogram-container::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                transform: skewX(-14deg);
+                border-radius: 1rem;
+                background-color: #f8fafc;
+                border: 1.5px solid #cbd5e1;
+                box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.04);
+                z-index: 0;
+            }
+            .parallelogram-grid-wrapper {
+                position: absolute;
+                inset: 0;
+                transform: skewX(-14deg);
+                border-radius: 1rem;
+                overflow: hidden;
+                pointer-events: none;
+                z-index: 1;
+            }
+            .room-tab-skew {
+                position: relative;
+                background: transparent !important;
+                border: none !important;
+            }
+            .room-tab-skew::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                transform: skewX(-14deg);
+                border-radius: 0.75rem;
+                transition: all 180ms ease;
+                z-index: 0;
+            }
+            .room-tab-skew.tab-active::before {
+                background-color: #2563eb;
+                border: 1px solid #3b82f6;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.12);
+            }
+            .room-tab-skew.tab-inactive::before {
+                background-color: #ffffff;
+                border: 1px solid #e2e8f0;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            }
+            .room-tab-skew.tab-inactive:hover::before {
+                background-color: #f8fafc;
+                border-color: #cbd5e1;
+            }
+        }
+        @media (max-width: 767px) {
+            .parallelogram-container {
+                position: relative;
+                background-color: #f8fafc;
+                border: 1.5px solid #cbd5e1;
+                border-radius: 1.25rem;
+                box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.06);
+            }
+            .parallelogram-grid-wrapper {
+                position: absolute;
+                inset: 0;
+                border-radius: 1.25rem;
+                overflow: hidden;
+                pointer-events: none;
+                z-index: 1;
+            }
+            .room-tab-skew {
+                position: relative;
+                border-radius: 0.75rem;
+                transition: all 180ms ease;
+            }
+            .room-tab-skew.tab-active {
+                background-color: #2563eb !important;
+                border: 1px solid #3b82f6 !important;
+                box-shadow: 0 4px 10px -1px rgba(37, 99, 235, 0.35);
+            }
+            .room-tab-skew.tab-inactive {
+                background-color: #ffffff !important;
+                border: 1px solid #e2e8f0 !important;
+                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+            }
+            .room-tab-skew.tab-inactive:hover {
+                background-color: #f1f5f9 !important;
+                border-color: #cbd5e1 !important;
+            }
+        }
+        .room-tab-content {
+            position: relative;
+            z-index: 10;
+        }
+        .star-line-transition {
+            transition: max-width 650ms cubic-bezier(0.16, 1, 0.3, 1), opacity 650ms ease;
+        }
+        .inner-star-line {
+            width: 220px;
+            max-width: 22vw;
+            transition: width 700ms cubic-bezier(0.16, 1, 0.3, 1), max-width 700ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms ease, margin 700ms cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: width, max-width, opacity;
+        }
+        @media (min-width: 640px) {
+            .inner-star-line {
+                width: 300px;
+                max-width: 25vw;
+            }
+        }
+        @media (min-width: 1024px) {
+            .inner-star-line {
+                width: 360px;
+                max-width: 26vw;
+            }
+        }
+        @media (min-width: 1280px) {
+            .inner-star-line {
+                width: 420px;
+                max-width: 28vw;
+            }
+        }
+        .side-star-wrapper {
+            transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms ease, max-width 700ms cubic-bezier(0.16, 1, 0.3, 1), margin 700ms cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity, max-width;
+        }
+        .center-star-wrapper {
+            transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1), filter 700ms ease;
+            will-change: transform, filter;
+        }
+        #workflowStarsDivider {
+            transition: opacity 650ms cubic-bezier(0.16, 1, 0.3, 1), transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+        #workflowStarsDivider.divider-merged .inner-star-line {
+            width: 8px !important;
+            max-width: 8px !important;
+            opacity: 0.9 !important;
+            margin: 0 2px !important;
+        }
+        @media (min-width: 640px) {
+            #workflowStarsDivider.divider-merged .inner-star-line {
+                width: 12px !important;
+                max-width: 12px !important;
+                margin: 0 3px !important;
+            }
+        }
+        #workflowStarsDivider.divider-merged .side-star-wrapper {
+            width: auto !important;
+            max-width: none !important;
+            opacity: 1 !important;
+            margin: 0 1px !important;
+            transform: scale(0.9) !important;
+            pointer-events: auto !important;
+        }
+        @media (min-width: 640px) {
+            #workflowStarsDivider.divider-merged .side-star-wrapper {
+                margin: 0 2px !important;
+                transform: scale(0.92) !important;
+            }
+        }
+        #workflowStarsDivider.divider-merged .center-star-wrapper {
+            transform: scale(1.06) !important;
+            margin: 0 1px !important;
+        }
+        @media (min-width: 640px) {
+            #workflowStarsDivider.divider-merged .center-star-wrapper {
+                margin: 0 2px !important;
+                transform: scale(1.08) !important;
+            }
+        }
+        #workflowStarsDivider.divider-merged .center-star-wrapper svg {
+            filter: drop-shadow(0 0 18px rgba(37, 99, 235, 0.85)) !important;
+        }
+        #workflowStarsDivider.divider-collapsed {
+            opacity: 0 !important;
+            transform: scale(0.75) !important;
+            pointer-events: none !important;
+        }
+        #workflowStarsDivider.divider-collapsed #starLineLeft,
+        #workflowStarsDivider.divider-collapsed #starLineRight {
+            max-width: 0 !important;
+            opacity: 0 !important;
+        }
+        .showcase-block-transition {
+            transition: transform 950ms cubic-bezier(0.2, 1, 0.3, 1);
+            will-change: transform;
+        }
+        .avatar-transition {
+            transition: opacity 850ms ease-out 120ms, transform 850ms cubic-bezier(0.2, 1, 0.3, 1) 120ms;
+            will-change: opacity, transform;
+            -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 80%, rgba(0, 0, 0, 0.85) 88%, rgba(0, 0, 0, 0.35) 95%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 0%, #000 80%, rgba(0, 0, 0, 0.85) 88%, rgba(0, 0, 0, 0.35) 95%, transparent 100%);
+        }
+        .about-card-transition {
+            transition: transform 650ms cubic-bezier(0.16, 1, 0.3, 1), opacity 650ms ease-out;
+            will-change: transform, opacity;
+        }
+
+        html, body {
+            overflow-x: clip;
+            max-width: 100vw;
+        }
+        html.lenis, html.lenis body {
+            height: auto;
+        }
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="min-h-full flex flex-col text-slate-800 bg-slate-50 antialiased overflow-x-clip max-w-[100vw]">
+
+    <header class="sticky top-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-slate-200">
+        <div class="w-full px-3 sm:px-6 lg:px-12 h-16 flex items-center justify-between gap-2">
+            <a href="/" class="flex items-center gap-2.5 sm:gap-3 group min-w-0">
+                <img src="{% static 'images/void_hunter_2x.png' %}" alt="VH Logo" class="w-9 h-9 sm:w-10 sm:h-10 object-contain transition group-hover:scale-105 drop-shadow-sm flex-shrink-0" />
+                <div class="flex flex-col min-w-0">
+                    <span class="font-extrabold text-xl sm:text-2xl tracking-tight text-slate-900 leading-tight">VH</span>
+                    <span class="text-[11px] font-medium text-slate-500 tracking-wide leading-none">Vacation &amp; Hotel</span>
+                </div>
+            </a>
+
+            <nav class="hidden xl:flex items-center gap-4 text-sm font-medium text-slate-600">
+                <a href="#workflow" class="hover:text-blue-600 transition">ขั้นตอนการใช้งาน</a>
+                <span class="text-slate-300 select-none">|</span>
+                <a href="#facilities" class="hover:text-blue-600 transition">ห้องที่ให้บริการ</a>
+                <span class="text-slate-300 select-none">|</span>
+                <a href="#about" class="hover:text-blue-600 transition">เกี่ยวกับระบบ</a>
+            </nav>
+
+            <!-- Guest Only Header Actions (Always Login / Register on About Page) -->
+            <div id="navGuestActions" class="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
+                <a href="/auth/?mode=register" class="px-2.5 sm:px-3.5 py-1.5 text-xs sm:text-sm font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 hover:text-slate-900 transition shadow-sm inline-flex items-center whitespace-nowrap">
+                    สมัครสมาชิก
+                </a>
+                <a href="/auth/?mode=login" class="px-2.5 sm:px-3.5 py-1.5 text-xs sm:text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition shadow-sm flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                        <polyline points="10 17 15 12 10 7"></polyline>
+                        <line x1="15" y1="12" x2="3" y2="12"></line>
+                    </svg>
+                    <span>เข้าสู่ระบบ</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1">
+
+        <div id="publicPresentationSection">
+
+            <div id="heroTrack" class="relative w-full hero-banner" style="overflow-x: clip; overflow-y: visible;">
+                <section id="heroSection" class="sticky top-16 z-0 w-full text-white px-4 sm:px-6 lg:px-12 pt-20 pb-28 sm:pt-24 sm:pb-36 lg:pt-28 lg:pb-40 flex flex-col justify-center overflow-hidden">
+                    <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none" style="transform: translate3d(0,0,0); backface-visibility: hidden;">
+                        <source src="{% static 'videos/hero_airships.mp4' %}" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/65 to-slate-900/30 z-0 pointer-events-none"></div>
+                    <div id="heroContentInner" class="relative z-10 max-w-4xl space-y-6">
+                        <div class="space-y-2">
+                            <span class="text-blue-400 text-sm font-semibold tracking-wide uppercase">
+                                บริการจองและเช่าพื้นที่สถานที่ระดับพรีเมียม
+                            </span>
+                            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight drop-shadow-md">
+                                บริการจองและเช่าสถานที่พักผ่อน ทำงาน และจัดกิจกรรม
+                            </h1>
+                            <p class="text-lg text-blue-300 font-medium drop-shadow-sm">
+                                Smart Space, Workspace & Venue Reservation System
+                            </p>
+                        </div>
+
+                        <p class="text-base sm:text-lg text-slate-200 leading-relaxed max-w-2xl font-normal drop-shadow-sm">
+                            ระบบศูนย์กลางสำหรับจองและเช่าสถานที่ระดับพรีเมียม ตรวจสอบตารางเวลาว่างแบบเรียลไทม์ พร้อมระบบป้องกันการจองเวลาชน 100% และยืนยันตัวตนความปลอดภัยสูงด้วยรหัส PIN ผ่านอีเมล
+                        </p>
+
+                        <div class="flex flex-wrap items-center gap-4 pt-4">
+                            <a href="/auth/?mode=login" class="px-6 py-3.5 text-base font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition shadow-lg flex items-center gap-2.5">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                                    <polyline points="10 17 15 12 10 7"></polyline>
+                                    <line x1="15" y1="12" x2="3" y2="12"></line>
+                                </svg>
+                                เข้าสู่ระบบเพื่อเริ่มจองสถานที่
+                            </a>
+                            <a href="#facilities" class="px-6 py-3.5 text-base font-semibold text-white bg-slate-800/90 hover:bg-slate-800 border border-slate-600 rounded-lg transition shadow-md flex items-center gap-2">
+                                <svg class="w-5 h-5 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                สำรวจสถานที่ที่เปิดให้บริการ
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="flowingSection" class="relative z-10 w-full">
+
+                <div id="heroWaveContainer" class="w-full overflow-hidden leading-none pointer-events-none -mb-1 h-16 sm:h-20 md:h-28 relative">
+                    <div class="absolute inset-0 w-full h-full overflow-hidden">
+                        <svg class="absolute bottom-0 left-0 w-[200%] h-full text-slate-50/25 animate-wave-slow" viewBox="0 0 2880 120" preserveAspectRatio="none" fill="currentColor">
+                            <path d="M0,45 C360,95 720,10 1080,50 C1440,90 1800,12 2160,50 C2520,88 2880,15 2880,45 L2880,120 L0,120 Z"></path>
+                        </svg>
+                    </div>
+                    <div class="absolute inset-0 w-full h-full overflow-hidden">
+                        <svg class="absolute bottom-0 left-0 w-[200%] h-full text-slate-50/45 animate-wave-mid" viewBox="0 0 2880 120" preserveAspectRatio="none" fill="currentColor">
+                            <path d="M0,55 C360,18 720,95 1080,40 C1440,15 1800,85 2160,35 C2520,18 2880,75 2880,55 L2880,120 L0,120 Z"></path>
+                        </svg>
+                    </div>
+                    <svg id="heroWaveSvg" class="relative block w-full h-full text-slate-50" viewBox="0 0 1440 120" preserveAspectRatio="none" fill="currentColor">
+                        <path d="M0,60 C480,115 960,25 1440,60 L1440,120 L0,120 Z"></path>
+                    </svg>
+                </div>
+
+                <div class="bg-slate-50 w-full">
+            <section id="workflow" class="pt-8 pb-16 sm:pt-10 sm:pb-20 w-full px-2 sm:px-6 bg-slate-50 border-b border-slate-200 overflow-hidden">
+                <div id="workflowStarsDivider" class="w-full flex items-center justify-center py-6 sm:py-8 text-blue-600 select-none">
+                    <div id="starLineLeft" class="star-line-transition flex-1 h-[2px] sm:h-[2.5px] bg-gradient-to-r from-transparent via-blue-400 to-blue-600 rounded-full shadow-[0_0_10px_rgba(37,99,235,0.4)]"></div>
+                    <div id="sideStarLeft" class="side-star-wrapper flex items-center justify-center shrink-0 mx-2 sm:mx-3">
+                        <svg class="w-8 h-8 sm:w-10 sm:h-10 text-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.6)] flex-shrink-0 animate-pulse" viewBox="0 0 300 350" fill="currentColor">
+                            <path d="M 150.00 39.00 Q 166.97 158.03 251.00 175.00 Q 166.97 191.97 150.00 311.00 Q 133.03 191.97 49.00 175.00 Q 133.03 158.03 150.00 39.00 Z"/>
+                        </svg>
+                    </div>
+                    <div id="innerStarLineLeft" class="inner-star-line h-[2px] sm:h-[2.5px] bg-gradient-to-r from-blue-500/80 via-blue-400 to-blue-500/80 rounded-full shadow-[0_0_6px_rgba(59,130,246,0.4)] shrink-0"></div>
+                    <div id="centerStar" class="center-star-wrapper flex items-center justify-center shrink-0 mx-2 sm:mx-3">
+                        <svg class="w-12 h-12 sm:w-16 sm:h-16 text-blue-600 drop-shadow-[0_0_16px_rgba(37,99,235,0.7)] flex-shrink-0 animate-pulse" viewBox="0 0 300 350" fill="currentColor">
+                            <path d="M 150.00 39.00 Q 166.97 158.03 251.00 175.00 Q 166.97 191.97 150.00 311.00 Q 133.03 191.97 49.00 175.00 Q 133.03 158.03 150.00 39.00 Z"/>
+                        </svg>
+                    </div>
+                    <div id="innerStarLineRight" class="inner-star-line h-[2px] sm:h-[2.5px] bg-gradient-to-r from-blue-500/80 via-blue-400 to-blue-500/80 rounded-full shadow-[0_0_6px_rgba(59,130,246,0.4)] shrink-0"></div>
+                    <div id="sideStarRight" class="side-star-wrapper flex items-center justify-center shrink-0 mx-2 sm:mx-3">
+                        <svg class="w-8 h-8 sm:w-10 sm:h-10 text-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.6)] flex-shrink-0 animate-pulse" viewBox="0 0 300 350" fill="currentColor">
+                            <path d="M 150.00 39.00 Q 166.97 158.03 251.00 175.00 Q 166.97 191.97 150.00 311.00 Q 133.03 191.97 49.00 175.00 Q 133.03 158.03 150.00 39.00 Z"/>
+                        </svg>
+                    </div>
+                    <div id="starLineRight" class="star-line-transition flex-1 h-[2px] sm:h-[2.5px] bg-gradient-to-l from-transparent via-blue-400 to-blue-600 rounded-full shadow-[0_0_10px_rgba(37,99,235,0.4)]"></div>
+                </div>
+
+                <div class="max-w-7xl mx-auto space-y-8 sm:space-y-10">
+
+                    <div id="workflowHeader" class="text-center space-y-3 transition-all duration-700 ease-out opacity-0 translate-y-8 pointer-events-none">
+                        <span class="text-blue-600 text-sm font-bold uppercase tracking-wider">กระบวนการมาตรฐาน</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">3 ขั้นตอนง่ายๆ ในการขอใช้งานห้อง</h2>
+                        <p class="text-slate-600 max-w-2xl mx-auto text-base">ระบบออกแบบมาให้ลดขั้นตอนที่ซ้ำซ้อน มีความปลอดภัย โปร่งใส และทราบผลการอนุมัติอย่างรวดเร็ว</p>
+                    </div>
+
+                    <div id="workflowCardsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                        <div id="workflowCard-0" class="workflow-card-transition bg-white border border-slate-200 rounded-xl p-8 shadow-md space-y-4 relative" style="transform: translate3d(calc(100% + 2rem), 10px, 0) rotate(-4deg); z-index: 10;">
+                            <div class="flex items-center justify-between">
+                                <span class="text-3xl font-black text-blue-600">01</span>
+                                <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900">ตรวจสอบตารางและเลือกห้อง</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                เลือกห้องที่ตรงตามวัตถุประสงค์ สำรวจความจุ อุปกรณ์สนับสนุนประจำห้อง และตรวจสอบตารางเวลาว่างแบบเรียลไทม์
+                            </p>
+                        </div>
+
+                        <div id="workflowCard-1" class="workflow-card-transition bg-white border border-slate-200 rounded-xl p-8 shadow-md space-y-4 relative" style="transform: translate3d(0, 0, 0) rotate(0deg); z-index: 20;">
+                            <div class="flex items-center justify-between">
+                                <span class="text-3xl font-black text-blue-600">02</span>
+                                <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900">ระบุช่วงเวลาและยืนยันด้วย PIN</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                กำหนดวันและเวลาที่ต้องการใช้งาน กรอกหัวข้อการประชุม พร้อมยืนยันตัวตนความปลอดภัยสูงด้วยรหัส PIN 6 หลักทางอีเมล
+                            </p>
+                        </div>
+
+                        <div id="workflowCard-2" class="workflow-card-transition bg-white border border-slate-200 rounded-xl p-8 shadow-md space-y-4 relative" style="transform: translate3d(calc(-100% - 2rem), 20px, 0) rotate(4deg); z-index: 30;">
+                            <div class="flex items-center justify-between">
+                                <span class="text-3xl font-black text-blue-600">03</span>
+                                <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900">รับการอนุมัติและเข้าใช้งาน</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                ระบบตรวจสอบความขัดแย้ง ส่งต่อผู้ดูแลพิจารณาอนุมัติ และบันทึกลงปฏิทินทันที พร้อมเข้าใช้งานห้องตามกำหนด
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="facilities" class="py-16 sm:py-20 bg-slate-50/60 border-b border-slate-200 w-full px-4 sm:px-6 lg:px-12 overflow-hidden">
+                <div class="max-w-7xl mx-auto space-y-6 sm:space-y-7">
+                    <div id="facilitiesHeaderBlock" class="facilities-slide-block showcase-block-transition relative z-20 w-full max-w-[1140px] mx-auto space-y-6 sm:space-y-7 translate-x-0">
+                        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                            <div class="space-y-2">
+                                <span class="text-blue-600 text-sm font-bold uppercase tracking-wider">พื้นที่และสถานที่เปิดให้เช่าใช้งาน</span>
+                                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">ห้องและสถานที่ที่เปิดให้บริการเช่า</h2>
+                                <p class="text-slate-600 text-base">ครอบคลุมทั้งคาเฟ่ส่วนตัว วิลล่าตากอากาศ โถงจัดกิจกรรม สำนักงาน ห้องพักรับรอง และโรงละคร รองรับทุกรูปแบบกิจกรรม</p>
+                            </div>
+                            <div class="flex items-center gap-2 flex-shrink-0">
+                                <span class="px-4 py-2 rounded-xl bg-white border border-slate-200 text-blue-700 text-sm font-bold shadow-sm whitespace-nowrap">
+                                    ทั้งหมด {{ rooms|length }} ห้องในระบบ
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="w-full">
+                            <div class="parallelogram-container relative z-10 p-4 sm:p-5">
+                                <div class="parallelogram-grid-wrapper">
+                                    <div class="absolute -inset-x-24 -inset-y-16 animate-upright-grid" style="transform: skewX(20deg);"></div>
+                                </div>
+                                <div class="relative z-10 grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3 lg:gap-4">
+                                    {% for room in rooms %}
+                                    <button onclick="selectShowcaseRoom({{ forloop.counter0 }})" id="roomTab-{{ forloop.counter0 }}" class="room-nav-tab room-tab-skew {% if forloop.first %}tab-active font-bold text-white{% else %}tab-inactive font-semibold text-slate-800 hover:text-blue-600{% endif %} group relative px-2.5 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm flex items-center justify-between min-w-0">
+                                        <div class="room-tab-content flex items-center gap-1.5 sm:gap-2.5 overflow-hidden min-w-0 flex-1">
+                                            <svg id="tabSparkle-{{ forloop.counter0 }}" class="w-4 h-4 sm:w-5 sm:h-5 shrink-0 transition-colors {% if forloop.first %}text-white animate-pulse{% else %}text-slate-400 group-hover:text-blue-500{% endif %}" style="width: 1.15rem; height: 1.15rem; min-width: 1.15rem; min-height: 1.15rem;" viewBox="115 155 220 250" fill="currentColor">
+                                                <path d="M 315.56 171.86 Q 255.98 249.48 309.75 300.14 Q 250.52 255.98 133.66 388.65 Q 244.02 250.52 190.25 199.86 Q 249.48 244.02 315.56 171.86 Z"/>
+                                            </svg>
+                                            <span class="truncate font-medium text-[11px] sm:text-xs text-inherit min-w-0">{{ room.name }}</span>
+                                        </div>
+                                        <div class="room-tab-content flex-shrink-0 ml-1.5 hidden md:block">
+                                            <span id="tabBadge-{{ forloop.counter0 }}" class="text-[9px] sm:text-[10px] uppercase font-bold px-2 py-0.5 rounded whitespace-nowrap {% if forloop.first %}bg-white/20 text-white{% else %}bg-slate-100 text-slate-500{% endif %}">
+                                                {{ room.tag_list.0|default:room.get_room_type_display }}
+                                            </span>
+                                        </div>
+                                    </button>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="facilitiesStage" class="relative w-full">
+                        <div id="facilitiesShowcaseBlock" class="facilities-slide-block showcase-block-transition relative z-10 w-full max-w-[1140px] mx-auto translate-x-0">
+                            <div class="relative w-full flex flex-col sm:block bg-white sm:bg-slate-100 rounded-3xl border border-slate-200 shadow-xl overflow-hidden sm:h-[510px] lg:h-[550px]">
+                                <div id="showcaseSlidesContainer" class="relative w-full h-[240px] sm:h-full sm:absolute sm:inset-0 shrink-0 overflow-hidden bg-slate-900">
+                                    {% for room in rooms %}
+                                    <div id="roomPanel-{{ forloop.counter0 }}" class="room-showcase-panel absolute inset-0 w-full h-full will-change-transform {% if forloop.first %}z-10{% else %}z-0 pointer-events-none{% endif %}" style="transform: translate3d({% if forloop.first %}0{% else %}100%{% endif %}, 0, 0);">
+                                        <img src="{% if room.image %}{{ room.image.url }}{% else %}{% static 'images/rooms/private_cafe.png' %}{% endif %}" alt="{{ room.name }}" class="w-full h-full object-cover select-none">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-slate-900/10 pointer-events-none"></div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="relative w-full sm:absolute sm:bottom-0 sm:right-0 sm:w-[380px] md:w-[410px] lg:w-[420px] z-20 bg-white sm:bg-transparent pointer-events-auto sm:pointer-events-none border-t border-slate-100 sm:border-0">
+                                    <div id="showcaseInfoBg" class="hidden sm:block absolute inset-0 bg-white/90 sm:bg-white/85 backdrop-blur-2xl rounded-t-2xl sm:rounded-tl-[36px] sm:rounded-tr-none border-t sm:border-l border-white/80 shadow-2xl transition-opacity duration-300 ease-out pointer-events-auto"></div>
+
+                                    <div id="showcaseInfoContent" class="relative z-10 p-4 sm:p-6 space-y-2.5 sm:space-y-3 pointer-events-auto transform transition-all duration-300 ease-out translate-y-0 opacity-100">
+                                        {% with first_room=rooms.0 %}
+                                        <div class="space-y-1">
+                                            <div class="flex items-center justify-between gap-2">
+                                                <span class="transform -skew-x-[20deg] px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200">
+                                                    <span id="showcaseRoomType" class="inline-block transform skew-x-[20deg]">
+                                                        {{ first_room.tag_list.0|default:first_room.get_room_type_display }}
+                                                    </span>
+                                                </span>
+                                                <span id="showcaseRoomNumber" class="font-mono text-xs font-extrabold text-blue-600">ห้อง {{ first_room.room_number }}</span>
+                                            </div>
+                                            <h3 id="showcaseRoomName" class="text-base sm:text-xl font-black text-slate-900 tracking-tight leading-tight truncate sm:whitespace-normal">{{ first_room.name }}</h3>
+                                            <p id="showcaseRoomLocation" class="text-[10px] sm:text-[11px] text-slate-500 font-medium">อาคาร {{ first_room.building }} ชั้น {{ first_room.floor }}</p>
+                                        </div>
+
+                                        <div class="flex items-center gap-2.5 py-1 sm:py-1.5 border-y border-slate-200/60 text-xs font-semibold text-slate-800">
+                                            <div class="flex items-center gap-1.5 text-blue-600">
+                                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                    <circle cx="9" cy="7" r="4"></circle>
+                                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                                </svg>
+                                                <span id="showcaseRoomCapacity">ความจุ {{ first_room.capacity }} ท่าน</span>
+                                            </div>
+                                            <span class="text-slate-300">|</span>
+                                            <span class="text-[10px] sm:text-[11px] font-semibold text-emerald-600 flex items-center gap-1">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                                พร้อมเปิดจอง
+                                            </span>
+                                        </div>
+
+                                        <div class="space-y-0.5 sm:space-y-1">
+                                            <span class="text-[10px] sm:text-[11px] font-bold text-slate-700 uppercase tracking-wide">อุปกรณ์ประจำห้อง:</span>
+                                            <p id="showcaseRoomAmenities" class="text-[10px] sm:text-[11px] text-slate-600 leading-relaxed font-normal line-clamp-2 sm:line-clamp-none">
+                                                {{ first_room.amenities }}
+                                            </p>
+                                        </div>
+
+                                        <button id="showcaseRoomBookBtn" onclick="handlePublicRoomClick('{{ first_room.id }}')" class="w-full transform -skew-x-[14deg] py-2 sm:py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold rounded-lg transition shadow-md hover:shadow-lg flex items-center justify-center gap-2 group">
+                                            <div class="transform skew-x-[14deg] flex items-center justify-center gap-1.5">
+                                                <svg class="w-3.5 h-3.5 transition group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                                </svg>
+                                                <span>เลือกจองห้องนี้ทันที</span>
+                                            </div>
+                                        </button>
+                                        {% endwith %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="facilitiesAvatar" class="avatar-transition pointer-events-none absolute right-0 bottom-0 z-30 opacity-0 translate-x-12 hidden lg:flex items-end justify-center w-[660px] xl:w-[840px] 2xl:w-[1040px] h-[570px] xl:h-[700px] 2xl:h-[840px]">
+                            <img src="{% static 'images/cool_avatar.png' %}" alt="Avatar" class="h-full w-auto object-contain filter drop-shadow-[0_25px_40px_rgba(0,0,0,0.38)] select-none">
+                        </div>
+                    </div>
+                <script id="roomsShowcaseData" type="application/json">
+                    [
+                        {% for room in rooms %}
+                        {
+                            "id": "{{ room.id }}",
+                            "room_number": "{{ room.room_number|escapejs }}",
+                            "name": "{{ room.name|escapejs }}",
+                            "room_type": "{{ room.room_type|escapejs }}",
+                            "type_label": "{{ room.tag_list.0|default:room.get_room_type_display|escapejs }}",
+                            "building": "{{ room.building|escapejs }}",
+                            "floor": "{{ room.floor }}",
+                            "capacity": "{{ room.capacity }}",
+                            "amenities": "{{ room.amenities|escapejs }}"
+                        }{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    ]
+                    </script>
+                </div>
+            </section>
+
+            <section id="about" class="py-16 sm:py-20 w-full px-4 sm:px-6 lg:px-12 bg-slate-50 border-b border-slate-200">
+                <div class="max-w-7xl mx-auto space-y-12">
+                    <div class="text-center space-y-3">
+                        <span class="text-blue-600 text-sm font-bold uppercase tracking-wider">สถาปัตยกรรมระบบ</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">คุณสมบัติและความมั่นคงปลอดภัยของระบบ</h2>
+                        <p class="text-slate-600 max-w-2xl mx-auto text-base">ขับเคลื่อนด้วย Django 6.0 และ Django REST Framework ออกแบบตามมาตรฐานความปลอดภัยระดับองค์กร</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="about-card-transition about-feature-card bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-3 opacity-0 translate-y-8 scale-[0.97]" style="transition-delay: 0ms;">
+                            <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-900">ตรวจจับเวลาชนอัตโนมัติ</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                กลไก Conflict Prevention Engine ตรวจสอบความถูกต้องของตารางแบบเรียลไทม์ ป้องกันปัญหาการจองซ้อนทับกันอย่างแม่นยำ 100%
+                            </p>
+                        </div>
+
+                        <div class="about-card-transition about-feature-card bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-3 opacity-0 translate-y-8 scale-[0.97]" style="transition-delay: 110ms;">
+                            <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-900">ระบบยืนยันตัวตนด้วย PIN</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                เชื่อมต่อ Google App Password เพื่อส่งรหัสยืนยัน OTP PIN 6 หลักไปยังอีเมล ป้องกันการเข้าถึงข้อมูลโดยไม่ได้รับอนุญาต
+                            </p>
+                        </div>
+
+                        <div class="about-card-transition about-feature-card bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-3 opacity-0 translate-y-8 scale-[0.97]" style="transition-delay: 220ms;">
+                            <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-900">คิวพิจารณาอนุมัติคำขอ</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                ระบบแยกสิทธิ์ผู้ใช้งาน เจ้าหน้าที่ และผู้ดูแลระบบอย่างชัดเจน รองรับการตรวจสอบวัตถุประสงค์และอนุมัติการใช้พื้นที่
+                            </p>
+                        </div>
+
+                        <div class="about-card-transition about-feature-card bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-3 opacity-0 translate-y-8 scale-[0.97]" style="transition-delay: 330ms;">
+                            <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-900">ความปลอดภัยมาตรฐานสูง</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                ยืนยันตัวตนผ่านรหัส OTP PIN และเข้ารหัสข้อมูลความปลอดภัย เพื่อคุ้มครองสิทธิ์การจองห้องของผู้ใช้งานทุกคน
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 mt-auto">
+        <div class="w-full px-4 sm:px-6 lg:px-12 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2 space-y-3">
+                    <div class="flex items-center gap-3">
+                        <img src="{% static 'images/void_hunter_2x.png' %}" alt="VH Logo" class="w-10 h-10 object-contain drop-shadow-sm" />
+                        <div class="flex flex-col">
+                            <span class="font-extrabold text-lg tracking-tight text-slate-900 leading-tight">VH</span>
+                            <span class="text-xs font-medium text-slate-500 tracking-wide leading-none">Vacation &amp; Hotel</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-500 max-w-md leading-relaxed">
+                        งานบริการเทคโนโลยีสารสนเทศและบริหารจัดการอาคารสถานที่ มุ่งมั่นพัฒนาการบริหารจัดการพื้นที่พักผ่อน ทำงาน และจัดกิจกรรมให้เกิดความประทับใจและความสะดวกสบายสูงสุด
+                    </p>
+                </div>
+                <div class="space-y-2">
+                    <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wider">ลิงก์ระบบ</h4>
+                    <ul class="space-y-1.5 text-sm text-slate-600">
+                        <li><a href="#about" class="hover:text-blue-600 transition">เกี่ยวกับระบบ</a></li>
+                        <li><a href="#workflow" class="hover:text-blue-600 transition">ขั้นตอนการใช้งาน</a></li>
+                        <li><a href="#facilities" class="hover:text-blue-600 transition">สถานที่ที่ให้บริการ</a></li>
+                        
+                    </ul>
+                </div>
+                <div class="space-y-2">
+                    <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wider">ติดต่อและผู้ดูแล</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed">
+                        อาคารศูนย์สารสนเทศ ชั้น 2<br>
+                        โทรศัพท์: 02-000-0000<br>
+                        อีเมล: smartroom@institution.ac.th
+                    </p>
+                    
+                </div>
+            </div>
+            <div class="pt-8 mt-8 border-t border-slate-200 text-center text-xs text-slate-400">
+                สงวนลิขสิทธิ์ © 2026 VH - Vacation &amp; Hotel พัฒนาด้วยเทคโนโลยีความปลอดภัยขั้นสูง
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentUser = null;
+        let pendingRegUser = null;
+
+        function getAuthToken() {
+            const token = localStorage.getItem('smart_room_token') || localStorage.getItem('access_token');
+            if (!token) return null;
+            const lastActivity = localStorage.getItem('smart_room_last_activity');
+            if (lastActivity) {
+                const diff = Date.now() - parseInt(lastActivity, 10);
+                const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
+                if (diff > SEVEN_DAYS_MS) {
+                    removeAuthToken();
+                    return null;
+                }
+            }
+            return token;
+        }
+
+        function setAuthToken(token) {
+            localStorage.setItem('smart_room_token', token);
+            localStorage.setItem('access_token', token);
+            localStorage.setItem('smart_room_last_activity', Date.now().toString());
+        }
+
+        function removeAuthToken() {
+            localStorage.removeItem('smart_room_token');
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('smart_room_refresh');
+            localStorage.removeItem('refresh_token');
+            localStorage.removeItem('smart_room_last_activity');
+            localStorage.removeItem('user');
+            localStorage.removeItem('currentUser');
+        }
+
+        function touchUserActivity() {
+            const token = getAuthToken();
+            if (token) {
+                localStorage.setItem('smart_room_last_activity', Date.now().toString());
+            }
+        }
+        window.addEventListener('click', touchUserActivity, { passive: true });
+        window.addEventListener('keydown', touchUserActivity, { passive: true });
+
+        let currentShowcaseIndex = 0;
+        let isShowcaseAnimating = false;
+
+        function updateTabVisuals(selectedIndex) {
+            const tabs = document.querySelectorAll('.room-nav-tab');
+            tabs.forEach((tab, i) => {
+                const sparkle = document.getElementById('tabSparkle-' + i);
+                const badge = document.getElementById('tabBadge-' + i);
+                if (i === selectedIndex) {
+                    tab.className = 'room-nav-tab room-tab-skew tab-active tab-trigger-pop font-bold text-white group relative px-2.5 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm flex items-center justify-between min-w-0';
+                    if (sparkle) {
+                        sparkle.setAttribute('class', 'w-4 h-4 sm:w-5 sm:h-5 shrink-0 transition-colors text-white animate-pulse');
+                        sparkle.style.width = '1.15rem';
+                        sparkle.style.height = '1.15rem';
+                        sparkle.style.minWidth = '1.15rem';
+                        sparkle.style.minHeight = '1.15rem';
+                    }
+                    if (badge) badge.className = 'text-[9px] sm:text-[10px] uppercase font-bold px-2 py-0.5 rounded whitespace-nowrap bg-white/20 text-white';
+                    setTimeout(() => {
+                        tab.classList.remove('tab-trigger-pop');
+                    }, 200);
+                } else {
+                    tab.className = 'room-nav-tab room-tab-skew tab-inactive font-semibold text-slate-800 hover:text-blue-600 group relative px-2.5 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm flex items-center justify-between min-w-0';
+                    if (sparkle) {
+                        sparkle.setAttribute('class', 'w-4 h-4 sm:w-5 sm:h-5 shrink-0 transition-colors text-slate-400 group-hover:text-blue-500');
+                        sparkle.style.width = '1.15rem';
+                        sparkle.style.height = '1.15rem';
+                        sparkle.style.minWidth = '1.15rem';
+                        sparkle.style.minHeight = '1.15rem';
+                    }
+                    if (badge) badge.className = 'text-[9px] sm:text-[10px] uppercase font-bold px-2 py-0.5 rounded whitespace-nowrap bg-slate-100 text-slate-500';
+                }
+            });
+        }
+
+        let showcaseAutoTimer = null;
+        const SHOWCASE_AUTO_INTERVAL = 6500;
+
+        function startShowcaseAuto() {
+            stopShowcaseAuto();
+            showcaseAutoTimer = setInterval(() => {
+                const panels = document.querySelectorAll('.room-showcase-panel');
+                if (!panels || panels.length <= 1) return;
+                const nextIndex = (currentShowcaseIndex + 1) % panels.length;
+                const nextTab = document.getElementById('roomTab-' + nextIndex);
+                if (nextTab) {
+                    nextTab.click();
+                } else {
+                    selectShowcaseRoom(nextIndex);
+                }
+            }, SHOWCASE_AUTO_INTERVAL);
+        }
+
+        function stopShowcaseAuto() {
+            if (showcaseAutoTimer) {
+                clearInterval(showcaseAutoTimer);
+                showcaseAutoTimer = null;
+            }
+        }
+
+        function selectShowcaseRoom(newIndex) {
+            if (newIndex === currentShowcaseIndex || isShowcaseAnimating) return;
+            startShowcaseAuto();
+            const panels = document.querySelectorAll('.room-showcase-panel');
+            const tabs = document.querySelectorAll('.room-nav-tab');
+            const dataEl = document.getElementById('roomsShowcaseData');
+            if (!dataEl || newIndex < 0 || newIndex >= panels.length) return;
+
+            let roomsData;
+            try {
+                roomsData = JSON.parse(dataEl.textContent);
+            } catch (e) {
+                return;
+            }
+            const targetData = roomsData[newIndex];
+            if (!targetData) return;
+
+            isShowcaseAnimating = true;
+            const prevIndex = currentShowcaseIndex;
+            const isSlideLeft = newIndex > prevIndex;
+            currentShowcaseIndex = newIndex;
+
+            updateTabVisuals(newIndex);
+
+            const currentPanel = panels[prevIndex];
+            const nextPanel = panels[newIndex];
+
+            const enterFrom = isSlideLeft ? '100%' : '-100%';
+            const exitTo = isSlideLeft ? '-100%' : '100%';
+
+            nextPanel.style.transition = 'none';
+            nextPanel.style.transform = `translate3d(${enterFrom}, 0, 0)`;
+            nextPanel.style.zIndex = '10';
+            nextPanel.style.pointerEvents = 'auto';
+
+            currentPanel.style.zIndex = '9';
+            currentPanel.style.pointerEvents = 'none';
+
+            void nextPanel.offsetHeight;
+
+            const slideDuration = 950;
+            const slideEasing = 'cubic-bezier(0.2, 1, 0.3, 1)';
+
+            nextPanel.style.transition = `transform ${slideDuration}ms ${slideEasing}`;
+            currentPanel.style.transition = `transform ${slideDuration}ms ${slideEasing}`;
+
+            nextPanel.style.transform = 'translate3d(0, 0, 0)';
+            currentPanel.style.transform = `translate3d(${exitTo}, 0, 0)`;
+
+            const infoBg = document.getElementById('showcaseInfoBg');
+            const infoContent = document.getElementById('showcaseInfoContent');
+
+            if (infoBg && infoContent) {
+                infoBg.style.transition = 'opacity 360ms ease-out';
+                infoBg.style.opacity = '0';
+
+                infoContent.style.transition = 'transform 360ms cubic-bezier(0.4, 0, 0.2, 1), opacity 360ms ease-out';
+                infoContent.style.transform = 'translate3d(0, 36px, 0)';
+                infoContent.style.opacity = '0';
+
+                setTimeout(() => {
+                    const roomType = document.getElementById('showcaseRoomType');
+                    const roomNumber = document.getElementById('showcaseRoomNumber');
+                    const roomName = document.getElementById('showcaseRoomName');
+                    const roomLocation = document.getElementById('showcaseRoomLocation');
+                    const roomCapacity = document.getElementById('showcaseRoomCapacity');
+                    const roomAmenities = document.getElementById('showcaseRoomAmenities');
+                    const bookBtn = document.getElementById('showcaseRoomBookBtn');
+
+                    if (roomType) roomType.textContent = targetData.type_label;
+                    if (roomNumber) roomNumber.textContent = 'ห้อง ' + targetData.room_number;
+                    if (roomName) roomName.textContent = targetData.name;
+                    if (roomLocation) roomLocation.textContent = `อาคาร ${targetData.building} ชั้น ${targetData.floor}`;
+                    if (roomCapacity) roomCapacity.textContent = `ความจุ ${targetData.capacity} ท่าน`;
+                    if (roomAmenities) roomAmenities.textContent = targetData.amenities;
+                    if (bookBtn) {
+                        bookBtn.onclick = function() { handlePublicRoomClick(targetData.id); };
+                    }
+
+                    infoContent.style.transition = 'none';
+                    infoContent.style.transform = 'translate3d(0, 26px, 0)';
+                    infoContent.style.opacity = '0';
+                    void infoContent.offsetHeight;
+
+                    setTimeout(() => {
+                        infoBg.style.transition = 'opacity 480ms ease-out';
+                        infoBg.style.opacity = '1';
+
+                        infoContent.style.transition = 'transform 520ms cubic-bezier(0.16, 1, 0.3, 1), opacity 480ms ease-out';
+                        infoContent.style.transform = 'translate3d(0, 0, 0)';
+                        infoContent.style.opacity = '1';
+                    }, 80);
+                }, 420);
+            }
+
+            setTimeout(() => {
+                panels.forEach((p, idx) => {
+                    if (idx !== newIndex) {
+                        p.style.zIndex = '0';
+                        p.style.pointerEvents = 'none';
+                        p.style.transition = 'none';
+                    }
+                });
+                isShowcaseAnimating = false;
+            }, slideDuration + 60);
+        }
+
+        function handlePublicRoomClick(roomId) {
+            const token = getAuthToken();
+            if (token) {
+                window.location.href = '/user/';
+            } else {
+                window.location.href = '/auth/?mode=login';
+            }
+        }
+
+        async function handleLogout() {
+            removeAuthToken();
+            currentUser = null;
+            window.location.href = '/logout/';
+        }
+
+        async function checkSession() {
+            let token = getAuthToken();
+            if (!token) {
+                document.getElementById('navUserActions').classList.add('hidden');
+                document.getElementById('navGuestActions').classList.remove('hidden');
+                document.getElementById('publicPresentationSection').classList.remove('hidden');
+                return;
+            }
+
+            // Renew activity timestamp when online
+            touchUserActivity();
+
+            try {
+                let res = await fetch('/api/auth/profile/', {
+                    headers: {'Authorization': `Bearer ${token}`}
+                });
+
+                // Auto-refresh token if 401 Unauthorized
+                if (res.status === 401) {
+                    const refreshToken = localStorage.getItem('smart_room_refresh') || localStorage.getItem('refresh_token');
+                    if (refreshToken) {
+                        try {
+                            const refreshRes = await fetch('/api/auth/token/refresh/', {
+                                method: 'POST',
+                                headers: {'Content-Type': 'application/json'},
+                                body: JSON.stringify({ refresh: refreshToken })
+                            });
+                            if (refreshRes.ok) {
+                                const refreshData = await refreshRes.json();
+                                if (refreshData.access) {
+                                    setAuthToken(refreshData.access);
+                                    token = refreshData.access;
+                                    if (refreshData.refresh) {
+                                        localStorage.setItem('smart_room_refresh', refreshData.refresh);
+                                        localStorage.setItem('refresh_token', refreshData.refresh);
+                                    }
+                                    res = await fetch('/api/auth/profile/', {
+                                        headers: {'Authorization': `Bearer ${token}`}
+                                    });
+                                }
+                            }
+                        } catch (refreshErr) {
+                            console.error('Auto refresh error:', refreshErr);
+                        }
+                    }
+                }
+
+                if (res.ok) {
+                    const data = await res.json();
+                    currentUser = data;
+
+                    document.getElementById('navGuestActions').classList.add('hidden');
+                    document.getElementById('navUserActions').classList.remove('hidden');
+                    document.getElementById('navUserActions').classList.add('flex');
+
+                    document.getElementById('userDisplayName').textContent = data.username;
+                    document.getElementById('userAvatarText').textContent = data.username.charAt(0).toUpperCase();
+
+                    let roleText = 'ผู้ใช้งานทั่วไป';
+                    let portalUrl = '/user/';
+                    let portalLabel = 'ไปยังหน้าผู้ใช้งาน (User Portal) →';
+                    if (data.is_staff || data.role === 'admin') {
+                        roleText = 'ผู้ดูแลระบบ';
+                        portalUrl = '/admin-panel/';
+                        portalLabel = 'ไปยังแผงควบคุม (Admin Panel) →';
+                    } else if (data.role === 'staff') {
+                        roleText = 'เจ้าหน้าที่';
+                    }
+
+                    document.getElementById('userDisplayRole').textContent = roleText;
+                    const portalLink = document.getElementById('navPortalLink');
+                    if (portalLink) {
+                        portalLink.href = portalUrl;
+                        const portalText = document.getElementById('navPortalText');
+                        if (portalText) portalText.textContent = portalLabel;
+                    }
+
+                    // Always keep the public presentation/about page visible
+                    document.getElementById('publicPresentationSection').classList.remove('hidden');
+                } else {
+                    removeAuthToken();
+                    document.getElementById('navUserActions').classList.add('hidden');
+                    document.getElementById('navGuestActions').classList.remove('hidden');
+                    document.getElementById('publicPresentationSection').classList.remove('hidden');
+                }
+            } catch (e) {
+                removeAuthToken();
+                document.getElementById('navUserActions').classList.add('hidden');
+                document.getElementById('navGuestActions').classList.remove('hidden');
+                document.getElementById('publicPresentationSection').classList.remove('hidden');
+            }
+        }
+
+        let isTicking = false;
+        let heroFadeMax = 250;
+
+        function updateHeroFade() {
+            const heroContent = document.getElementById('heroContentInner');
+            if (!heroContent) return;
+
+            const sc = window.pageYOffset || document.documentElement.scrollTop || 0;
+            const fadeLimit = heroFadeMax || 250;
+            const progress = Math.max(0, Math.min(1, sc / fadeLimit));
+            const op = 1 - progress;
+            const ty = -(progress * 36);
+            heroContent.style.opacity = op.toFixed(3);
+            heroContent.style.transform = `translate3d(0, ${ty.toFixed(1)}px, 0)`;
+            heroContent.style.pointerEvents = op < 0.1 ? 'none' : 'auto';
+            isTicking = false;
+        }
+
+        function adjustHeroScrollTrack() {
+            const hero = document.getElementById('heroSection');
+            const track = document.getElementById('heroTrack');
+            const flowing = document.getElementById('flowingSection');
+            const wave = document.getElementById('heroWaveContainer');
+            if (!hero || !track || !flowing) return;
+
+            const heroH = hero.offsetHeight;
+            const waveH = (wave && wave.offsetHeight > 0) ? wave.offsetHeight : 112;
+            const revealDist = Math.min(260, Math.max(160, Math.round(window.innerHeight * 0.28)));
+            heroFadeMax = revealDist;
+            track.style.height = (heroH + revealDist) + 'px';
+            flowing.style.marginTop = (-(revealDist + waveH)) + 'px';
+            updateHeroFade();
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!isTicking) {
+                requestAnimationFrame(updateHeroFade);
+                isTicking = true;
+            }
+        }, { passive: true });
+
+                const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            orientation: 'vertical',
+            gestureOrientation: 'vertical',
+            smoothWheel: true,
+            wheelMultiplier: 1.0,
+            touchMultiplier: 2.0,
+            infinite: false
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        let hasFacilitiesShifted = false;
+        let hasWorkflowSpread = false;
+        let hasWorkflowHeaderRevealed = false;
+        let hasDividerMerged = false;
+        let hasDividerCollapsed = false;
+
+        function updateWorkflowHeaderScroll() {
+            const header = document.getElementById('workflowHeader');
+            const divider = document.getElementById('workflowStarsDivider');
+            if (!header || !divider) return;
+
+            const sc = window.pageYOffset || document.documentElement.scrollTop || 0;
+            const dividerRect = divider.getBoundingClientRect();
+
+            if (sc > 70 && !hasDividerMerged) {
+                hasDividerMerged = true;
+                divider.classList.add('divider-merged');
+            } else if (sc <= 70 && hasDividerMerged) {
+                hasDividerMerged = false;
+                divider.classList.remove('divider-merged');
+            }
+
+            if (dividerRect.top <= 100 && sc > 300) {
+                if (!hasDividerCollapsed) {
+                    hasDividerCollapsed = true;
+                    divider.classList.add('divider-collapsed');
+                }
+            } else {
+                if (hasDividerCollapsed) {
+                    hasDividerCollapsed = false;
+                    divider.classList.remove('divider-collapsed');
+                }
+            }
+
+            if (sc > 80 && !hasWorkflowHeaderRevealed) {
+                hasWorkflowHeaderRevealed = true;
+                header.classList.remove('opacity-0', 'translate-y-8', 'pointer-events-none');
+                header.classList.add('opacity-100', 'translate-y-0');
+            } else if (sc <= 80 && hasWorkflowHeaderRevealed) {
+                hasWorkflowHeaderRevealed = false;
+                header.classList.remove('opacity-100', 'translate-y-0');
+                header.classList.add('opacity-0', 'translate-y-8', 'pointer-events-none');
+            }
+        }
+
+        function updateWorkflowCardsScroll() {
+            const section = document.getElementById('workflow');
+            const c0 = document.getElementById('workflowCard-0');
+            const c1 = document.getElementById('workflowCard-1');
+            const c2 = document.getElementById('workflowCard-2');
+            if (!section || !c0 || !c1 || !c2) return;
+
+            if (window.innerWidth < 768) {
+                c0.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
+                c1.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
+                c2.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
+                c0.style.zIndex = '1';
+                c1.style.zIndex = '1';
+                c2.style.zIndex = '1';
+                hasWorkflowSpread = true;
+                return;
+            }
+
+            const sc = window.pageYOffset || document.documentElement.scrollTop || 0;
+            const rect = section.getBoundingClientRect();
+            const windowH = window.innerHeight;
+
+            if (sc > 120 && rect.top <= windowH * 0.40 && !hasWorkflowSpread) {
+                hasWorkflowSpread = true;
+                c0.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
+                c1.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
+                c2.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
+                c0.style.zIndex = '1';
+                c1.style.zIndex = '1';
+                c2.style.zIndex = '1';
+            } else if ((sc < 120 || rect.top > windowH * 0.65) && hasWorkflowSpread) {
+                hasWorkflowSpread = false;
+                c0.style.transform = 'translate3d(calc(100% + 2rem), 10px, 0) rotate(-4deg)';
+                c1.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
+                c2.style.transform = 'translate3d(calc(-100% - 2rem), 20px, 0) rotate(4deg)';
+                c0.style.zIndex = '10';
+                c1.style.zIndex = '20';
+                c2.style.zIndex = '30';
+            }
+        }
+
+        function updateFacilitiesAvatarScroll() {
+            const section = document.getElementById('facilities');
+            const headerBlock = document.getElementById('facilitiesHeaderBlock');
+            const showcaseBlock = document.getElementById('facilitiesShowcaseBlock');
+            const showcaseBox = showcaseBlock ? showcaseBlock.firstElementChild : null;
+            const avatar = document.getElementById('facilitiesAvatar');
+            const infoCard = document.getElementById('showcaseInfoBg')?.parentElement;
+            const infoBg = document.getElementById('showcaseInfoBg');
+            const infoContent = document.getElementById('showcaseInfoContent');
+            const roomTitle = document.getElementById('showcaseRoomName');
+            if (!section || !avatar || !showcaseBlock || !headerBlock) return;
+
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const isLandscape = vw > vh && vw >= 1024;
+
+            if (!isLandscape) {
+                headerBlock.style.maxWidth = '100%';
+                headerBlock.style.transform = 'translate3d(0, 0, 0)';
+                showcaseBlock.style.maxWidth = '100%';
+                showcaseBlock.style.transform = 'translate3d(0, 0, 0)';
+                if (showcaseBox) showcaseBox.style.height = '';
+                avatar.style.display = 'none';
+                avatar.style.opacity = '0';
+                avatar.style.transform = 'translate3d(50px, 0, 0)';
+                if (infoCard) {
+                    infoCard.style.width = '';
+                    infoCard.className = 'relative w-full sm:absolute sm:bottom-0 sm:right-0 sm:w-[380px] md:w-[410px] lg:w-[420px] z-20 bg-white sm:bg-transparent pointer-events-auto sm:pointer-events-none border-t border-slate-100 sm:border-0';
+                }
+                if (infoBg) infoBg.className = 'hidden sm:block absolute inset-0 bg-white/90 sm:bg-white/85 backdrop-blur-2xl rounded-t-2xl sm:rounded-tl-[36px] sm:rounded-tr-none border-t sm:border-l border-white/80 shadow-2xl transition-opacity duration-300 ease-out pointer-events-auto';
+                if (infoContent) infoContent.className = 'relative z-10 p-4 sm:p-6 space-y-2.5 sm:space-y-3 pointer-events-auto transform transition-all duration-300 ease-out translate-y-0 opacity-100';
+                if (roomTitle) roomTitle.className = 'text-base sm:text-xl font-black text-slate-900 tracking-tight leading-tight truncate sm:whitespace-normal';
+                hasFacilitiesShifted = false;
+                return;
+            }
+
+            const scale = Math.min(1.0, vw / 1920.0);
+            const stage = document.getElementById('facilitiesStage');
+            const stageLeft = stage ? stage.getBoundingClientRect().left : ((vw - Math.min(1280, vw - 96)) / 2);
+            const stageWidth = stage ? stage.offsetWidth : Math.min(1280, vw - 96);
+            const rightMargin = vw - (stageLeft + stageWidth);
+
+            const maxW = Math.round(1140 * scale);
+            const showcaseH = Math.round(Math.min(550 * scale, Math.max(380, vh * 0.58)));
+            const avatarW = Math.round(1040 * scale);
+            const avatarH = Math.round(Math.min(840 * scale, Math.max(520, vh * 0.85)));
+            const cardW = Math.round(420 * scale);
+
+            const targetLeft = Math.round(48 * scale);
+            const unshiftedShowcaseLeft = stageLeft + (stageWidth - maxW) / 2;
+            const shift = Math.max(160, Math.round(unshiftedShowcaseLeft - targetLeft));
+            const avatarRight = -Math.round(rightMargin + (100 * scale));
+
+            headerBlock.style.maxWidth = maxW + 'px';
+            showcaseBlock.style.maxWidth = maxW + 'px';
+            if (showcaseBox) showcaseBox.style.height = showcaseH + 'px';
+
+            if (infoCard) {
+                infoCard.className = 'relative w-full sm:absolute sm:bottom-0 sm:right-0 z-20 pointer-events-none';
+                infoCard.style.width = cardW + 'px';
+            }
+            if (infoBg) {
+                infoBg.className = 'hidden sm:block absolute inset-0 bg-white/85 backdrop-blur-2xl rounded-tl-[28px] border-t border-l border-white/80 shadow-2xl pointer-events-auto';
+            }
+
+            if (scale < 0.72) {
+                if (infoContent) infoContent.className = 'relative z-10 p-2.5 space-y-1 pointer-events-auto';
+                if (roomTitle) roomTitle.className = 'text-xs font-black text-slate-900 tracking-tight leading-snug';
+            } else if (scale < 0.88) {
+                if (infoContent) infoContent.className = 'relative z-10 p-3.5 space-y-1.5 pointer-events-auto';
+                if (roomTitle) roomTitle.className = 'text-sm sm:text-base font-black text-slate-900 tracking-tight leading-snug';
+            } else {
+                if (infoContent) infoContent.className = 'relative z-10 p-4 sm:p-6 space-y-2.5 sm:space-y-3 pointer-events-auto';
+                if (roomTitle) roomTitle.className = 'text-base sm:text-xl font-black text-slate-900 tracking-tight leading-tight';
+            }
+
+            avatar.style.display = 'flex';
+            avatar.style.width = avatarW + 'px';
+            avatar.style.height = avatarH + 'px';
+            avatar.style.right = avatarRight + 'px';
+
+            const rect = section.getBoundingClientRect();
+            const windowH = window.innerHeight;
+
+            if (rect.top <= windowH * 0.65 && !hasFacilitiesShifted) {
+                hasFacilitiesShifted = true;
+                headerBlock.style.transform = 'translate3d(-' + shift + 'px, 0, 0)';
+                showcaseBlock.style.transform = 'translate3d(-' + shift + 'px, 0, 0)';
+                avatar.style.opacity = '1';
+                avatar.style.transform = 'translate3d(0, 0, 0)';
+            } else if (hasFacilitiesShifted && rect.top > windowH * 0.65) {
+                hasFacilitiesShifted = false;
+                headerBlock.style.transform = 'translate3d(0, 0, 0)';
+                showcaseBlock.style.transform = 'translate3d(0, 0, 0)';
+                avatar.style.opacity = '0';
+                avatar.style.transform = 'translate3d(50px, 0, 0)';
+            }
+        }
+
+        function updateAboutCardsScroll() {
+            const cards = document.querySelectorAll('.about-feature-card');
+            if (!cards.length) return;
+            const windowH = window.innerHeight;
+
+            cards.forEach((card) => {
+                const rect = card.getBoundingClientRect();
+                if (rect.top <= windowH * 0.85 && rect.bottom >= 0) {
+                    if (card.classList.contains('opacity-0')) {
+                        card.classList.remove('opacity-0', 'translate-y-8', 'scale-[0.97]');
+                        card.classList.add('opacity-100', 'translate-y-0', 'scale-100');
+                    }
+                } else if (rect.top > windowH * 1.05) {
+                    if (card.classList.contains('opacity-100')) {
+                        card.classList.remove('opacity-100', 'translate-y-0', 'scale-100');
+                        card.classList.add('opacity-0', 'translate-y-8', 'scale-[0.97]');
+                    }
+                }
+            });
+        }
+
+        lenis.on('scroll', () => {
+            updateHeroFade();
+            updateWorkflowHeaderScroll();
+            updateWorkflowCardsScroll();
+            updateFacilitiesAvatarScroll();
+            updateAboutCardsScroll();
+        });
+
+        window.addEventListener('resize', adjustHeroScrollTrack);
+        window.addEventListener('load', adjustHeroScrollTrack);
+
+        window.addEventListener('scroll', () => {
+            updateWorkflowHeaderScroll();
+            updateWorkflowCardsScroll();
+            updateFacilitiesAvatarScroll();
+            updateAboutCardsScroll();
+        }, { passive: true });
+        window.addEventListener('resize', () => {
+            const headerBlock = document.getElementById('facilitiesHeaderBlock');
+            const showcaseBlock = document.getElementById('facilitiesShowcaseBlock');
+            const avatar = document.getElementById('facilitiesAvatar');
+            const isLandscape = window.innerWidth > window.innerHeight && window.innerWidth >= 1024;
+            if (!isLandscape) {
+                if (headerBlock) headerBlock.style.transform = 'translate3d(0, 0, 0)';
+                if (showcaseBlock) showcaseBlock.style.transform = 'translate3d(0, 0, 0)';
+                if (avatar) {
+                    avatar.style.opacity = '0';
+                    avatar.style.transform = 'translate3d(50px, 0, 0)';
+                }
+                hasFacilitiesShifted = false;
+            } else {
+                hasFacilitiesShifted = false;
+            }
+            updateWorkflowHeaderScroll();
+            updateWorkflowCardsScroll();
+            updateFacilitiesAvatarScroll();
+            updateAboutCardsScroll();
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            checkSession();
+            adjustHeroScrollTrack();
+            updateWorkflowHeaderScroll();
+            updateWorkflowCardsScroll();
+            updateFacilitiesAvatarScroll();
+            updateAboutCardsScroll();
+            currentShowcaseIndex = 0;
+            updateTabVisuals(0);
+            const panels = document.querySelectorAll('.room-showcase-panel');
+            panels.forEach((p, idx) => {
+                p.style.transition = 'none';
+                p.style.transform = idx === 0 ? 'translate3d(0, 0, 0)' : 'translate3d(100%, 0, 0)';
+                p.style.zIndex = idx === 0 ? '10' : '0';
+                p.style.pointerEvents = idx === 0 ? 'auto' : 'none';
+            });
+            startShowcaseAuto();
+            const facilitiesEl = document.getElementById('facilities');
+            if (facilitiesEl) {
+                facilitiesEl.addEventListener('mouseenter', stopShowcaseAuto);
+                facilitiesEl.addEventListener('mouseleave', startShowcaseAuto);
+            }
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (!href || href === '#') return;
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        lenis.scrollTo(target, {
+                            offset: -64,
+                            duration: 1.4,
+                            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

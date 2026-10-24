@@ -1,0 +1,1 @@
+web: gunicorn smart_room_system.wsgi:application --bind 0.0.0.0:$PORT

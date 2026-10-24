@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: smart-room-system
+    env: python
+    region: singapore
+    plan: free
+    buildCommand: bash build.sh
+    startCommand: gunicorn --chdir smart_room_system smart_room_system.wsgi:application --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: DB_ENGINE
+        value: django.db.backends.mysql
+      - key: DB_HOST
+        value: mysql-124f2678-rtaxdt-e955.e.aivencloud.com
+      - key: DB_PORT
+        value: "22487"
+      - key: DB_USER
+        value: avnadmin
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        value: smart_room_db
+      - key: DB_SSL_REQUIRED
+        value: "true"
+      - key: SECRET_KEY
+        value: django-insecure-w7uww(m_np!2yn@4yh_x+k7q861oafrrtun0e3++#pdn$y8+mx
+      - key: ALLOWED_HOSTS
+        value: "*"
+      - key: CORS_ALLOW_ALL
+        value: "True"

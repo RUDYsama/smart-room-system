@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เอกสารรายงานโครงงาน - ระบบบริหารจัดการและจองห้องเรียน/ห้องประชุมอัจฉริยะ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700&family=Sarabun:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            line-height: 1.8;
+            color: #1e293b;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Prompt', sans-serif;
+        }
+        code, pre {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        @media print {
+            .no-print { display: none !important; }
+            body { font-size: 11pt; }
+            .page-break { page-break-before: always; }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 py-8 px-4 sm:px-6 lg:px-8">
+
+    <div class="max-w-4xl mx-auto mb-6 flex justify-between items-center no-print">
+        <a href="/" class="px-4 py-2 bg-slate-800 text-white rounded-lg text-sm hover:bg-slate-900 transition flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+            กลับสู่หน้าหลัก
+        </a>
+        <div class="flex gap-2">
+            <a href="/download/docx/" class="px-4 py-2 bg-sky-700 text-white rounded-lg text-sm hover:bg-sky-800 transition flex items-center gap-2 font-medium">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                ดาวน์โหลดไฟล์ Word (.docx)
+            </a>
+            <button onclick="window.print()" class="px-4 py-2 bg-emerald-700 text-white rounded-lg text-sm hover:bg-emerald-800 transition flex items-center gap-2 font-medium">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
+                พิมพ์รายงาน / ส่งออก PDF
+            </button>
+        </div>
+    </div>
+
+    <main class="max-w-4xl mx-auto bg-white p-8 sm:p-12 shadow-md rounded-xl border border-slate-300">
+        <div class="text-center border-b-2 border-slate-900 pb-6 mb-8">
+            <span class="inline-block px-3 py-1 bg-sky-100 text-sky-900 text-xs font-semibold rounded-full uppercase tracking-wider mb-2">เอกสารรายงานฉบับสมบูรณ์</span>
+            <h1 class="text-2xl sm:text-3xl font-bold text-slate-950 mb-2">รายงานโครงงานการพัฒนาเว็บแอปพลิเคชันและ RESTful API</h1>
+            <h2 class="text-lg sm:text-xl font-semibold text-sky-900">ระบบบริหารจัดการและจองห้องเรียน/ห้องประชุมอัจฉริยะ (Smart Room Reservation System)</h2>
+            <p class="text-xs text-slate-500 mt-2">วิชาการพัฒนาเว็บแอปพลิเคชันและบริการบนเว็บ (Web Application & API Development)</p>
+        </div>
+
+        <section class="mb-8 p-4 bg-slate-50 border border-slate-200 rounded-lg text-sm">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div><strong>ประเภทโครงงาน:</strong> โครงงานกลุ่ม (2 คน)</div>
+                <div><strong>สถาปัตยกรรม:</strong> Django 6.0, Django REST Framework, SimpleJWT</div>
+                <div><strong>ระบบยืนยันตัวตน:</strong> 6-Digit OTP PIN (Google App Password / Gmail SMTP)</div>
+                <div><strong>การทดสอบ:</strong> Django Test Suite (7/7 Pass 100%)</div>
+            </div>
+        </section>
+
+        <section class="mb-8">
+            <h3 class="text-lg font-bold text-sky-950 border-b border-sky-800 pb-1 mb-3">บทที่ 1: บทนำและวัตถุประสงค์</h3>
+            <p class="text-justify text-sm text-slate-700 mb-3">
+                ในองค์กรการศึกษาและสำนักงานยุคใหม่ การจัดสรรทรัพยากรห้องเรียน ห้องปฏิบัติการ และห้องประชุม มีความสำคัญอย่างยิ่งต่อประสิทธิภาพการดำเนินงาน ปัญหาที่พบบ่อยในระบบดั้งเดิมคือการจองเวลาซ้ำซ้อน (Double Booking) และการขาดระบบยืนยันตัวตนที่ปลอดภัย
+            </p>
+            <p class="text-justify text-sm text-slate-700">
+                โครงงานนี้พัฒนาขึ้นเพื่อให้บริการ RESTful API ที่มีความปลอดภัยด้วยมาตรฐาน Token Authentication (SimpleJWT) ควบคู่กับระบบส่งรหัสยืนยัน OTP PIN 6 หลักทางอีเมลผ่าน Google App Password และมีหน้าจอ Institutional Gateway ตามมาตรฐานทางการของหน่วยงานภาครัฐและมหาวิทยาลัย
+            </p>
+        </section>
+
+        <section class="mb-8">
+            <h3 class="text-lg font-bold text-sky-950 border-b border-sky-800 pb-1 mb-3">บทที่ 2: บทบาทผู้ใช้งานในระบบ (Role-Based Access Control)</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs border border-slate-300">
+                    <thead class="bg-slate-100 text-slate-800">
+                        <tr>
+                            <th class="p-2 border">บทบาท (Role)</th>
+                            <th class="p-2 border">สิทธิ์การเข้าถึงและการทำงาน</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 text-slate-700">
+                        <tr>
+                            <td class="p-2 font-bold border">User (ผู้ใช้ทั่วไป)</td>
+                            <td class="p-2 border">ลงทะเบียน, ยืนยัน OTP PIN 6 หลัก, จองห้อง, ตรวจสอบตารางเวลาว่าง, ดูประวัติและยกเลิกคำขอของตนเอง</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 font-bold border">Staff (เจ้าหน้าที่สถานที่)</td>
+                            <td class="p-2 border">ตรวจสอบคำขอจองทั้งหมด, พิจารณาอนุมัติ (Approve) หรือปฏิเสธ (Reject พร้อมระบุเหตุผล), จัดการข้อมูลห้อง</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 font-bold border">Administrator (ผู้ดูแลระบบ)</td>
+                            <td class="p-2 border">จัดการผู้ใช้ทั้งหมด, กำหนดสิทธิ์บทบาท, จัดการห้องเรียน/ห้องประชุม, เข้าถึงแดชบอร์ดสรุปสถิติภาพรวม</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="mb-8">
+            <h3 class="text-lg font-bold text-sky-950 border-b border-sky-800 pb-1 mb-3">บทที่ 3: ระบบส่งรหัสยืนยัน OTP PIN 6 หลัก (Google App Password)</h3>
+            <p class="text-justify text-sm text-slate-700 mb-3">
+                เพื่อป้องกันการสมัครด้วยอีเมลปลอม ระบบจะสร้างรหัสตัวเลข 6 หลัก (อายุ 10 นาที) และจัดส่งไปยังอีเมลของผู้ใช้ผ่าน Gmail SMTP โดยใช้รหัสผ่าน Google App Password ทางการ เมื่อผู้ใช้ยืนยันรหัสถูกต้อง บัญชีจะได้รับการเปิดใช้งาน (is_verified = True) และได้รับ JWT Token เข้าสู่ระบบทันที
+            </p>
+        </section>
+
+        <section class="mb-8">
+            <h3 class="text-lg font-bold text-sky-950 border-b border-sky-800 pb-1 mb-3">บทที่ 4: สรุปรายการ RESTful API (21 Endpoints)</h3>
+            <div class="overflow-x-auto text-xs">
+                <table class="w-full text-left border border-slate-300">
+                    <thead class="bg-slate-100 text-slate-900">
+                        <tr>
+                            <th class="p-2 border">Method</th>
+                            <th class="p-2 border">URL Path</th>
+                            <th class="p-2 border">สิทธิ์</th>
+                            <th class="p-2 border">คำอธิบาย</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 text-slate-700">
+                        <tr><td class="p-2 border font-mono font-bold text-emerald-700">POST</td><td class="p-2 border font-mono">/api/auth/register/</td><td class="p-2 border">Public</td><td class="p-2 border">ลงทะเบียนผู้ใช้และส่งรหัส OTP 6 หลัก</td></tr>
+                        <tr><td class="p-2 border font-mono font-bold text-emerald-700">POST</td><td class="p-2 border font-mono">/api/auth/verify-otp/</td><td class="p-2 border">Public</td><td class="p-2 border">ยืนยัน PIN 6 หลักเพื่อเปิดใช้งานบัญชีและรับ JWT</td></tr>
+                        <tr><td class="p-2 border font-mono font-bold text-emerald-700">POST</td><td class="p-2 border font-mono">/api/auth/resend-otp/</td><td class="p-2 border">Public</td><td class="p-2 border">ขอส่งรหัส PIN 6 หลักใหม่อีกครั้ง</td></tr>
+                        <tr><td class="p-2 border font-mono font-bold text-emerald-700">POST</td><td class="p-2 border font-mono">/api/auth/login/</td><td class="p-2 border">Public</td><td class="p-2 border">เข้าสู่ระบบเพื่อรับ JWT Access / Refresh Token</td></tr>
+                        <tr><td class="p-2 border font-mono font-bold text-sky-700">GET</td><td class="p-2 border font-mono">/api/auth/profile/</td><td class="p-2 border">Bearer</td><td class="p-2 border">ดูข้อมูลโปรไฟล์และบทบาทของตนเอง</td></tr>
+                        <tr><td class="p-2 border font-mono font-bold text-sky-700">GET</td><td class="p-2 border font-mono">/api/rooms/</td><td class="p-2 border">Public</td><td class="p-2 border">ดูรายการห้องทั้งหมด พร้อมตัวกรองประเภท</td></tr>
+                        <tr><td class="p-2 border font-mono font-bold text-emerald-700">POST</td><td class="p-2 border font-mono">/api/rooms/</td><td class="p-2 border">Staff/Admin</td><td class="p-2 border">สร้างห้องใหม่</td></tr>
+                        <tr><td class="p-2 border font-mono font-bold text-sky-700">GET</td><td class="p-2 border font-mono">/api/rooms/&#123;id&#125;/availability/</td><td class="p-2 border">Public</td><td class="p-2 border">ตรวจสอบตารางเวลาว่างของห้องในแต่ละวัน</td></tr>
+                        <tr><td class="p-2 border font-mono font-bold text-sky-700">GET</td><td class="p-2 border font-mono">/api/bookings/</td><td class="p-2 border">Bearer</td><td class="p-2 border">ดูรายการจองห้อง (User ดูของตน, Admin ดูทั้งหมด)</td></tr>
+                        <tr><td class="p-2 border font-mono font-bold text-emerald-700">POST</td><td class="p-2 border font-mono">/api/bookings/</td><td class="p-2 border">Bearer</td><td class="p-2 border">สร้างคำขอจอง (ตรวจสอบเวลาชนอัตโนมัติ)</td></tr>
+                        <tr><td class="p-2 border font-mono font-bold text-emerald-700">POST</td><td class="p-2 border font-mono">/api/bookings/&#123;id&#125;/approve/</td><td class="p-2 border">Staff/Admin</td><td class="p-2 border">อนุมัติคำขอจอง</td></tr>
+                        <tr><td class="p-2 border font-mono font-bold text-emerald-700">POST</td><td class="p-2 border font-mono">/api/bookings/&#123;id&#125;/reject/</td><td class="p-2 border">Staff/Admin</td><td class="p-2 border">ปฏิเสธคำขอจอง พร้อมระบุเหตุผล</td></tr>
+                        <tr><td class="p-2 border font-mono font-bold text-emerald-700">POST</td><td class="p-2 border font-mono">/api/bookings/&#123;id&#125;/cancel/</td><td class="p-2 border">Owner/Admin</td><td class="p-2 border">ยกเลิกรายการจอง</td></tr>
+                        <tr><td class="p-2 border font-mono font-bold text-sky-700">GET</td><td class="p-2 border font-mono">/api/dashboard/stats/</td><td class="p-2 border">Bearer</td><td class="p-2 border">สรุปสถิติภาพรวมและการใช้งานห้อง</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="mb-8">
+            <h3 class="text-lg font-bold text-sky-950 border-b border-sky-800 pb-1 mb-3">บทที่ 5: ผลการทดสอบระบบอัตโนมัติ (Automated Test Suite)</h3>
+            <p class="text-sm text-slate-700 mb-3">ชุดทดสอบอัตโนมัติของ Django Test Runner ผ่านการทดสอบครบถ้วน 100% (7/7 Pass):</p>
+            <ul class="list-disc pl-5 text-xs text-slate-700 space-y-1">
+                <li><strong class="text-emerald-700">[PASS]</strong> <code>test_user_registration_and_jwt_login</code>: ทดสอบสมัครสมาชิกและล็อกอินรับ Token</li>
+                <li><strong class="text-emerald-700">[PASS]</strong> <code>test_room_crud_and_permission_enforcement</code>: ทดสอบสิทธิ์การจัดการห้อง</li>
+                <li><strong class="text-emerald-700">[PASS]</strong> <code>test_booking_creation_and_conflict_detection</code>: ทดสอบตรวจจับเวลาซ้ำซ้อน (Conflict Engine)</li>
+                <li><strong class="text-emerald-700">[PASS]</strong> <code>test_booking_approval_rejection_cancel_lifecycle</code>: ทดสอบวงจรอนุมัติ ปฏิเสธ และยกเลิก</li>
+                <li><strong class="text-emerald-700">[PASS]</strong> <code>test_room_availability_timeline_endpoint</code>: ทดสอบคำนวณไทม์ไลน์ห้องว่างรายวัน</li>
+                <li><strong class="text-emerald-700">[PASS]</strong> <code>test_dashboard_analytics_and_web_ui</code>: ทดสอบ API สถิติและหน้า Institutional Portal</li>
+                <li><strong class="text-emerald-700">[PASS]</strong> <code>test_otp_pin_verification_and_resend_flow</code>: ทดสอบการส่งและยืนยันรหัส PIN 6 หลัก</li>
+            </ul>
+        </section>
+
+        <section class="border-t border-slate-300 pt-6 text-xs text-slate-500 flex justify-between">
+            <div>ระบบสารสนเทศเพื่อการบริหารจัดการและจองห้องเรียนและห้องประชุมอัจฉริยะ (Smart Room Reservation)</div>
+            <div>รายงานฉบับสมบูรณ์ - พัฒนาด้วย Django REST Framework</div>
+        </section>
+    </main>
+</body>
+</html>
