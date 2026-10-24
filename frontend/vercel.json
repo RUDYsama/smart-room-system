@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://smart-room-system-5vh7.onrender.com/$1",
+      "permanent": false
+    }
+  ]
+}

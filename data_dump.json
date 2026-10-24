@@ -1,0 +1,628 @@
+[
+{
+  "model": "reservations.customuser",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$azdbm2tkMWUYFUwdRtCS8C$TGC8IDQuwvUFJpiZNqK6OpTH2cRCkbGtnOLckRN8eQI=",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@itds-organization.local",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-10-24T18:04:03.452Z",
+    "role": "admin",
+    "membership_tier": "vip",
+    "loyalty_points": 150,
+    "phone_number": "02-123-4567",
+    "department": "IT Operations & Infrastructure",
+    "avatar": "",
+    "is_verified": true,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "reservations.customuser",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$NYTcHMRIfkXJnp6SykcL1G$HaY4Y/NtWkAHGp/PIXKxLn68Nxz7cOGP8cfW6eTAjFc=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "staff_member",
+    "first_name": "",
+    "last_name": "",
+    "email": "facility@itds-organization.local",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-10-24T18:04:04.166Z",
+    "role": "staff",
+    "membership_tier": "vip",
+    "loyalty_points": 150,
+    "phone_number": "02-123-4568",
+    "department": "Facility & Building Operations",
+    "avatar": "",
+    "is_verified": true,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "reservations.customuser",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$7hqa8G7SoKNh7abdWR9rTc$RDrCeHmGSVSGsQRcLvoalfA3yY+wDaVqB9xS5j4nFNk=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "john_doe",
+    "first_name": "",
+    "last_name": "",
+    "email": "john.doe@enterprise.local",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-24T18:04:04.852Z",
+    "role": "user",
+    "membership_tier": "vip",
+    "loyalty_points": 150,
+    "phone_number": "081-987-6543",
+    "department": "Software Engineering Department",
+    "avatar": "",
+    "is_verified": true,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "reservations.customuser",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$kvYwPP7OkVx0zxk3dHCZMi$qReGRzW2+D3L7hn7sG/q3w88LuozR05pYpilNszY47Y=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "jane_smith",
+    "first_name": "",
+    "last_name": "",
+    "email": "jane.smith@enterprise.local",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-24T18:04:05.536Z",
+    "role": "user",
+    "membership_tier": "vip",
+    "loyalty_points": 150,
+    "phone_number": "089-112-2334",
+    "department": "Data Analytics & AI",
+    "avatar": "",
+    "is_verified": true,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "reservations.room",
+  "pk": 1,
+  "fields": {
+    "name": "Grand Auditorium",
+    "room_number": "A-301",
+    "building": "Tower A",
+    "floor": 3,
+    "capacity": 150,
+    "price_per_hour": "500.00",
+    "price_unit": "hour",
+    "image": "",
+    "room_type": "auditorium",
+    "tags": "",
+    "amenities": "4K Laser Projector, Surround Sound System, Dual Wireless Mics, Interactive Stage Podium",
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:06.255Z",
+    "updated_at": "2026-10-24T18:04:06.255Z"
+  }
+},
+{
+  "model": "reservations.room",
+  "pk": 2,
+  "fields": {
+    "name": "Executive Boardroom",
+    "room_number": "B-402",
+    "building": "Tower B",
+    "floor": 4,
+    "capacity": 22,
+    "price_per_hour": "500.00",
+    "price_unit": "hour",
+    "image": "",
+    "room_type": "meeting",
+    "tags": "",
+    "amenities": "85-inch 4K Display, Polycom Video Conferencing, High-speed Wi-Fi, Conference Phone, Ergonomic Chairs",
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:06.518Z",
+    "updated_at": "2026-10-24T18:04:06.518Z"
+  }
+},
+{
+  "model": "reservations.room",
+  "pk": 3,
+  "fields": {
+    "name": "Advanced Computing Laboratory",
+    "room_number": "A-205",
+    "building": "Tower A",
+    "floor": 2,
+    "capacity": 45,
+    "price_per_hour": "500.00",
+    "price_unit": "hour",
+    "image": "",
+    "room_type": "lab",
+    "tags": "",
+    "amenities": "45 RTX Workstations, Gigabit Ethernet, Instructor Overhead Monitor, Network Rack Access",
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:06.778Z",
+    "updated_at": "2026-10-24T18:04:06.778Z"
+  }
+},
+{
+  "model": "reservations.room",
+  "pk": 4,
+  "fields": {
+    "name": "Lecture Classroom Alpha",
+    "room_number": "C-501",
+    "building": "Tower C",
+    "floor": 5,
+    "capacity": 60,
+    "price_per_hour": "500.00",
+    "price_unit": "hour",
+    "image": "",
+    "room_type": "classroom",
+    "tags": "",
+    "amenities": "Dual Whiteboards, Full HD Ceiling Projector, Centralized Air Conditioning, Sound Amplification",
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:07.036Z",
+    "updated_at": "2026-10-24T18:04:07.036Z"
+  }
+},
+{
+  "model": "reservations.room",
+  "pk": 5,
+  "fields": {
+    "name": "Agile Sprint Room",
+    "room_number": "B-108",
+    "building": "Tower B",
+    "floor": 1,
+    "capacity": 12,
+    "price_per_hour": "500.00",
+    "price_unit": "hour",
+    "image": "",
+    "room_type": "meeting",
+    "tags": "",
+    "amenities": "Glass Whiteboard Walls, 65-inch Mobile Smart Monitor, Standing Desks, Power Pods",
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:07.295Z",
+    "updated_at": "2026-10-24T18:04:07.295Z"
+  }
+},
+{
+  "model": "reservations.booking",
+  "pk": 1,
+  "fields": {
+    "user": 3,
+    "room": 2,
+    "title": "Q4 System Architecture Review",
+    "purpose": "Quarterly system design review and microservice migration sync",
+    "start_time": "2026-10-25T10:00:00Z",
+    "end_time": "2026-10-25T12:00:00Z",
+    "stay_days": 1,
+    "stay_nights": 1,
+    "status": "APPROVED",
+    "attendees_count": 14,
+    "rejection_reason": "",
+    "access_pin": "",
+    "coupon_code": "",
+    "total_price": "0.00",
+    "payment_card": null,
+    "payment_status": "PAID",
+    "created_at": "2026-10-24T18:04:07.517Z",
+    "updated_at": "2026-10-24T18:04:07.517Z"
+  }
+},
+{
+  "model": "reservations.booking",
+  "pk": 2,
+  "fields": {
+    "user": 4,
+    "room": 3,
+    "title": "Machine Learning Workshop Lecture",
+    "purpose": "Hands-on PyTorch training for senior computer science cohort",
+    "start_time": "2026-10-25T14:00:00Z",
+    "end_time": "2026-10-25T16:00:00Z",
+    "stay_days": 1,
+    "stay_nights": 1,
+    "status": "PENDING",
+    "attendees_count": 38,
+    "rejection_reason": "",
+    "access_pin": "",
+    "coupon_code": "",
+    "total_price": "0.00",
+    "payment_card": null,
+    "payment_status": "PAID",
+    "created_at": "2026-10-24T18:04:08.085Z",
+    "updated_at": "2026-10-24T18:04:08.085Z"
+  }
+},
+{
+  "model": "reservations.booking",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "room": 1,
+    "title": "Ad-hoc Gaming Tournament",
+    "purpose": "Informal department social gaming session",
+    "start_time": "2026-10-24T10:00:00Z",
+    "end_time": "2026-10-24T12:00:00Z",
+    "stay_days": 1,
+    "stay_nights": 1,
+    "status": "REJECTED",
+    "attendees_count": 50,
+    "rejection_reason": "Auditorium is reserved strictly for academic and official department symposiums.",
+    "access_pin": "",
+    "coupon_code": "",
+    "total_price": "0.00",
+    "payment_card": null,
+    "payment_status": "PAID",
+    "created_at": "2026-10-24T18:04:08.460Z",
+    "updated_at": "2026-10-24T18:04:08.460Z"
+  }
+},
+{
+  "model": "reservations.bookingequipment",
+  "pk": 1,
+  "fields": {
+    "booking": 1,
+    "equipment_name": "Wireless Presentation Clicker",
+    "quantity": 1,
+    "condition": "New"
+  }
+},
+{
+  "model": "reservations.bookingequipment",
+  "pk": 2,
+  "fields": {
+    "booking": 1,
+    "equipment_name": "Video Conference Extension Mic",
+    "quantity": 2,
+    "condition": "Good"
+  }
+},
+{
+  "model": "reservations.bookingequipment",
+  "pk": 3,
+  "fields": {
+    "booking": 2,
+    "equipment_name": "HDMI 4K Splitter Cable",
+    "quantity": 1,
+    "condition": "Good"
+  }
+},
+{
+  "model": "reservations.coupon",
+  "pk": 1,
+  "fields": {
+    "code": "VHNEW20",
+    "discount_title": "ส่วนลด 20%",
+    "sub_title": "สิทธิ์สมาชิกใหม่",
+    "info_tooltip": "ใช้ได้กับทุกหมวดหมู่ เมื่อมียอดจองขั้นต่ำ ฿1,000 (ลดสูงสุด ฿600)",
+    "icon_type": "star",
+    "button_text": "รับสิทธิ์",
+    "discount_percent": 20,
+    "min_spend": "1000.00",
+    "applicable_category": "all",
+    "max_discount_amount": "600.00",
+    "expires_at": "2026-12-31T16:59:59Z",
+    "terms": "ใช้ได้สำหรับสมาชิกใหม่ทุกท่านในการจองครั้งแรก\nส่วนลด 20% สูงสุดไม่เกิน ฿600 เมื่อมียอดจองขั้นต่ำ ฿1,000\nใช้ได้กับการจองสถานที่ทุกประเภท\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.\nจำกัด 1 สิทธิ์ ต่อ 1 บัญชีผู้ใช้งานตลอดระยะเวลาแคมเปญ",
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:37.128Z"
+  }
+},
+{
+  "model": "reservations.coupon",
+  "pk": 2,
+  "fields": {
+    "code": "VILLA25",
+    "discount_title": "ส่วนลด 25%",
+    "sub_title": "บ้านพัก Horizon Villa",
+    "info_tooltip": "ใช้ได้เฉพาะหมวดบ้านพัก เมื่อมียอดจองขั้นต่ำ ฿2,500 (ลดสูงสุด ฿1,500)",
+    "icon_type": "villa",
+    "button_text": "รับสิทธิ์",
+    "discount_percent": 25,
+    "min_spend": "2500.00",
+    "applicable_category": "villa",
+    "max_discount_amount": "1500.00",
+    "expires_at": "2026-12-31T16:59:59Z",
+    "terms": "สิทธิพิเศษเฉพาะการจองในหมวดหมู่บ้านพักและพูลวิลล่า (Villa)\nส่วนลด 25% สูงสุด ฿1,500 เมื่อมียอดจองขั้นต่ำ ฿2,500\nสามารถใช้ได้กับการเข้าพักทุกวัน ทั้งวันธรรมดาและวันหยุด\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.\nไม่สามารถแลกเปลี่ยนเป็นเงินสดหรือโอนสิทธิ์ให้ผู้อื่นได้",
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:37.306Z"
+  }
+},
+{
+  "model": "reservations.coupon",
+  "pk": 3,
+  "fields": {
+    "code": "SUITE10",
+    "discount_title": "ส่วนลด 10%",
+    "sub_title": "ห้องพัก Jade Pavilion",
+    "info_tooltip": "ใช้ได้เฉพาะหมวดห้องพัก เมื่อมียอดจองขั้นต่ำ ฿800 (ลดสูงสุด ฿400)",
+    "icon_type": "bed",
+    "button_text": "รับสิทธิ์",
+    "discount_percent": 10,
+    "min_spend": "800.00",
+    "applicable_category": "room",
+    "max_discount_amount": "400.00",
+    "expires_at": "2026-12-31T16:59:59Z",
+    "terms": "ใช้ได้สำหรับการจองห้องพักในหมวด Suite & Deluxe Room\nส่วนลด 10% สูงสุด ฿400 เมื่อมียอดจองขั้นต่ำ ฿800\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.\nจำกัด 1 สิทธิ์ ต่อการจอง 1 ครั้ง",
+    "order": 3,
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:37.484Z"
+  }
+},
+{
+  "model": "reservations.coupon",
+  "pk": 4,
+  "fields": {
+    "code": "EVENT15",
+    "discount_title": "ส่วนลด 15%",
+    "sub_title": "โถงกิจกรรม Nexus Hall",
+    "info_tooltip": "ใช้ได้เฉพาะหมวดจัดกิจกรรม เมื่อมียอดจองขั้นต่ำ ฿3,000 (ลดสูงสุด ฿2,000)",
+    "icon_type": "event",
+    "button_text": "รับสิทธิ์",
+    "discount_percent": 15,
+    "min_spend": "3000.00",
+    "applicable_category": "event",
+    "max_discount_amount": "2000.00",
+    "expires_at": "2026-12-31T16:59:59Z",
+    "terms": "ใช้ได้เฉพาะการจองห้องจัดเลี้ยงและโถงกิจกรรมอเนกประสงค์ (Event Hall)\nส่วนลด 15% สูงสุด ฿2,000 เมื่อมียอดจองขั้นต่ำ ฿3,000\nรวมสิ่งอำนวยความสะดวกพื้นฐาน โต๊ะ เก้าอี้ และระบบเสียง\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.",
+    "order": 4,
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:37.662Z"
+  }
+},
+{
+  "model": "reservations.coupon",
+  "pk": 5,
+  "fields": {
+    "code": "THEATER20",
+    "discount_title": "ส่วนลด 20%",
+    "sub_title": "โรงละคร Performing Arts",
+    "info_tooltip": "ใช้ได้เฉพาะหมวดโรงละคร เมื่อมียอดจองขั้นต่ำ ฿4,000 (ลดสูงสุด ฿3,000)",
+    "icon_type": "theater",
+    "button_text": "รับสิทธิ์",
+    "discount_percent": 20,
+    "min_spend": "4000.00",
+    "applicable_category": "theater",
+    "max_discount_amount": "3000.00",
+    "expires_at": "2026-12-31T16:59:59Z",
+    "terms": "ใช้ได้สำหรับการจองโรงละครและการแสดง (Grand Theater)\nส่วนลด 20% สูงสุด ฿3,000 เมื่อมียอดจองขั้นต่ำ ฿4,000\nต้องทำการจองล่วงหน้าอย่างน้อย 24 ชั่วโมงก่อนเริ่มใช้งาน\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.",
+    "order": 5,
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:37.841Z"
+  }
+},
+{
+  "model": "reservations.coupon",
+  "pk": 6,
+  "fields": {
+    "code": "WORKFREE",
+    "discount_title": "ใช้งานฟรี 1 ชม.",
+    "sub_title": "สถานที่ทำงาน Workstation",
+    "info_tooltip": "ใช้ได้เฉพาะหมวดสถานที่ทำงาน เมื่อมียอดจองขั้นต่ำ ฿300 (ลดสูงสุด ฿500)",
+    "icon_type": "work",
+    "button_text": "รับสิทธิ์",
+    "discount_percent": 100,
+    "min_spend": "300.00",
+    "applicable_category": "work",
+    "max_discount_amount": "500.00",
+    "expires_at": "2026-12-31T16:59:59Z",
+    "terms": "รับสิทธิ์ใช้งาน Executive Workstation ฟรี 1 ชั่วโมงแรก\nมูลค่าส่วนลดสูงสุด ฿500 เมื่อมียอดจองขั้นต่ำ ฿300\nใช้ได้เฉพาะในหมวดหมู่สถานที่ทำงาน (Workstation)\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.\nจำกัด 1 สิทธิ์ ต่อ 1 บัญชีผู้ใช้งาน",
+    "order": 6,
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:38.020Z"
+  }
+},
+{
+  "model": "reservations.coupon",
+  "pk": 7,
+  "fields": {
+    "code": "CAFECOFFEE",
+    "discount_title": "ฟรี Signature Drink",
+    "sub_title": "The Artisan Cafe",
+    "info_tooltip": "ใช้ได้เฉพาะหมวดสถานที่ทำงาน เมื่อมียอดจองขั้นต่ำ ฿200 (ลดสูงสุด ฿100)",
+    "icon_type": "cafe",
+    "button_text": "รับสิทธิ์",
+    "discount_percent": 10,
+    "min_spend": "200.00",
+    "applicable_category": "work",
+    "max_discount_amount": "100.00",
+    "expires_at": "2026-12-31T16:59:59Z",
+    "terms": "รับฟรี Signature Drink มูลค่าสูงสุด ฿100 ที่ The Artisan Cafe\nเมื่อมียอดใช้บริการหรือจองสถานที่ขั้นต่ำ ฿200\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.\nสามารถแลกรับได้ที่เคาน์เตอร์คาเฟ่ในวันที่เข้าใช้งาน",
+    "order": 7,
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:38.198Z"
+  }
+},
+{
+  "model": "reservations.coupon",
+  "pk": 8,
+  "fields": {
+    "code": "MEETPRO",
+    "discount_title": "ส่วนลด 10%",
+    "sub_title": "ห้องประชุม & เลานจ์",
+    "info_tooltip": "ใช้ได้เฉพาะหมวดสถานที่ทำงาน เมื่อมียอดจองขั้นต่ำ ฿1,000 (ลดสูงสุด ฿500)",
+    "icon_type": "users",
+    "button_text": "รับสิทธิ์",
+    "discount_percent": 10,
+    "min_spend": "1000.00",
+    "applicable_category": "work",
+    "max_discount_amount": "500.00",
+    "expires_at": "2026-12-31T16:59:59Z",
+    "terms": "ส่วนลด 10% สำหรับห้องประชุม & เลานจ์ส่วนตัว\nส่วนลดสูงสุด ฿500 เมื่อมียอดจองขั้นต่ำ ฿1,000\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.",
+    "order": 8,
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:38.379Z"
+  }
+},
+{
+  "model": "reservations.coupon",
+  "pk": 9,
+  "fields": {
+    "code": "ALLDAY30",
+    "discount_title": "ส่วนลด 30%",
+    "sub_title": "จองเต็มวัน เหมาวัน",
+    "info_tooltip": "ใช้ได้กับทุกหมวดหมู่ เมื่อมียอดจองขั้นต่ำ ฿5,000 (ลดสูงสุด ฿2,500)",
+    "icon_type": "clock",
+    "button_text": "รับสิทธิ์",
+    "discount_percent": 30,
+    "min_spend": "5000.00",
+    "applicable_category": "all",
+    "max_discount_amount": "2500.00",
+    "expires_at": "2026-12-31T16:59:59Z",
+    "terms": "ส่วนลดพิเศษ 30% สำหรับการจองสถานที่แบบเต็มวัน (เหมาวัน)\nส่วนลดสูงสุด ฿2,500 เมื่อมียอดจองขั้นต่ำ ฿5,000\nใช้ได้กับสถานที่ทุกประเภทที่เปิดให้บริการแบบเต็มวัน\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.\nไม่สามารถใช้ร่วมกับคูปองส่วนลดอื่นๆ ในบิลเดียวกันได้",
+    "order": 9,
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:38.557Z"
+  }
+},
+{
+  "model": "reservations.coupon",
+  "pk": 10,
+  "fields": {
+    "code": "WEEKEND15",
+    "discount_title": "ส่วนลด 15%",
+    "sub_title": "สิทธิ์พิเศษสุดสัปดาห์",
+    "info_tooltip": "ใช้ได้เฉพาะหมวดบ้านพักและห้องพัก เมื่อมียอดจองขั้นต่ำ ฿2,000 (ลดสูงสุด ฿1,000)",
+    "icon_type": "calendar",
+    "button_text": "รับสิทธิ์",
+    "discount_percent": 15,
+    "min_spend": "2000.00",
+    "applicable_category": "villa,room",
+    "max_discount_amount": "1000.00",
+    "expires_at": "2026-12-31T16:59:59Z",
+    "terms": "ส่วนลดพิเศษ 15% สำหรับการจองช่วงสุดสัปดาห์ (ศุกร์ - อาทิตย์)\nส่วนลดสูงสุด ฿1,000 เมื่อมียอดจองขั้นต่ำ ฿2,000\nใช้ได้กับหมวดหมู่บ้านพักและห้องพัก\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.",
+    "order": 10,
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:38.737Z"
+  }
+},
+{
+  "model": "reservations.promotionbanner",
+  "pk": 1,
+  "fields": {
+    "title": "Luxury Hotel Flash Sale",
+    "badge_text": "Flash Sale ดีลเด็ด",
+    "image": "promotions/luxury_hotel_flash_sale.png",
+    "banner_type": "main_wide",
+    "coupon": 9,
+    "secondary_coupon": null,
+    "description": "ส่วนลดสุดคุ้ม 30% สำหรับการจองสถานที่และห้องพักแบบเต็มวัน/เหมาวัน ให้คุณพักผ่อนหรือจัดกิจกรรมพิเศษได้ยาวนานและคุ้มค่ายิ่งขึ้น",
+    "terms": "ส่วนลด 30% สูงสุด ฿2,500 เมื่อมียอดจองขั้นต่ำ ฿5,000\nใช้ได้กับสถานที่ทุกแห่งที่รองรับการจองแบบเต็มวัน\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.\nจำกัด 1 สิทธิ์ ต่อ 1 บัญชีผู้ใช้งานตลอดระยะเวลาแคมเปญ\nเงื่อนไขเป็นไปตามที่บริษัทกำหนด",
+    "target_url": "#venuesGridAnchor",
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:38.917Z",
+    "updated_at": "2026-10-24T18:04:38.917Z"
+  }
+},
+{
+  "model": "reservations.promotionbanner",
+  "pk": 2,
+  "fields": {
+    "title": "The Jade Pavilion - Flash Sale ลดสูงสุด 30%",
+    "badge_text": "ห้องพักหรูวิวพรีเมียม",
+    "image": "promotions/promo_jade_pavilion_flash_sale.jpg",
+    "banner_type": "side_compact",
+    "coupon": 3,
+    "secondary_coupon": 9,
+    "description": "The Jade Pavilion มอบประสบการณ์การพักผ่อนระดับเวิลด์คลาส ท่ามกลางบรรยากาศที่เงียบสงบ พร้อมส่วนลดห้องพัก 10% และสิทธิ์ลดสูงสุด 30% เมื่อจองเต็มวัน",
+    "terms": "ส่วนลด 10% สูงสุด ฿400 ยอดจองขั้นต่ำ ฿800 สำหรับห้องพัก Jade Pavilion\nหากจองแบบเหมาวัน สามารถเลือกใช้สิทธิ์คูปอง ALLDAY30 เพื่อรับส่วนลด 30%\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.\nกรุณาแสดงรหัสการจองเมื่อเข้าเช็คอิน",
+    "target_url": "javascript:showVenueDetail('5')",
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:39.096Z",
+    "updated_at": "2026-10-24T18:04:39.096Z"
+  }
+},
+{
+  "model": "reservations.promotionbanner",
+  "pk": 3,
+  "fields": {
+    "title": "Horizon Vacation Villa - Private Pool Villa ลด 25%",
+    "badge_text": "พูลวิลล่าส่วนตัว",
+    "image": "promotions/promo_horizon_pool_villa.jpg",
+    "banner_type": "side_compact",
+    "coupon": 2,
+    "secondary_coupon": null,
+    "description": "Horizon Vacation Villa ให้คุณและคนพิเศษดื่มด่ำกับสระว่ายน้ำส่วนตัว วิวธรรมชาติสุดสายตา พร้อมรับส่วนลดทันที 25% สำหรับการพักผ่อนครั้งนี้",
+    "terms": "ส่วนลด 25% สูงสุด ฿1,500 เมื่อมียอดจองขั้นต่ำ ฿2,500\nใช้ได้เฉพาะการจองในหมวดบ้านพักและพูลวิลล่า (Villa)\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.\nจำกัด 1 สิทธิ์ ต่อ 1 บัญชีผู้ใช้งาน\nไม่สามารถแลกเปลี่ยนเป็นเงินสดได้",
+    "target_url": "javascript:showVenueDetail('2')",
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:39.275Z",
+    "updated_at": "2026-10-24T18:04:39.275Z"
+  }
+},
+{
+  "model": "reservations.promotionbanner",
+  "pk": 4,
+  "fields": {
+    "title": "Grand Performing Arts Theater - รับสิทธิ์ลด 20%",
+    "badge_text": "โรงละครระบบเวิลด์คลาส",
+    "image": "promotions/promo_grand_theater.jpg",
+    "banner_type": "side_compact",
+    "coupon": 5,
+    "secondary_coupon": null,
+    "description": "Grand Performing Arts Theater สถานที่จัดแสดง ละครเวที คอนเสิร์ต และการสัมมนาขนาดใหญ่ พร้อมระบบแสง สี เสียง ระดับโลก รับส่วนลดพิเศษ 20%",
+    "terms": "ส่วนลด 20% สูงสุด ฿3,000 เมื่อมียอดจองขั้นต่ำ ฿4,000\nใช้ได้เฉพาะการจองในหมวดโรงละคร (Theater)\nต้องจองล่วงหน้าอย่างน้อย 24 ชั่วโมงก่อนเริ่มใช้งาน\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.",
+    "target_url": "javascript:showVenueDetail('6')",
+    "order": 3,
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:39.453Z",
+    "updated_at": "2026-10-24T18:04:39.453Z"
+  }
+},
+{
+  "model": "reservations.promotionbanner",
+  "pk": 5,
+  "fields": {
+    "title": "Nexus Multipurpose Activity Hall - Mega Event Hall ลด 15%",
+    "badge_text": "โถงกิจกรรมอเนกประสงค์",
+    "image": "promotions/promo_nexus_event_hall.jpg",
+    "banner_type": "side_compact",
+    "coupon": 4,
+    "secondary_coupon": null,
+    "description": "Nexus Multipurpose Activity Hall รองรับทุกการจัดงาน ทั้งงานแต่ง งานเลี้ยง งานสัมมนา และอีเวนต์ระดับองค์กร พร้อมรับส่วนลด 15% ทันที",
+    "terms": "ส่วนลด 15% สูงสุด ฿2,000 เมื่อมียอดจองขั้นต่ำ ฿3,000\nใช้ได้เฉพาะการจองในหมวดจัดกิจกรรม (Event)\nรวมสิ่งอำนวยความสะดวกพื้นฐาน โต๊ะ เก้าอี้ และเวที\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.",
+    "target_url": "javascript:showVenueDetail('3')",
+    "order": 4,
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:39.631Z",
+    "updated_at": "2026-10-24T18:04:39.631Z"
+  }
+},
+{
+  "model": "reservations.promotionbanner",
+  "pk": 6,
+  "fields": {
+    "title": "Work & Chill - Executive Workstation & Artisan Cafe ฟรี 1 ชม.",
+    "badge_text": "โคเวิร์กกิ้ง & คาเฟ่",
+    "image": "promotions/promo_work_and_chill.jpg",
+    "banner_type": "side_compact",
+    "coupon": 6,
+    "secondary_coupon": 7,
+    "description": "Work & Chill ผสานพื้นที่ทำงานระดับ Executive Workstation เข้ากับบรรยากาศสุดผ่อนคลาย พร้อมรับสิทธิ์ใช้งานฟรี 1 ชม. และรับ Signature Drink ฟรีจาก The Artisan Cafe",
+    "terms": "คูปอง WORKFREE รับสิทธิ์ใช้งานฟรี 1 ชม. (ส่วนลดมูลค่าสูงสุด ฿500 ยอดขั้นต่ำ ฿300)\nคูปอง CAFECOFFEE รับฟรี Signature Drink มูลค่า ฿100 เมื่อมียอดใช้บริการขั้นต่ำ ฿200\nใช้ได้เฉพาะสถานที่ทำงาน Workstation & Artisan Cafe\nใช้ได้ถึงวันที่ 31 ธันวาคม 2026 เวลา 23:59 น.\nจำกัด 1 สิทธิ์ ต่อ 1 ท่านต่อวัน",
+    "target_url": "javascript:showVenueDetail('4')",
+    "order": 5,
+    "is_active": true,
+    "created_at": "2026-10-24T18:04:39.809Z",
+    "updated_at": "2026-10-24T18:04:39.809Z"
+  }
+}
+]

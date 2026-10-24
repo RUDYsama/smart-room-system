@@ -9,3 +9,4 @@ fi
 
 python manage.py collectstatic --noinput
 python manage.py migrate
+python manage.py loaddata data_dump.json || true
