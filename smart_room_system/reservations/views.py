@@ -233,6 +233,7 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
 class RoomListCreateView(generics.ListCreateAPIView):
     queryset = Room.objects.all().order_by('id')
     serializer_class = RoomSerializer
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def get_permissions(self):
         if self.request.method == 'GET':
@@ -263,6 +264,7 @@ class RoomListCreateView(generics.ListCreateAPIView):
 class RoomDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
     lookup_field = 'pk'
 
     def get_permissions(self):

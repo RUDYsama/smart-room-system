@@ -1,7 +1,10 @@
 # Environments & Secrets
 .env
+.env.*
 .env.local
 *.env
+*.exe
+.scratch/
 
 # Python & Django
 __pycache__/

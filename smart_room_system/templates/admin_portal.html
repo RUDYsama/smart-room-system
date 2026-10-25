@@ -419,14 +419,25 @@
                                     <span class="px-2 py-0.5 rounded bg-slate-100 font-mono-code font-bold text-slate-800">{{ r.room_number }}</span>
                                 </td>
                                 <td class="p-3.5">
-                                    <div class="font-semibold text-slate-900">{{ r.name }}</div>
-                                    {% if r.tags %}
-                                    <div class="flex flex-wrap gap-1 mt-1">
-                                        {% for t in r.tag_list %}
-                                        <span class="px-1.5 py-0.2 rounded text-[10px] bg-slate-100 text-slate-600 font-normal">{{ t }}</span>
-                                        {% endfor %}
+                                    <div class="flex items-center gap-3">
+                                        {% if r.image %}
+                                        <img src="{{ r.image.url }}" alt="{{ r.name }}" class="w-12 h-10 object-cover rounded-lg border border-slate-200 flex-shrink-0 shadow-2xs">
+                                        {% else %}
+                                        <div class="w-12 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-400 flex-shrink-0">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                        </div>
+                                        {% endif %}
+                                        <div>
+                                            <div class="font-semibold text-slate-900">{{ r.name }}</div>
+                                            {% if r.tags %}
+                                            <div class="flex flex-wrap gap-1 mt-1">
+                                                {% for t in r.tag_list %}
+                                                <span class="px-1.5 py-0.2 rounded text-[10px] bg-slate-100 text-slate-600 font-normal">{{ t }}</span>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
                                     </div>
-                                    {% endif %}
                                 </td>
                                 <td class="p-3.5">
                                     <span class="px-2 py-0.5 rounded text-[11px] font-medium bg-blue-50 text-blue-700">{{ r.get_room_type_display }}</span>
@@ -444,7 +455,7 @@
                                     {% endif %}
                                 </td>
                                 <td class="p-3.5 text-right whitespace-nowrap space-x-2">
-                                    <button type="button" onclick="openEditRoomModal('{{ r.id }}', '{{ r.room_number|escapejs }}', '{{ r.name|escapejs }}', '{{ r.room_type }}', '{{ r.building|escapejs }}', '{{ r.floor }}', '{{ r.capacity }}', '{{ r.price_per_hour }}', '{{ r.price_unit }}', '{{ r.tags|escapejs }}', '{{ r.amenities|escapejs }}', {{ r.is_active|yesno:'true,false' }})" class="text-blue-600 hover:text-blue-800 font-semibold hover:underline cursor-pointer">แก้ไข</button>
+                                    <button type="button" onclick="openEditRoomModal('{{ r.id }}', '{{ r.room_number|escapejs }}', '{{ r.name|escapejs }}', '{{ r.room_type }}', '{{ r.building|escapejs }}', '{{ r.floor }}', '{{ r.capacity }}', '{{ r.price_per_hour }}', '{{ r.price_unit }}', '{{ r.tags|escapejs }}', '{{ r.amenities|escapejs }}', {{ r.is_active|yesno:'true,false' }}, '{% if r.image %}{{ r.image.url|escapejs }}{% endif %}')" class="text-blue-600 hover:text-blue-800 font-semibold hover:underline cursor-pointer">แก้ไข</button>
                                     {% if r.is_active %}
                                     <button type="button" onclick="toggleRoomMaintenance('{{ r.id }}', false)" class="text-amber-600 hover:text-amber-800 hover:underline cursor-pointer">ปิดซ่อม</button>
                                     {% else %}
@@ -655,7 +666,7 @@
                             </div>
                             <div>
                                 <h2 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight">จัดการแบนเนอร์โปรโมชัน (Promotional Campaign Banners)</h2>
-                                <p class="text-xs text-slate-500">จัดการสื่อแคมเปญหลักและการ์ดโปรโมชัน เชื่อมโยงคูปอง และดูพรีวิวสดแบบ Shopee</p>
+                                <p class="text-xs text-slate-500">จัดการสื่อแคมเปญหลักและการ์ดโปรโมชัน เชื่อมโยงคูปอง และดูพรีวิวสดคูปองสิทธิพิเศษ</p>
                             </div>
                         </div>
                     </div>
@@ -708,7 +719,7 @@
                                 <th class="p-3.5">ชื่อผู้ใช้ (Username)</th>
                                 <th class="p-3.5">อีเมล & เบอร์โทร</th>
                                 <th class="p-3.5">สิทธิ์ (Role)</th>
-                                <th class="p-3.5">แผนก/สังกัด</th>
+
                                 <th class="p-3.5 text-center">สถานะบัญชี</th>
                                 <th class="p-3.5 text-right">การจัดการ</th>
                             </tr>
@@ -740,7 +751,7 @@
                                     <span class="px-2 py-0.5 rounded text-[10px] bg-slate-100 text-slate-700 font-medium">User</span>
                                     {% endif %}
                                 </td>
-                                <td class="p-3.5 text-slate-600">{{ u.department|default:"-" }}</td>
+
                                 <td class="p-3.5 text-center">
                                     {% if u.is_active %}
                                     <span class="inline-flex items-center gap-1 text-emerald-700 font-semibold">
@@ -894,95 +905,266 @@
 
     <!-- Add Room Modal -->
     <!-- ==================== ROOM CREATE / EDIT MODAL ==================== -->
-    <div id="roomModal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200">
-            <div class="flex items-center justify-between pb-3.5 border-b border-slate-100">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+    <div id="roomModal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8 hidden overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-7xl w-[96vw] shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[94vh] my-auto">
+            
+            <!-- Modal Header -->
+            <div class="px-8 py-5 border-b border-slate-100 flex items-center justify-between flex-shrink-0 bg-slate-50/70">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold shadow-2xs">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                     </div>
                     <div>
-                        <h3 id="roomModalTitle" class="font-bold text-base text-slate-900">เพิ่มห้องใหม่เข้าสู่ระบบ</h3>
-                        <p class="text-[11px] text-slate-500">กรอกรายละเอียดข้อมูลสถานที่และอัตราค่าบริการ</p>
+                        <h3 id="roomModalTitle" class="font-bold text-lg sm:text-xl text-slate-900 tracking-tight">เพิ่มห้องใหม่เข้าสู่ระบบ</h3>
+                        <p class="text-xs sm:text-sm text-slate-500">กำหนดข้อมูลสถานที่ รูปภาพขนาดใหญ่ อัตราค่าบริการ ประเภท และสิ่งอำนวยความสะดวกครบวงจร</p>
                     </div>
                 </div>
-                <button type="button" onclick="closeRoomModal()" class="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 flex items-center justify-center cursor-pointer transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                <button type="button" onclick="closeRoomModal()" class="w-10 h-10 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 flex items-center justify-center cursor-pointer transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
-            <form onsubmit="handleRoomSubmit(event)" class="mt-4 space-y-3.5 text-xs">
+
+            <!-- Modal Body (Spacious 2-Column Form) -->
+            <form id="roomForm" onsubmit="handleRoomSubmit(event)" class="overflow-y-auto p-6 sm:p-8 space-y-6 text-sm flex-1">
                 {% csrf_token %}
                 <input type="hidden" id="editRoomId" value="">
-                
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">รหัสห้อง (Room Code)</label>
-                        <input type="text" id="newRoomCode" required placeholder="เช่น BD-401" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-blue-600 font-mono-code font-bold">
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    
+                    <!-- LEFT COLUMN (General Information & Categories) -->
+                    <div class="lg:col-span-6 space-y-5">
+                        
+                        <!-- Room Code & Name -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="sm:col-span-1">
+                                <label class="block font-semibold text-slate-700 mb-1.5 text-xs sm:text-sm">รหัสสถานที่ <span class="text-rose-500">*</span></label>
+                                <input type="text" id="newRoomCode" required placeholder="เช่น BD-401" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-blue-600 font-mono-code font-bold text-slate-900 bg-slate-50/60 text-sm">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="block font-semibold text-slate-700 mb-1.5 text-xs sm:text-sm">ชื่อห้อง / สถานที่ <span class="text-rose-500">*</span></label>
+                                <input type="text" id="newRoomName" required placeholder="เช่น Synergy Boardroom" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-blue-600 text-slate-900 font-medium text-sm">
+                            </div>
+                        </div>
+
+                        <!-- Pricing & Unit -->
+                        <div class="grid grid-cols-2 gap-4 bg-slate-50/90 p-4 rounded-2xl border border-slate-200">
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1.5 text-xs sm:text-sm">อัตราค่าบริการ (บาท) <span class="text-rose-500">*</span></label>
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 font-bold text-base">฿</span>
+                                    <input type="number" step="0.01" id="newRoomPrice" required value="500.00" class="w-full pl-8 pr-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-blue-600 font-mono-code font-bold text-slate-900 bg-white text-base">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1.5 text-xs sm:text-sm">หน่วยคิดราคา</label>
+                                <select id="newRoomPriceUnit" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-blue-600 bg-white text-slate-900 font-medium text-sm">
+                                    <option value="hour">ต่อชั่วโมง (/ ชม.)</option>
+                                    <option value="day">ต่อวัน (/ วัน)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Building, Floor, Capacity -->
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1.5 text-xs sm:text-sm">อาคาร</label>
+                                <input type="text" id="newRoomBuilding" value="อาคาร B" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-blue-600 text-slate-900 text-sm">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1.5 text-xs sm:text-sm">ชั้น</label>
+                                <input type="number" id="newRoomFloor" value="4" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-blue-600 text-slate-900 text-sm font-semibold">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1.5 text-xs sm:text-sm">ความจุ (คน) <span class="text-rose-500">*</span></label>
+                                <input type="number" id="newRoomCap" required value="20" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-blue-600 font-bold text-slate-900 text-sm">
+                            </div>
+                        </div>
+
+                        <!-- 6 System Categories + Custom Category Selector (Max 3) -->
+                        <div class="space-y-3 pt-2">
+                            <div class="flex items-center justify-between">
+                                <label class="font-bold text-slate-800 text-sm">
+                                    ประเภทสถานที่ / หมวดหมู่ <span class="text-slate-400 font-normal text-xs">(เลือกได้สูงสุด 3 ประเภท)</span>
+                                </label>
+                                <span id="categoryCountBadge" class="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                                    เลือกแล้ว: 0/3
+                                </span>
+                            </div>
+
+                            <!-- 6 Official Category Cards (No Truncation, Generous Padding) -->
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="categoryPillsGrid">
+                                <button type="button" onclick="toggleRoomCategorySelect('ห้องพัก')" data-cat="ห้องพัก" class="room-cat-btn flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200 hover:border-blue-300 text-left transition select-none cursor-pointer bg-white">
+                                    <span class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 text-sm">🛏️</span>
+                                    <span class="font-semibold text-slate-800 text-xs sm:text-sm">ห้องพัก</span>
+                                </button>
+                                <button type="button" onclick="toggleRoomCategorySelect('สถานที่จัดกิจกรรม')" data-cat="สถานที่จัดกิจกรรม" class="room-cat-btn flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200 hover:border-blue-300 text-left transition select-none cursor-pointer bg-white">
+                                    <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 text-sm">🎪</span>
+                                    <span class="font-semibold text-slate-800 text-xs sm:text-sm">สถานที่จัดกิจกรรม</span>
+                                </button>
+                                <button type="button" onclick="toggleRoomCategorySelect('สถานที่ทำงาน')" data-cat="สถานที่ทำงาน" class="room-cat-btn flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200 hover:border-blue-300 text-left transition select-none cursor-pointer bg-white">
+                                    <span class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0 text-sm">💼</span>
+                                    <span class="font-semibold text-slate-800 text-xs sm:text-sm">สถานที่ทำงาน</span>
+                                </button>
+                                <button type="button" onclick="toggleRoomCategorySelect('บ้านพัก')" data-cat="บ้านพัก" class="room-cat-btn flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200 hover:border-blue-300 text-left transition select-none cursor-pointer bg-white">
+                                    <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0 text-sm">🏡</span>
+                                    <span class="font-semibold text-slate-800 text-xs sm:text-sm">บ้านพัก</span>
+                                </button>
+                                <button type="button" onclick="toggleRoomCategorySelect('โรงละคร & การแสดง')" data-cat="โรงละคร & การแสดง" class="room-cat-btn flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200 hover:border-blue-300 text-left transition select-none cursor-pointer bg-white">
+                                    <span class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center flex-shrink-0 text-sm">🎭</span>
+                                    <span class="font-semibold text-slate-800 text-xs sm:text-sm">โรงละคร &amp; การแสดง</span>
+                                </button>
+                                <button type="button" onclick="toggleRoomCategorySelect('ห้องประชุม')" data-cat="ห้องประชุม" class="room-cat-btn flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200 hover:border-blue-300 text-left transition select-none cursor-pointer bg-white">
+                                    <span class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0 text-sm">👥</span>
+                                    <span class="font-semibold text-slate-800 text-xs sm:text-sm">ห้องประชุม</span>
+                                </button>
+                            </div>
+
+                            <!-- Custom Category Tag Adder -->
+                            <div class="flex items-center gap-2 pt-1">
+                                <input type="text" id="customCategoryInput" placeholder="+ กำหนดประเภทหรือแท็กหมวดหมู่เอง..." onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomCategoryFromInput();}" class="flex-1 px-4 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-500 text-xs sm:text-sm">
+                                <button type="button" onclick="addCustomCategoryFromInput()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold cursor-pointer transition text-xs sm:text-sm">เพิ่มแท็ก</button>
+                            </div>
+                            
+                            <!-- Selected Categories Tag Pills Display -->
+                            <div id="selectedCategoriesDisplay" class="flex flex-wrap gap-2 pt-1 min-h-[32px]"></div>
+                        </div>
+
+                        <!-- Active Toggle -->
+                        <div class="pt-3 flex items-center gap-3">
+                            <input type="checkbox" id="newRoomActive" checked class="w-5 h-5 rounded text-blue-600 border-slate-300 focus:ring-blue-500 cursor-pointer">
+                            <label for="newRoomActive" class="font-semibold text-slate-700 cursor-pointer select-none text-sm">เปิดให้บริการทันที (Active พร้อมให้ผู้ใช้ค้นหาและจอง)</label>
+                        </div>
+
                     </div>
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">ประเภทสถานที่</label>
-                        <select id="newRoomType" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-blue-600">
-                            <option value="meeting">ห้องประชุม (Meeting Room)</option>
-                            <option value="classroom">ห้องเรียนบรรยาย (Classroom)</option>
-                            <option value="auditorium">หอประชุมใหญ่ (Auditorium)</option>
-                            <option value="lab">ห้องปฏิบัติการ (Lab)</option>
-                        </select>
+
+                    <!-- RIGHT COLUMN (Photo Upload / Preview & Amenities Checklist) -->
+                    <div class="lg:col-span-6 space-y-5">
+                        
+                        <!-- Room Multi-Photo Gallery & Interactive Carousel Manager (Up to 10 Photos) -->
+                        <div class="space-y-2.5">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <label class="font-bold text-slate-800 text-sm">รูปภาพสถานที่และแกลเลอรี</label>
+                                    <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200">สูงสุด 10 รูป</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span id="adminGalleryCounterBadge" class="text-xs font-bold text-slate-700 font-mono-code bg-slate-100 px-2.5 py-0.5 rounded-lg border border-slate-200">
+                                        0 / 10 รูป
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <!-- Spacious Large Preview Canvas with Carousel Controls -->
+                            <div id="adminGalleryViewerCanvas" class="relative w-full h-72 sm:h-80 rounded-2xl border-2 border-slate-300 overflow-hidden bg-slate-900 flex items-center justify-center group select-none shadow-md">
+                                
+                                <!-- Active Main Image -->
+                                <img id="adminGalleryMainImage" src="" alt="Room Photo" class="w-full h-full object-cover transition-all duration-300 hidden">
+                                
+                                <!-- Empty Placeholder (When 0 photos) -->
+                                <div id="adminGalleryEmptyState" class="flex flex-col items-center justify-center p-6 text-center text-slate-300">
+                                    <div class="w-14 h-14 rounded-2xl bg-slate-800/90 text-blue-400 flex items-center justify-center mb-3 border border-slate-700 shadow-inner">
+                                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                    </div>
+                                    <p class="font-bold text-white text-sm">ยังไม่มีรูปภาพสถานที่</p>
+                                    <p class="text-xs text-slate-400 mt-1">คลิกปุ่ม "+ เพิ่มรูปภาพ" ด้านล่าง เพื่ออัปโหลด (เพิ่มได้สูงสุด 10 รูป)</p>
+                                    <button type="button" onclick="document.getElementById('adminGalleryFileInput').click()" class="mt-3 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition shadow-md cursor-pointer flex items-center gap-1.5">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                                        <span>เลือกรูปภาพสถานที่</span>
+                                    </button>
+                                </div>
+
+                                <!-- Prev Slide Button (<) -->
+                                <button type="button" id="adminGalleryPrevBtn" onclick="adminGalleryPrev(event)" title="รูปก่อนหน้า (หรือกดลูกศร ซ้าย)" class="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/80 hover:bg-slate-900 text-white flex items-center justify-center backdrop-blur-md shadow-xl transition transform hover:scale-110 active:scale-95 cursor-pointer z-30 hidden border border-white/20">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+                                </button>
+
+                                <!-- Next Slide Button (>) -->
+                                <button type="button" id="adminGalleryNextBtn" onclick="adminGalleryNext(event)" title="รูปถัดไป (หรือกดลูกศร ขวา)" class="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/80 hover:bg-slate-900 text-white flex items-center justify-center backdrop-blur-md shadow-xl transition transform hover:scale-110 active:scale-95 cursor-pointer z-30 hidden border border-white/20">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                                </button>
+
+                                <!-- Floating Top Badges & Actions -->
+                                <div id="adminGalleryTopBadges" class="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none z-20 hidden">
+                                    <div class="flex items-center gap-2">
+                                        <span id="adminActivePhotoRoleBadge" class="px-3 py-1 rounded-full text-xs font-bold text-white shadow-md backdrop-blur-md flex items-center gap-1 bg-blue-600/90 border border-white/20">
+                                            ⭐ ภาพหน้าปกหลัก
+                                        </span>
+                                        <span id="adminActivePhotoIndexBadge" class="px-2.5 py-1 rounded-full text-xs font-bold text-white bg-black/60 backdrop-blur-md border border-white/10 font-mono-code">
+                                            1 / 1
+                                        </span>
+                                    </div>
+
+                                    <div class="flex items-center gap-2 pointer-events-auto">
+                                        <button type="button" onclick="adminTriggerReplaceActivePhoto(event)" title="เปลี่ยนรูปนี้ด้วยไฟล์ใหม่" class="px-3 py-1.5 rounded-xl bg-slate-900/85 hover:bg-slate-900 text-white text-xs font-semibold backdrop-blur-md border border-white/20 shadow-md transition cursor-pointer flex items-center gap-1.5 hover:border-white/40">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                                            <span>เปลี่ยนรูป</span>
+                                        </button>
+                                        <button type="button" onclick="adminDeleteActivePhoto(event)" title="ลบรูปนี้" class="px-3 py-1.5 rounded-xl bg-rose-600/90 hover:bg-rose-600 text-white text-xs font-bold shadow-md backdrop-blur-md transition cursor-pointer flex items-center gap-1.5">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                            <span>ลบรูป</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Dots Indicator -->
+                                <div id="adminGalleryDotsContainer" class="absolute bottom-3 inset-x-0 flex items-center justify-center gap-1.5 pointer-events-none z-20 hidden"></div>
+                            </div>
+
+                            <!-- Horizontal Thumbnail Filmstrip (คลิกเพื่อเลือกดูรูป หรือเลื่อนดู) -->
+                            <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200">
+                                <div class="flex items-center justify-between text-xs text-slate-500 mb-2 px-1">
+                                    <span class="flex items-center gap-1.5 font-medium">
+                                        <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/></svg>
+                                        <span>คลิกรูปด้านล่างเพื่อเลือกดู หรือกดลูกศร &lt; &gt; เพื่อเลื่อนดูภาพสถานที่</span>
+                                    </span>
+                                    <span id="adminGalleryTotalText" class="font-bold text-slate-700 tabular-nums">0 / 10 รูป</span>
+                                </div>
+
+                                <!-- Filmstrip Track -->
+                                <div id="adminGalleryThumbnailsTrack" class="flex items-center gap-2.5 overflow-x-auto py-1 px-0.5 scrollbar-thin min-h-[64px]"></div>
+                            </div>
+
+                            <!-- Hidden File Pickers -->
+                            <input type="file" id="adminGalleryFileInput" multiple accept="image/*" onchange="handleAdminGalleryFilesAdded(event)" class="hidden">
+                            <input type="file" id="adminReplacePhotoInput" accept="image/*" onchange="handleAdminReplacePhoto(event)" class="hidden">
+                            <input type="file" id="newRoomImage" accept="image/*" class="hidden">
+                        </div>
+
+                        <!-- Amenities (Interactive Checklist & Custom Tag Input) -->
+                        <div class="space-y-2.5">
+                            <div class="flex items-center justify-between">
+                                <label class="font-bold text-slate-800 text-sm">สิ่งอำนวยความสะดวก (Amenities Checklist)</label>
+                                <span id="amenitiesCountBadge" class="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200">เลือกแล้ว 0 รายการ</span>
+                            </div>
+
+                            <!-- Interactive Preset Amenities Pills (Spacious Box) -->
+                            <div class="flex flex-wrap gap-2 max-h-56 overflow-y-auto p-2.5 border border-slate-200 rounded-2xl bg-slate-50/60" id="presetAmenitiesContainer"></div>
+
+                            <!-- Custom Amenity Input Adder -->
+                            <div class="flex items-center gap-2 pt-1">
+                                <input type="text" id="customAmenityInput" placeholder="+ พิมพ์เพิ่มสิ่งอำนวยความสะดวกอื่นๆ..." onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomAmenityFromInput();}" class="flex-1 px-4 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-500 text-xs sm:text-sm">
+                                <button type="button" onclick="addCustomAmenityFromInput()" class="px-4 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold cursor-pointer transition text-xs sm:text-sm">เพิ่ม</button>
+                            </div>
+
+                            <!-- Selected Amenities Chips List -->
+                            <div id="selectedAmenitiesDisplay" class="flex flex-wrap gap-1.5 pt-1 min-h-[32px]"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Footer Bar -->
+                <div class="pt-5 flex items-center justify-between border-t border-slate-100 flex-shrink-0">
+                    <span class="text-xs text-slate-400">ระบบจะอัปเดตข้อมูลสถานที่และแสดงผลในระบบค้นหาทันที</span>
+                    <div class="flex items-center gap-3">
+                        <button type="button" onclick="closeRoomModal()" class="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 font-semibold cursor-pointer transition text-sm">ยกเลิก</button>
+                        <button type="submit" id="roomSubmitBtn" class="px-7 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-md cursor-pointer transition flex items-center gap-2 text-sm">
+                            <span>บันทึกข้อมูลสถานที่</span>
+                        </button>
                     </div>
                 </div>
 
-                <div>
-                    <label class="block font-semibold text-slate-700 mb-1">ชื่อห้อง / สถานที่</label>
-                    <input type="text" id="newRoomName" required placeholder="เช่น Synergy Boardroom" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-blue-600">
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">อัตราค่าบริการ (บาท)</label>
-                        <input type="number" step="0.01" id="newRoomPrice" required value="500.00" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-blue-600 font-mono-code">
-                    </div>
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">หน่วยคิดราคา</label>
-                        <select id="newRoomPriceUnit" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-blue-600">
-                            <option value="hour">ต่อชั่วโมง (/ ชม.)</option>
-                            <option value="day">ต่อวัน (/ วัน)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-3 gap-3">
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">อาคาร</label>
-                        <input type="text" id="newRoomBuilding" value="อาคาร B" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-blue-600">
-                    </div>
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">ชั้น</label>
-                        <input type="number" id="newRoomFloor" value="4" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-blue-600">
-                    </div>
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">ความจุ (คน)</label>
-                        <input type="number" id="newRoomCap" required value="20" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-blue-600">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block font-semibold text-slate-700 mb-1">แท็กหมวดหมู่ (คั่นด้วยจุลภาค สูงสุด 3 แท็ก)</label>
-                    <input type="text" id="newRoomTags" placeholder="เช่น สถานที่ทำงาน, จัดกิจกรรม, ประชุมด่วน" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-blue-600">
-                </div>
-
-                <div>
-                    <label class="block font-semibold text-slate-700 mb-1">สิ่งอำนวยความสะดวก (Amenities)</label>
-                    <textarea id="newRoomAmenities" rows="2" placeholder="เช่น โปรเจคเตอร์ 4K, ไวท์บอร์ด, ปลั๊กไฟรอบห้อง" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-blue-600"></textarea>
-                </div>
-
-                <div class="flex items-center gap-2 pt-1">
-                    <input type="checkbox" id="newRoomActive" checked class="w-4 h-4 rounded text-blue-600 border-slate-300 focus:ring-blue-500">
-                    <label for="newRoomActive" class="text-xs font-semibold text-slate-700">เปิดให้บริการทันที (Active พร้อมใช้งาน)</label>
-                </div>
-
-                <div class="pt-3 flex items-center justify-end gap-2 border-t border-slate-100">
-                    <button type="button" onclick="closeRoomModal()" class="px-4 py-2 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 font-medium cursor-pointer">ยกเลิก</button>
-                    <button type="submit" id="roomSubmitBtn" class="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-sm cursor-pointer transition">บันทึกข้อมูลห้อง</button>
-                </div>
             </form>
         </div>
     </div>
@@ -1582,7 +1764,7 @@
                     <!-- Instant Live Shopee Modal Preview Button -->
                     <button type="button" onclick="previewModalFromBannerForm()" class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition flex items-center gap-1.5 cursor-pointer">
                         <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                        <span>พรีวิว Shopee Modal สด</span>
+                        <span>พรีวิว คูปอง 👁️</span>
                     </button>
 
                     <div class="flex items-center gap-2">
@@ -1721,6 +1903,13 @@
         // Switch Tab
         function switchAdminTab(tab) {
             const tabs = ['overview', 'approvals', 'rooms', 'reservations', 'coupons', 'banners', 'users', 'email', 'security', 'logs'];
+            if (!tabs.includes(tab)) tab = 'overview';
+            try {
+                if (window.location.hash !== '#' + tab) {
+                    history.replaceState(null, '', '#' + tab);
+                }
+                localStorage.setItem('adminActiveTab', tab);
+            } catch (err) {}
             tabs.forEach(t => {
                 const panel = document.getElementById(`panel${t.charAt(0).toUpperCase() + t.slice(1)}`);
                 const sideBtn = document.getElementById(`sideBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
@@ -1751,10 +1940,10 @@
             }
 
             if (tab === 'coupons') {
-                fetchAdminCoupons();
+    fetchAdminCoupons();
             } else if (tab === 'banners') {
                 fetchAdminBanners();
-                fetchAdminCoupons();
+    fetchAdminCoupons();
             }
         }
 
@@ -1919,7 +2108,7 @@
                         <td class="p-3.5 text-center">
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" onchange="toggleCouponActive('${cp.id}', this.checked)" ${cp.is_active ? 'checked' : ''} class="sr-only peer">
-                                <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
+                                <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
                             </label>
                         </td>
 
@@ -1959,11 +2148,11 @@
                     if (cp) cp.is_active = newStatus;
                 } else {
                     showToast('ไม่สามารถเปลี่ยนสถานะคูปองได้', 'error');
-                    fetchAdminCoupons();
+        fetchAdminCoupons();
                 }
             } catch (err) {
                 showToast('เกิดข้อผิดพลาดในการเชื่อมต่อ', 'error');
-                fetchAdminCoupons();
+    fetchAdminCoupons();
             }
         }
 
@@ -2102,7 +2291,7 @@
                 if (res.ok) {
                     closeCouponModal();
                     showToast(isEdit ? `อัปเดตคูปอง ${payload.code} สำเร็จ` : `สร้างคูปอง ${payload.code} สำเร็จ`, 'success');
-                    fetchAdminCoupons();
+        fetchAdminCoupons();
                 } else {
                     let errorText = 'ไม่สามารถบันทึกข้อมูลคูปองได้: ';
                     if (typeof data === 'object') {
@@ -2141,7 +2330,7 @@
                 });
                 if (res.ok || res.status === 204) {
                     showToast(`ลบคูปอง ${code} เรียบร้อยแล้ว`, 'success');
-                    fetchAdminCoupons();
+        fetchAdminCoupons();
                 } else {
                     showToast('ไม่สามารถลบคูปองได้', 'error');
                 }
@@ -2374,16 +2563,16 @@
                         <!-- Action Buttons Bar -->
                         <div class="p-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between gap-2">
                             <!-- Live Shopee Modal Preview Button -->
-                            <button type="button" onclick="openCampaignModal('${b.id}')" class="px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:text-rose-600 hover:border-rose-300 text-xs font-semibold shadow-2xs transition flex items-center gap-1 cursor-pointer" title="พรีวิว Modal สไตล์ Shopee">
+                            <button type="button" onclick="openCampaignModal('${b.id}')" class="px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:text-rose-600 hover:border-rose-300 text-xs font-semibold shadow-2xs transition flex items-center gap-1 cursor-pointer" title="พรีวิว คูปอง">
                                 <svg class="w-3.5 h-3.5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                <span>พรีวิว Shopee</span>
+                                <span>พรีวิว คูปอง</span>
                             </button>
 
                             <div class="flex items-center gap-1.5">
                                 <!-- Toggle Switch -->
                                 <label class="relative inline-flex items-center cursor-pointer mr-1">
                                     <input type="checkbox" onchange="toggleBannerActive('${b.id}', this.checked)" ${b.is_active ? 'checked' : ''} class="sr-only peer">
-                                    <div class="w-8 h-4 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600"></div>
+                                    <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
                                 </label>
 
                                 <!-- Edit -->
@@ -2999,39 +3188,779 @@
             }
         }
 
-        // Room CRUD Logic
+        // ==================== ROOM CRUD CONTROLLER (EXPANDED & NORMALIZED) ====================
+        let selectedRoomCategories = new Set();
+        let selectedRoomAmenities = new Set();
+        let currentRoomImageUrl = '';
+
+        // 1. Canonical Category Mapping (Resolves 'จัดกิจกรรม' vs 'สถานที่จัดกิจกรรม', 'โรงละคร' vs 'โรงละคร & การแสดง')
+        const CANONICAL_CATEGORY_MAP = {
+            'จัดกิจกรรม': 'สถานที่จัดกิจกรรม',
+            'สถานที่จัดกิจกรรม': 'สถานที่จัดกิจกรรม',
+            'event': 'สถานที่จัดกิจกรรม',
+            'โรงละคร': 'โรงละคร & การแสดง',
+            'โรงละคร & การแสดง': 'โรงละคร & การแสดง',
+            'theater': 'โรงละคร & การแสดง',
+            'สถานที่ทำงาน': 'สถานที่ทำงาน',
+            'work': 'สถานที่ทำงาน',
+            'ห้องพัก': 'ห้องพัก',
+            'room': 'ห้องพัก',
+            'บ้านพัก': 'บ้านพัก',
+            'villa': 'บ้านพัก',
+            'ห้องประชุม': 'ห้องประชุม',
+            'meeting': 'ห้องประชุม',
+            'classroom': 'ห้องประชุม',
+            'auditorium': 'สถานที่จัดกิจกรรม',
+            'lab': 'สถานที่ทำงาน'
+        };
+
+        const PRESET_SYSTEM_CATEGORIES = [
+            'ห้องพัก',
+            'สถานที่จัดกิจกรรม',
+            'สถานที่ทำงาน',
+            'บ้านพัก',
+            'โรงละคร & การแสดง',
+            'ห้องประชุม'
+        ];
+
+        // 2. Exact Amenities Catalog matching Database and User Portal Filter
+        const SYSTEM_AMENITIES_CATALOG = [
+            { id: 'High-Speed Wi-Fi 6', en: 'High-Speed Wi-Fi 6', th: 'Wi-Fi ความเร็วสูง' },
+            { id: '4K Projection Mapping', en: '4K Projection Mapping', th: 'โปรเจคเตอร์ 4K' },
+            { id: 'Dolby Atmos Cinema Audio', en: 'Dolby Atmos Cinema Audio', th: 'ระบบเสียง Dolby Atmos' },
+            { id: 'Private Jacuzzi & Pool', en: 'Private Jacuzzi & Pool', th: 'สระว่ายน้ำส่วนตัว & อ่างจากุซซี่' },
+            { id: 'Panoramic View Balcony', en: 'Panoramic View Balcony', th: 'ระเบียงชมวิวพาโนรามา' },
+            { id: 'Smart Home Automation', en: 'Smart Home Automation', th: 'สมาร์ทโฮมอัจฉริยะ' },
+            { id: 'Espresso & Brew Bar', en: 'Espresso & Brew Bar', th: 'บาร์กาแฟเอสเปรสโซ' },
+            { id: 'Full Kitchenette & BBQ Grill', en: 'Full Kitchenette & BBQ Grill', th: 'ครัวพร้อมอุปกรณ์ & เตาบาร์บีคิว' },
+            { id: 'Ergonomic Herman Miller Chairs', en: 'Ergonomic Herman Miller Chairs', th: 'เก้าอี้เพื่อสุขภาพ Ergonomic' },
+            { id: 'Dual 4K Monitors', en: 'Dual 4K Monitors', th: 'จอมอนิเตอร์คู่ 4K' },
+            { id: 'Meeting Pods', en: 'Meeting Pods', th: 'ตู้ประชุมเก็บเสียงส่วนตัว' },
+            { id: '10Gbps Dedicated Fiber', en: '10Gbps Dedicated Fiber', th: 'อินเทอร์เน็ตไฟเบอร์ 10Gbps' },
+            { id: '24 Ultra-Performance Workstations', en: '24 Ultra-Performance Workstations', th: 'เวิร์กสเตชัน 24 ชุด' },
+            { id: 'Modular Partition Layout', en: 'Modular Partition Layout', th: 'ผนังพาร์ติชันกั้นห้อง' },
+            { id: 'High-Output PA System', en: 'High-Output PA System', th: 'เครื่องเสียง PA กำลังสูง' },
+            { id: 'Portable Stage & Risers', en: 'Portable Stage & Risers', th: 'เวทีและอัฒจันทร์เคลื่อนที่' },
+            { id: 'Workshop Craft Tables', en: 'Workshop Craft Tables', th: 'โต๊ะทำงานเวิร์กช็อป' },
+            { id: 'King-Size Luxury Bed', en: 'King-Size Luxury Bed', th: 'เตียงคิงไซส์ลักชัวรี' },
+            { id: 'Authentic Chinese Rosewood Furniture', en: 'Authentic Chinese Rosewood Furniture', th: 'เฟอร์นิเจอร์ไม้ชิงชัน' },
+            { id: 'Traditional Kung Fu Tea Station', en: 'Traditional Kung Fu Tea Station', th: 'ชุดโต๊ะชงชากังฟู' },
+            { id: 'Courtyard Garden View', en: 'Courtyard Garden View', th: 'วิวสวนคอร์ทยาร์ด' },
+            { id: 'Private En-suite Bath', en: 'Private En-suite Bath', th: 'ห้องน้ำในตัวส่วนตัว' },
+            { id: 'Proscenium Main Stage', en: 'Proscenium Main Stage', th: 'เวทีการแสดงหลัก' },
+            { id: 'Automated Flying Rigging', en: 'Automated Flying Rigging', th: 'ระบบสลิงชักรอกฉาก' },
+            { id: 'DMX Intelligent Stage Lighting', en: 'DMX Intelligent Stage Lighting', th: 'ระบบไฟเวทีอัจฉริยะ DMX' },
+            { id: 'Green Rooms & Dressing Suites', en: 'Green Rooms & Dressing Suites', th: 'ห้องพักศิลปิน & แต่งตัว' },
+            { id: 'Luxury Lounge Sofas', en: 'Luxury Lounge Sofas', th: 'โซฟาเลานจ์พักผ่อน' },
+            { id: 'Acoustic Soundproofing', en: 'Acoustic Soundproofing', th: 'ระบบซับเสียงสตูดิโอ' },
+            { id: 'Ambient BGM', en: 'Ambient BGM', th: 'ดนตรีบรรเลงสร้างบรรยากาศ' },
+            { id: 'Smart Touch Display', en: 'Smart Touch Display', th: 'จอสัมผัสอัจฉริยะ' },
+            { id: 'Whiteboard & Markers', en: 'Whiteboard & Markers', th: 'ไวท์บอร์ดและปากกา' },
+            { id: 'Inverter Air Conditioner', en: 'Inverter Air Conditioner', th: 'เครื่องปรับอากาศ Inverter' },
+            { id: 'Power Outlets & USB Charging', en: 'Power Outlets & USB Charging', th: 'เต้ารับไฟฟ้า & USB รอบห้อง' }
+        ];
+
+        // Alias map from Thai or synonyms to canonical database ID
+        const AMENITY_ALIAS_MAP = {
+            'wi-fi ความเร็วสูง': 'High-Speed Wi-Fi 6',
+            'wi-fi ความเร็วสูง 6': 'High-Speed Wi-Fi 6',
+            'wifi': 'High-Speed Wi-Fi 6',
+            'โปรเจคเตอร์ 4k': '4K Projection Mapping',
+            'ระบบเสียง dolby atmos': 'Dolby Atmos Cinema Audio',
+            'สระว่ายน้ำส่วนตัว & อ่างจากุซซี่': 'Private Jacuzzi & Pool',
+            'ระเบียงชมวิวพาโนรามา': 'Panoramic View Balcony',
+            'สมาร์ทโฮมอัจฉริยะ': 'Smart Home Automation',
+            'บาร์กาแฟเอสเปรสโซ': 'Espresso & Brew Bar',
+            'ครัวพร้อมอุปกรณ์ & เตาบาร์บีคิว': 'Full Kitchenette & BBQ Grill',
+            'เก้าอี้เพื่อสุขภาพ ergonomic': 'Ergonomic Herman Miller Chairs',
+            'เก้าอี้ ergonomic': 'Ergonomic Herman Miller Chairs',
+            'จอมอนิเตอร์คู่ 4k': 'Dual 4K Monitors',
+            'ตู้ประชุมเก็บเสียงส่วนตัว': 'Meeting Pods',
+            'อินเทอร์เน็ตไฟเบอร์ 10gbps': '10Gbps Dedicated Fiber',
+            'เวิร์กสเตชัน 24 ชุด': '24 Ultra-Performance Workstations',
+            'ผนังพาร์ติชันกั้นห้อง': 'Modular Partition Layout',
+            'เครื่องเสียง pa กำลังสูง': 'High-Output PA System',
+            'เวทีและอัฒจันทร์เคลื่อนที่': 'Portable Stage & Risers',
+            'โต๊ะทำงานเวิร์กช็อป': 'Workshop Craft Tables',
+            'เตียงคิงไซส์ลักชัวรี': 'King-Size Luxury Bed',
+            'เฟอร์นิเจอร์ไม้ชิงชัน': 'Authentic Chinese Rosewood Furniture',
+            'ชุดโต๊ะชงชากังฟู': 'Traditional Kung Fu Tea Station',
+            'วิวสวนคอร์ทยาร์ด': 'Courtyard Garden View',
+            'ห้องน้ำในตัวส่วนตัว': 'Private En-suite Bath',
+            'เวทีการแสดงหลัก': 'Proscenium Main Stage',
+            'ระบบสลิงชักรอกฉาก': 'Automated Flying Rigging',
+            'ระบบไฟเวทีอัจฉริยะ dmx': 'DMX Intelligent Stage Lighting',
+            'ห้องพักศิลปิน & แต่งตัว': 'Green Rooms & Dressing Suites',
+            'โซฟาเลานจ์พักผ่อน': 'Luxury Lounge Sofas',
+            'ระบบซับเสียงสตูดิโอ': 'Acoustic Soundproofing',
+            'ดนตรีบรรเลงสร้างบรรยากาศ': 'Ambient BGM',
+            'จอสัมผัสอัจฉริยะ': 'Smart Touch Display',
+            'ไวท์บอร์ดและปากกา': 'Whiteboard & Markers',
+            'เครื่องปรับอากาศ inverter': 'Inverter Air Conditioner',
+            'เครื่องปรับอากาศ': 'Inverter Air Conditioner',
+            'เต้ารับไฟฟ้า & usb รอบห้อง': 'Power Outlets & USB Charging'
+        };
+
+        function normalizeAmenity(name) {
+            if (!name) return '';
+            const clean = name.trim();
+            const lower = clean.toLowerCase();
+            return AMENITY_ALIAS_MAP[lower] || clean;
+        }
+
+        function getAmenityDisplay(id) {
+            const found = SYSTEM_AMENITIES_CATALOG.find(c => c.id.toLowerCase() === id.toLowerCase());
+            if (found) {
+                return `${found.en} <span class="text-[11px] opacity-75 font-normal">(${found.th})</span>`;
+            }
+            return escapeCampHtml(id);
+        }
+
+        // --- Category Controller ---
+        function toggleRoomCategorySelect(cat) {
+            cat = (cat || '').trim();
+            if (!cat) return;
+            const canonical = CANONICAL_CATEGORY_MAP[cat] || cat;
+            if (selectedRoomCategories.has(canonical)) {
+                selectedRoomCategories.delete(canonical);
+            } else {
+                if (selectedRoomCategories.size >= 3) {
+                    showToast('เลือกได้สูงสุด 3 ประเภทต่อ 1 สถานที่เท่านั้น', 'warning');
+                    return;
+                }
+                selectedRoomCategories.add(canonical);
+            }
+            renderRoomCategoriesUI();
+        }
+
+        function addCustomCategoryFromInput() {
+            const inp = document.getElementById('customCategoryInput');
+            const val = (inp.value || '').trim();
+            if (!val) return;
+            const canonical = CANONICAL_CATEGORY_MAP[val] || val;
+            if (selectedRoomCategories.size >= 3) {
+                showToast('เลือกได้สูงสุด 3 ประเภทต่อ 1 สถานที่เท่านั้น', 'warning');
+                return;
+            }
+            selectedRoomCategories.add(canonical);
+            inp.value = '';
+            renderRoomCategoriesUI();
+        }
+
+        function removeRoomCategory(cat) {
+            selectedRoomCategories.delete(cat);
+            renderRoomCategoriesUI();
+        }
+
+        function renderRoomCategoriesUI() {
+            // Update preset buttons styling
+            const buttons = document.querySelectorAll('.room-cat-btn');
+            buttons.forEach(btn => {
+                const cat = btn.getAttribute('data-cat');
+                const canonical = CANONICAL_CATEGORY_MAP[cat] || cat;
+                const isSelected = selectedRoomCategories.has(canonical);
+                if (isSelected) {
+                    btn.classList.add('border-blue-600', 'bg-blue-50/90', 'text-blue-700', 'ring-2', 'ring-blue-500');
+                    btn.classList.remove('border-slate-200', 'bg-white', 'text-slate-800');
+                } else {
+                    btn.classList.remove('border-blue-600', 'bg-blue-50/90', 'text-blue-700', 'ring-2', 'ring-blue-500');
+                    btn.classList.add('border-slate-200', 'bg-white', 'text-slate-800');
+                }
+            });
+
+            // Update badge
+            const count = selectedRoomCategories.size;
+            const badge = document.getElementById('categoryCountBadge');
+            if (badge) {
+                badge.textContent = `เลือกแล้ว: ${count}/3`;
+                if (count >= 3) {
+                    badge.className = 'px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300';
+                } else if (count > 0) {
+                    badge.className = 'px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 border border-blue-200';
+                } else {
+                    badge.className = 'px-2.5 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-500 border border-slate-200';
+                }
+            }
+
+            // Render selected category chips
+            const disp = document.getElementById('selectedCategoriesDisplay');
+            if (disp) {
+                disp.innerHTML = Array.from(selectedRoomCategories).map(cat => `
+                    <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-blue-600 text-white font-semibold text-xs sm:text-sm shadow-xs">
+                        <span>${escapeCampHtml(cat)}</span>
+                        <button type="button" onclick="removeRoomCategory('${escapeCampHtml(cat)}')" class="hover:bg-blue-700 rounded-lg p-0.5 transition cursor-pointer">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </span>
+                `).join('');
+            }
+        }
+
+        // --- Amenities Controller ---
+        function renderPresetAmenitiesList() {
+            const cont = document.getElementById('presetAmenitiesContainer');
+            if (!cont) return;
+            cont.innerHTML = SYSTEM_AMENITIES_CATALOG.map(item => {
+                const isSel = selectedRoomAmenities.has(item.id);
+                return `
+                    <button type="button" onclick="toggleRoomAmenitySelect('${escapeCampHtml(item.id)}')" class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium transition cursor-pointer flex items-center gap-1.5 text-left ${isSel ? 'bg-blue-600 text-white shadow-xs' : 'bg-white border border-slate-200 text-slate-700 hover:border-blue-400 hover:bg-blue-50/50'}">
+                        ${isSel ? '<svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>' : ''}
+                        <span class="font-bold">${escapeCampHtml(item.en)}</span>
+                        <span class="text-[11px] opacity-75 font-normal">(${escapeCampHtml(item.th)})</span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function toggleRoomAmenitySelect(am) {
+            am = normalizeAmenity(am);
+            if (!am) return;
+            if (selectedRoomAmenities.has(am)) {
+                selectedRoomAmenities.delete(am);
+            } else {
+                selectedRoomAmenities.add(am);
+            }
+            renderRoomAmenitiesUI();
+        }
+
+        function addCustomAmenityFromInput() {
+            const inp = document.getElementById('customAmenityInput');
+            const val = (inp.value || '').trim();
+            if (!val) return;
+            val.split(',').forEach(item => {
+                const norm = normalizeAmenity(item);
+                if (norm) selectedRoomAmenities.add(norm);
+            });
+            inp.value = '';
+            renderRoomAmenitiesUI();
+        }
+
+        function removeRoomAmenity(am) {
+            selectedRoomAmenities.delete(am);
+            renderRoomAmenitiesUI();
+        }
+
+        function renderRoomAmenitiesUI() {
+            renderPresetAmenitiesList();
+            const count = selectedRoomAmenities.size;
+            const badge = document.getElementById('amenitiesCountBadge');
+            if (badge) badge.textContent = `เลือกแล้ว ${count} รายการ`;
+
+            const disp = document.getElementById('selectedAmenitiesDisplay');
+            if (disp) {
+                disp.innerHTML = Array.from(selectedRoomAmenities).map(am => {
+                    const found = SYSTEM_AMENITIES_CATALOG.find(c => c.id.toLowerCase() === am.toLowerCase());
+                    const label = found ? `${found.en} (${found.th})` : am;
+                    return `
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 text-blue-800 text-xs font-semibold border border-blue-200 shadow-2xs">
+                            <span>${escapeCampHtml(label)}</span>
+                            <button type="button" onclick="removeRoomAmenity('${escapeCampHtml(am)}')" class="text-blue-500 hover:text-rose-600 transition cursor-pointer">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                            </button>
+                        </span>
+                    `;
+                }).join('');
+            }
+        }
+
+        // --- Multi-Photo Gallery & Interactive Carousel Controller (Up to 10 Photos) ---
+        let adminModalPhotos = []; // array of { id, isCover, url, file, isNew }
+        let adminActivePhotoIdx = 0;
+        let adminPendingCoverFile = null;
+
+        function getAdminAuthHeaders() {
+            const token = localStorage.getItem('access_token');
+            const headers = {
+                'X-CSRFToken': getCookie('csrftoken') || ''
+            };
+            if (token) headers['Authorization'] = 'Bearer ' + token;
+            return headers;
+        }
+
+        function renderAdminGalleryUI() {
+            const total = adminModalPhotos.length;
+            const emptyState = document.getElementById('adminGalleryEmptyState');
+            const mainImg = document.getElementById('adminGalleryMainImage');
+            const prevBtn = document.getElementById('adminGalleryPrevBtn');
+            const nextBtn = document.getElementById('adminGalleryNextBtn');
+            const topBadges = document.getElementById('adminGalleryTopBadges');
+            const dotsContainer = document.getElementById('adminGalleryDotsContainer');
+            const counterBadge = document.getElementById('adminGalleryCounterBadge');
+            const totalText = document.getElementById('adminGalleryTotalText');
+            const track = document.getElementById('adminGalleryThumbnailsTrack');
+
+            if (!track) return;
+
+            if (total === 0) {
+                if (emptyState) emptyState.classList.remove('hidden');
+                if (mainImg) { mainImg.classList.add('hidden'); mainImg.src = ''; }
+                if (prevBtn) prevBtn.classList.add('hidden');
+                if (nextBtn) nextBtn.classList.add('hidden');
+                if (topBadges) topBadges.classList.add('hidden');
+                if (dotsContainer) dotsContainer.classList.add('hidden');
+                if (counterBadge) counterBadge.textContent = '0 / 10 รูป';
+                if (totalText) totalText.textContent = '0 / 10 รูป';
+                track.innerHTML = `
+                    <div onclick="document.getElementById('adminGalleryFileInput').click()" class="w-24 h-16 rounded-xl border-2 border-dashed border-blue-400 bg-blue-50/70 hover:bg-blue-100 text-blue-700 flex flex-col items-center justify-center cursor-pointer transition flex-shrink-0 group">
+                        <svg class="w-5 h-5 text-blue-600 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        <span class="text-[11px] font-bold">+ เพิ่มรูป</span>
+                        <span class="text-[9px] text-blue-500 font-medium">ได้อีก 10 รูป</span>
+                    </div>
+                `;
+                return;
+            }
+
+            // Clamp active index
+            if (adminActivePhotoIdx >= total) adminActivePhotoIdx = total - 1;
+            if (adminActivePhotoIdx < 0) adminActivePhotoIdx = 0;
+
+            const activePhoto = adminModalPhotos[adminActivePhotoIdx];
+
+            if (emptyState) emptyState.classList.add('hidden');
+            if (mainImg) {
+                mainImg.classList.remove('hidden');
+                mainImg.src = activePhoto.url;
+            }
+
+            // Prev & Next Buttons (Show if > 1 photo)
+            if (total > 1) {
+                if (prevBtn) prevBtn.classList.remove('hidden');
+                if (nextBtn) nextBtn.classList.remove('hidden');
+            } else {
+                if (prevBtn) prevBtn.classList.add('hidden');
+                if (nextBtn) nextBtn.classList.add('hidden');
+            }
+
+            // Top Badges
+            if (topBadges) topBadges.classList.remove('hidden');
+            const roleBadge = document.getElementById('adminActivePhotoRoleBadge');
+            const indexBadge = document.getElementById('adminActivePhotoIndexBadge');
+
+            if (roleBadge) {
+                if (activePhoto.isCover) {
+                    roleBadge.className = 'px-3 py-1 rounded-full text-xs font-bold text-white shadow-md backdrop-blur-md flex items-center gap-1 bg-blue-600/90 border border-white/20';
+                    roleBadge.innerHTML = '⭐ ภาพหน้าปกหลัก';
+                } else {
+                    roleBadge.className = 'px-3 py-1 rounded-full text-xs font-bold text-white shadow-md backdrop-blur-md flex items-center gap-1 bg-indigo-600/90 border border-white/20';
+                    roleBadge.innerHTML = `🖼️ ภาพเพิ่มเติม #${adminActivePhotoIdx}`;
+                }
+            }
+            if (indexBadge) {
+                indexBadge.textContent = `${adminActivePhotoIdx + 1} / ${total}`;
+            }
+
+            // Dots
+            if (dotsContainer) {
+                if (total > 1) {
+                    dotsContainer.classList.remove('hidden');
+                    dotsContainer.innerHTML = adminModalPhotos.map((_, i) => `
+                        <span class="transition-all duration-200 rounded-full ${i === adminActivePhotoIdx ? 'w-6 h-1.5 bg-white shadow' : 'w-1.5 h-1.5 bg-white/50'}"></span>
+                    `).join('');
+                } else {
+                    dotsContainer.classList.add('hidden');
+                }
+            }
+
+            if (counterBadge) counterBadge.textContent = `${adminActivePhotoIdx + 1} / ${total} รูป (สูงสุด 10)`;
+            if (totalText) totalText.textContent = `${total} / 10 รูป`;
+
+            // Thumbnails Track
+            let thumbsHtml = adminModalPhotos.map((p, idx) => {
+                const isActive = idx === adminActivePhotoIdx;
+                return `
+                    <div onclick="adminSelectPhoto(${idx})" class="relative w-20 h-14 rounded-xl overflow-hidden cursor-pointer flex-shrink-0 border-2 transition-all transform hover:scale-105 group ${isActive ? 'border-blue-600 ring-2 ring-blue-500 shadow-md scale-102' : 'border-slate-300 opacity-75 hover:opacity-100 hover:border-slate-400'}">
+                        <img src="${p.url}" alt="thumb-${idx}" class="w-full h-full object-cover">
+                        <span class="absolute top-1 left-1 px-1.5 py-0.5 rounded text-[9px] font-bold font-mono-code leading-none ${p.isCover ? 'bg-blue-600 text-white' : 'bg-slate-900/80 text-white'}">
+                            ${p.isCover ? '★ ปก' : (idx + 1)}
+                        </span>
+                        <button type="button" onclick="adminDeletePhotoAtIndex(${idx}, event)" title="ลบรูปนี้" class="absolute top-1 right-1 w-5 h-5 rounded-full bg-rose-600 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition hover:bg-rose-700 shadow-sm cursor-pointer z-10">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+
+            // Add photo button slot
+            if (total < 10) {
+                const remain = 10 - total;
+                thumbsHtml += `
+                    <div onclick="document.getElementById('adminGalleryFileInput').click()" class="w-20 h-14 rounded-xl border-2 border-dashed border-blue-400 bg-blue-50/70 hover:bg-blue-100 text-blue-700 flex flex-col items-center justify-center cursor-pointer transition flex-shrink-0 group">
+                        <svg class="w-4 h-4 text-blue-600 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        <span class="text-[10px] font-bold">+ เพิ่มรูป</span>
+                        <span class="text-[8px] text-blue-500 font-medium">ได้อีก ${remain}</span>
+                    </div>
+                `;
+            } else {
+                thumbsHtml += `
+                    <div class="w-20 h-14 rounded-xl border border-slate-200 bg-slate-100 text-slate-400 flex flex-col items-center justify-center flex-shrink-0 select-none">
+                        <span class="text-[10px] font-bold">ครบ 10 รูป</span>
+                        <span class="text-[8px]">เต็มโควตา</span>
+                    </div>
+                `;
+            }
+
+            track.innerHTML = thumbsHtml;
+        }
+
+        function adminGalleryPrev(e) {
+            if (e) e.stopPropagation();
+            if (adminModalPhotos.length <= 1) return;
+            adminActivePhotoIdx = (adminActivePhotoIdx - 1 + adminModalPhotos.length) % adminModalPhotos.length;
+            renderAdminGalleryUI();
+            scrollActiveThumbnailIntoView();
+        }
+
+        function adminGalleryNext(e) {
+            if (e) e.stopPropagation();
+            if (adminModalPhotos.length <= 1) return;
+            adminActivePhotoIdx = (adminActivePhotoIdx + 1) % adminModalPhotos.length;
+            renderAdminGalleryUI();
+            scrollActiveThumbnailIntoView();
+        }
+
+        function adminSelectPhoto(idx) {
+            if (idx >= 0 && idx < adminModalPhotos.length) {
+                adminActivePhotoIdx = idx;
+                renderAdminGalleryUI();
+                scrollActiveThumbnailIntoView();
+            }
+        }
+
+        function scrollActiveThumbnailIntoView() {
+            const track = document.getElementById('adminGalleryThumbnailsTrack');
+            if (track && track.children[adminActivePhotoIdx]) {
+                track.children[adminActivePhotoIdx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }
+
+        function adminTriggerReplaceActivePhoto(e) {
+            if (e) e.stopPropagation();
+            if (adminModalPhotos.length === 0) return;
+            document.getElementById('adminReplacePhotoInput').click();
+        }
+
+        async function handleAdminReplacePhoto(e) {
+            const file = e.target.files[0];
+            e.target.value = '';
+            if (!file) return;
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('ขนาดไฟล์รูปภาพเกิน 5MB กรุณาเลือกรูปใหม่', 'warning');
+                return;
+            }
+
+            const current = adminModalPhotos[adminActivePhotoIdx];
+            if (!current) return;
+
+            if (current.isCover) {
+                adminPendingCoverFile = file;
+                current.url = URL.createObjectURL(file);
+                current.file = file;
+                renderAdminGalleryUI();
+                showToast('เปลี่ยนรูปภาพหน้าปกหลักเรียบร้อยแล้ว (จะบันทึกเมื่อกดบันทึกสถานที่)', 'info');
+            } else {
+                const editId = document.getElementById('editRoomId').value;
+                if (editId && !current.isNew && current.id) {
+                    try {
+                        await fetch(`/api/admin/rooms/gallery/${current.id}/`, {
+                            method: 'DELETE',
+                            headers: getAdminAuthHeaders()
+                        });
+                        const fd = new FormData();
+                        fd.append('image', file);
+                        const res = await fetch(`/api/admin/rooms/${editId}/gallery/`, {
+                            method: 'POST',
+                            headers: getAdminAuthHeaders(),
+                            body: fd
+                        });
+                        if (res.ok) {
+                            const created = await res.json();
+                            current.id = created.id;
+                            current.url = created.image;
+                            current.file = null;
+                            current.isNew = false;
+                            renderAdminGalleryUI();
+                            showToast('เปลี่ยนรูปภาพแกลเลอรีเรียบร้อยแล้ว', 'success');
+                            return;
+                        }
+                    } catch (err) {
+                        console.error('Error replacing gallery photo:', err);
+                    }
+                }
+                current.url = URL.createObjectURL(file);
+                current.file = file;
+                renderAdminGalleryUI();
+                showToast('เปลี่ยนรูปภาพเรียบร้อยแล้ว', 'info');
+            }
+        }
+
+        async function handleAdminGalleryFilesAdded(e) {
+            const files = Array.from(e.target.files);
+            e.target.value = '';
+            if (!files.length) return;
+
+            const currentTotal = adminModalPhotos.length;
+            const remaining = 10 - currentTotal;
+            if (remaining <= 0) {
+                showToast('รูปภาพสถานที่ครบโควตาสูงสุด 10 รูปแล้ว', 'warning');
+                return;
+            }
+
+            let validFiles = [];
+            for (const f of files) {
+                if (f.size > 5 * 1024 * 1024) {
+                    showToast(`รูป "${f.name}" มีขนาดเกิน 5MB จึงถูกข้าม`, 'warning');
+                } else {
+                    validFiles.push(f);
+                }
+            }
+
+            if (validFiles.length > remaining) {
+                showToast(`สามารถเพิ่มได้อีก ${remaining} รูปเท่านั้น จึงเลือก ${remaining} รูปแรก`, 'warning');
+                validFiles = validFiles.slice(0, remaining);
+            }
+
+            if (!validFiles.length) return;
+
+            const editId = document.getElementById('editRoomId').value;
+
+            if (editId) {
+                // In edit mode: upload immediately
+                for (let i = 0; i < validFiles.length; i++) {
+                    const f = validFiles[i];
+                    if (adminModalPhotos.length === 0) {
+                        adminPendingCoverFile = f;
+                        adminModalPhotos.push({
+                            id: 'cover',
+                            isCover: true,
+                            url: URL.createObjectURL(f),
+                            file: f,
+                            isNew: true
+                        });
+                    } else {
+                        try {
+                            const fd = new FormData();
+                            fd.append('image', f);
+                            const res = await fetch(`/api/admin/rooms/${editId}/gallery/`, {
+                                method: 'POST',
+                                headers: getAdminAuthHeaders(),
+                                body: fd
+                            });
+                            if (res.ok) {
+                                const created = await res.json();
+                                adminModalPhotos.push({
+                                    id: created.id,
+                                    isCover: false,
+                                    url: created.image,
+                                    file: null,
+                                    isNew: false
+                                });
+                            }
+                        } catch (err) {
+                            console.error('Gallery upload error:', err);
+                        }
+                    }
+                }
+                adminActivePhotoIdx = adminModalPhotos.length - 1;
+                renderAdminGalleryUI();
+                scrollActiveThumbnailIntoView();
+                showToast(`เพิ่มรูปภาพสถานที่สำเร็จ (ทั้งหมด ${adminModalPhotos.length}/10 รูป)`, 'success');
+            } else {
+                // In new room mode: queue files
+                for (let i = 0; i < validFiles.length; i++) {
+                    const f = validFiles[i];
+                    const isCover = adminModalPhotos.length === 0;
+                    adminModalPhotos.push({
+                        id: 'new_' + Date.now() + '_' + Math.random(),
+                        isCover: isCover,
+                        url: URL.createObjectURL(f),
+                        file: f,
+                        isNew: true
+                    });
+                }
+                adminActivePhotoIdx = adminModalPhotos.length - 1;
+                renderAdminGalleryUI();
+                scrollActiveThumbnailIntoView();
+            }
+        }
+
+        async function adminDeleteActivePhoto(e) {
+            if (e) e.stopPropagation();
+            if (adminModalPhotos.length === 0) return;
+            adminDeletePhotoAtIndex(adminActivePhotoIdx, e);
+        }
+
+        async function adminDeletePhotoAtIndex(idx, e) {
+            if (e) e.stopPropagation();
+            const photo = adminModalPhotos[idx];
+            if (!photo) return;
+
+            if (!confirm(`คุณต้องการลบรูปภาพ ${photo.isCover ? 'หน้าปก' : 'แกลเลอรี'} นี้ใช่หรือไม่?`)) return;
+
+            const editId = document.getElementById('editRoomId').value;
+
+            if (!photo.isCover && editId && !photo.isNew && photo.id) {
+                try {
+                    await fetch(`/api/admin/rooms/gallery/${photo.id}/`, {
+                        method: 'DELETE',
+                        headers: getAdminAuthHeaders()
+                    });
+                    showToast('ลบรูปภาพแกลเลอรีเรียบร้อยแล้ว', 'success');
+                } catch (err) {
+                    console.error('Error deleting gallery photo:', err);
+                }
+            }
+
+            if (photo.isCover) {
+                adminPendingCoverFile = 'DELETE';
+            }
+
+            adminModalPhotos.splice(idx, 1);
+
+            // If remaining photos exist and no cover, make first one cover
+            if (adminModalPhotos.length > 0 && !adminModalPhotos.some(p => p.isCover)) {
+                adminModalPhotos[0].isCover = true;
+            }
+
+            if (adminActivePhotoIdx >= adminModalPhotos.length) {
+                adminActivePhotoIdx = Math.max(0, adminModalPhotos.length - 1);
+            }
+
+            renderAdminGalleryUI();
+            scrollActiveThumbnailIntoView();
+        }
+
+        // Global arrow key listeners for sliding photos in modal
+        window.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('roomModal');
+            if (!modal || modal.classList.contains('hidden')) return;
+            if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) return;
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                adminGalleryPrev();
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                adminGalleryNext();
+            }
+        });
+
+        // Touch swipe support for adminGalleryViewerCanvas
+        document.addEventListener('DOMContentLoaded', () => {
+            let startX = 0;
+            const canvas = document.getElementById('adminGalleryViewerCanvas');
+            if (!canvas) return;
+            canvas.addEventListener('touchstart', (e) => {
+                startX = e.changedTouches[0].screenX;
+            }, { passive: true });
+            canvas.addEventListener('touchend', (e) => {
+                const endX = e.changedTouches[0].screenX;
+                if (endX < startX - 45) adminGalleryNext();
+                else if (endX > startX + 45) adminGalleryPrev();
+            }, { passive: true });
+        });
+
+        // --- Modal Openers ---
         function openAddRoomModal() {
             document.getElementById('editRoomId').value = '';
             document.getElementById('roomModalTitle').textContent = 'เพิ่มห้องใหม่เข้าสู่ระบบ';
             document.getElementById('newRoomName').value = '';
             document.getElementById('newRoomCode').value = '';
-            document.getElementById('newRoomType').value = 'meeting';
             document.getElementById('newRoomPrice').value = '500.00';
             document.getElementById('newRoomPriceUnit').value = 'hour';
             document.getElementById('newRoomBuilding').value = 'อาคาร B';
             document.getElementById('newRoomFloor').value = '4';
             document.getElementById('newRoomCap').value = '20';
-            document.getElementById('newRoomTags').value = '';
-            document.getElementById('newRoomAmenities').value = '';
             document.getElementById('newRoomActive').checked = true;
+
+            selectedRoomCategories = new Set(['ห้องประชุม']);
+            selectedRoomAmenities = new Set();
+            adminModalPhotos = [];
+            adminActivePhotoIdx = 0;
+            adminPendingCoverFile = null;
+
+            renderAdminGalleryUI();
+            renderRoomCategoriesUI();
+            renderRoomAmenitiesUI();
             document.getElementById('roomModal').classList.remove('hidden');
         }
 
-        function openEditRoomModal(id, code, name, type, building, floor, cap, price, priceUnit, tags, amenities, isActive) {
+        async function openEditRoomModal(id, code, name, type, building, floor, cap, price, priceUnit, tags, amenities, isActive, imageUrl) {
             document.getElementById('editRoomId').value = id;
-            document.getElementById('roomModalTitle').textContent = `แก้ไขข้อมูลห้อง ${name} (${code})`;
+            document.getElementById('roomModalTitle').textContent = `แก้ไขข้อมูลสถานที่: ${name} (${code})`;
             document.getElementById('newRoomName').value = name || '';
             document.getElementById('newRoomCode').value = code || '';
-            document.getElementById('newRoomType').value = type || 'meeting';
             document.getElementById('newRoomPrice').value = price || '500.00';
             document.getElementById('newRoomPriceUnit').value = priceUnit || 'hour';
             document.getElementById('newRoomBuilding').value = building || '';
             document.getElementById('newRoomFloor').value = floor || '1';
             document.getElementById('newRoomCap').value = cap || '10';
-            document.getElementById('newRoomTags').value = tags || '';
-            document.getElementById('newRoomAmenities').value = amenities || '';
             document.getElementById('newRoomActive').checked = !!isActive;
+
+            // Categories (normalized)
+            selectedRoomCategories = new Set();
+            if (tags) {
+                tags.split(',').map(s => s.trim()).filter(Boolean).slice(0, 3).forEach(c => {
+                    const canonical = CANONICAL_CATEGORY_MAP[c] || c;
+                    selectedRoomCategories.add(canonical);
+                });
+            }
+            if (selectedRoomCategories.size === 0 && type) {
+                const canonicalType = CANONICAL_CATEGORY_MAP[type] || 'ห้องประชุม';
+                selectedRoomCategories.add(canonicalType);
+            }
+
+            // Amenities (normalized)
+            selectedRoomAmenities = new Set();
+            if (amenities) {
+                amenities.split(',').map(s => s.trim()).filter(Boolean).forEach(a => {
+                    const norm = normalizeAmenity(a);
+                    if (norm) selectedRoomAmenities.add(norm);
+                });
+            }
+
+            // Multi-Photo Carousel Setup
+            adminModalPhotos = [];
+            adminActivePhotoIdx = 0;
+            adminPendingCoverFile = null;
+
+            if (imageUrl) {
+                adminModalPhotos.push({
+                    id: 'cover',
+                    isCover: true,
+                    url: imageUrl,
+                    file: null,
+                    isNew: false
+                });
+            }
+
+            renderAdminGalleryUI();
+            renderRoomCategoriesUI();
+            renderRoomAmenitiesUI();
             document.getElementById('roomModal').classList.remove('hidden');
+
+            // Fetch Gallery Images
+            try {
+                const res = await fetch(`/api/admin/rooms/${id}/gallery/`, {
+                    headers: getAdminAuthHeaders()
+                });
+                if (res.ok) {
+                    const galleryData = await res.json();
+                    if (Array.isArray(galleryData)) {
+                        galleryData.forEach(item => {
+                            adminModalPhotos.push({
+                                id: item.id,
+                                isCover: false,
+                                url: item.image,
+                                file: null,
+                                isNew: false,
+                                order: item.order
+                            });
+                        });
+                        renderAdminGalleryUI();
+                    }
+                }
+            } catch (err) {
+                console.error('Error loading gallery photos:', err);
+            }
         }
 
         function closeRoomModal() {
@@ -3039,11 +3968,15 @@
         }
         function closeAddRoomModal() { closeRoomModal(); }
 
+        // --- Room Form Submission ---
         async function handleRoomSubmit(e) {
             e.preventDefault();
             const btn = document.getElementById('roomSubmitBtn');
             btn.disabled = true;
-            btn.textContent = 'กำลังบันทึก...';
+            btn.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                <span>กำลังบันทึกข้อมูลสถานที่...</span>
+            `;
 
             const editId = document.getElementById('editRoomId').value;
             const name = document.getElementById('newRoomName').value.trim();
@@ -3051,34 +3984,53 @@
             const cap = parseInt(document.getElementById('newRoomCap').value, 10);
             const building = document.getElementById('newRoomBuilding').value.trim();
             const floor = parseInt(document.getElementById('newRoomFloor').value, 10);
-            const roomType = document.getElementById('newRoomType').value;
             const price = parseFloat(document.getElementById('newRoomPrice').value) || 0;
             const priceUnit = document.getElementById('newRoomPriceUnit').value;
-            const tags = document.getElementById('newRoomTags').value.trim();
-            const amenities = document.getElementById('newRoomAmenities').value.trim();
             const isActive = document.getElementById('newRoomActive').checked;
 
-            const payload = {
-                name: name,
-                room_number: code,
-                capacity: cap,
-                building: building,
-                floor: floor,
-                room_type: roomType,
-                price_per_hour: price,
-                price_unit: priceUnit,
-                tags: tags,
-                amenities: amenities,
-                is_active: isActive
-            };
+            // Categories
+            if (selectedRoomCategories.size === 0) {
+                selectedRoomCategories.add('ห้องประชุม');
+            }
+            const catArray = Array.from(selectedRoomCategories).slice(0, 3);
+            const tagsString = catArray.join(', ');
 
-            const token = localStorage.getItem('access_token');
-            const headers = {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken') || ''
+            // Map primary category to room_type
+            const categoryToTypeCode = {
+                'ห้องพัก': 'room',
+                'สถานที่จัดกิจกรรม': 'event',
+                'สถานที่ทำงาน': 'work',
+                'บ้านพัก': 'villa',
+                'โรงละคร & การแสดง': 'theater',
+                'ห้องประชุม': 'meeting'
             };
-            if (token) headers['Authorization'] = 'Bearer ' + token;
+            const roomType = categoryToTypeCode[catArray[0]] || 'meeting';
 
+            // Amenities
+            const amenitiesString = Array.from(selectedRoomAmenities).join(', ');
+
+            // Construct FormData
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('room_number', code);
+            formData.append('capacity', cap);
+            formData.append('building', building);
+            formData.append('floor', floor);
+            formData.append('room_type', roomType);
+            formData.append('price_per_hour', price);
+            formData.append('price_unit', priceUnit);
+            formData.append('tags', tagsString);
+            formData.append('amenities', amenitiesString);
+            formData.append('is_active', isActive ? 'true' : 'false');
+
+            // Cover Image
+            if (adminPendingCoverFile && adminPendingCoverFile instanceof File) {
+                formData.append('image', adminPendingCoverFile);
+            } else if (!editId && adminModalPhotos.length > 0 && adminModalPhotos[0].file instanceof File) {
+                formData.append('image', adminModalPhotos[0].file);
+            }
+
+            const headers = getAdminAuthHeaders();
             const url = editId ? `/api/rooms/${editId}/` : '/api/rooms/';
             const method = editId ? 'PATCH' : 'POST';
 
@@ -3086,24 +4038,47 @@
                 const res = await fetch(url, {
                     method: method,
                     headers: headers,
-                    body: JSON.stringify(payload)
+                    body: formData
                 });
 
                 if (res.ok) {
+                    const savedRoom = await res.json();
+                    
+                    // If new room, upload remaining queued photos to gallery
+                    if (!editId && adminModalPhotos.length > 1) {
+                        for (let i = 1; i < adminModalPhotos.length; i++) {
+                            const p = adminModalPhotos[i];
+                            if (p.file instanceof File) {
+                                try {
+                                    const fdG = new FormData();
+                                    fdG.append('image', p.file);
+                                    await fetch(`/api/admin/rooms/${savedRoom.id}/gallery/`, {
+                                        method: 'POST',
+                                        headers: getAdminAuthHeaders(),
+                                        body: fdG
+                                    });
+                                } catch (e) {
+                                    console.error('Error uploading extra gallery photo:', e);
+                                }
+                            }
+                        }
+                    }
+
                     closeRoomModal();
-                    showToast(editId ? `อัปเดตข้อมูลห้อง ${name} สำเร็จ` : `เพิ่มห้อง ${name} (${code}) สำเร็จ`, 'success');
+                    showToast(editId ? `อัปเดตข้อมูลสถานที่ ${name} สำเร็จ` : `เพิ่มสถานที่ ${name} (${code}) สำเร็จ`, 'success');
                     setTimeout(() => window.location.reload(), 800);
                 } else {
                     const data = await res.json();
-                    let errMsg = 'ไม่สามารถบันทึกข้อมูลห้องได้';
-                    if (data.room_number) errMsg = 'รหัสห้องนี้มีอยู่แล้วในระบบ';
+                    let errMsg = 'ไม่สามารถบันทึกข้อมูลสถานที่ได้';
+                    if (data.room_number) errMsg = 'รหัสห้องนี้มีอยู่แล้วในระบบ กรุณาระบุรหัสอื่น';
+                    else if (data.image) errMsg = 'ไฟล์รูปภาพไม่ถูกต้องหรือมีขนาดใหญ่เกินไป';
                     showToast(errMsg, 'error');
                 }
             } catch (err) {
-                showToast('เกิดข้อผิดพลาดในการบันทึกห้อง', 'error');
+                showToast('เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์', 'error');
             } finally {
                 btn.disabled = false;
-                btn.textContent = 'บันทึกข้อมูลห้อง';
+                btn.innerHTML = '<span>บันทึกข้อมูลสถานที่</span>';
             }
         }
 
@@ -3404,8 +4379,16 @@
 
         // Initial fetch for coupons and banners
         document.addEventListener('DOMContentLoaded', () => {
+            const hashTab = (window.location.hash || '').replace('#', '').trim();
+            const savedTab = localStorage.getItem('adminActiveTab');
+            const targetTab = hashTab || savedTab || 'overview';
+            switchAdminTab(targetTab);
             fetchAdminCoupons();
             fetchAdminBanners();
+        });
+        window.addEventListener('hashchange', () => {
+            const hashTab = (window.location.hash || '').replace('#', '').trim();
+            if (hashTab) switchAdminTab(hashTab);
         });
     </script>
 </body>

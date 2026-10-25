@@ -12,7 +12,7 @@ services:
       - key: DB_ENGINE
         value: django.db.backends.mysql
       - key: DB_HOST
-        value: mysql-124f2678-rtaxdt-e955.e.aivencloud.com
+        value: smart-room-mysql-rtaxdt-e955.k.aivencloud.com
       - key: DB_PORT
         value: "22487"
       - key: DB_USER
@@ -20,7 +20,7 @@ services:
       - key: DB_PASSWORD
         sync: false
       - key: DB_NAME
-        value: smart_room_db
+        value: defaultdb
       - key: DB_SSL_REQUIRED
         value: "true"
       - key: SECRET_KEY
