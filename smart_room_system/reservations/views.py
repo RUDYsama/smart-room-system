@@ -132,8 +132,7 @@ class RegisterView(generics.CreateAPIView):
             "email": user.email,
             "username": user.username,
             "requires_otp": True,
-            "email_dispatched": email_sent,
-            "dev_pin": pin
+            "email_dispatched": email_sent
         }, status=status.HTTP_201_CREATED)
 
 class VerifyOTPView(APIView):
@@ -214,8 +213,7 @@ class ResendOTPView(APIView):
         return Response({
             "message": "สร้างรหัส PIN 6 หลักใหม่เรียบร้อยแล้ว",
             "email": email,
-            "email_dispatched": email_sent,
-            "dev_pin": pin
+            "email_dispatched": email_sent
         }, status=status.HTTP_200_OK)
 
 class ProfileView(APIView):
