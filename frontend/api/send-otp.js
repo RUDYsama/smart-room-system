@@ -33,7 +33,7 @@ export default async function handler(req, res) {
     });
 
     const info = await transporter.sendMail({
-      from: '"ระบบบริหารจัดการและจองสถานที่อัจฉริยะ" <rtaxdt@gmail.com>',
+      from: '"VH - Vacations & Hotel" <rtaxdt@gmail.com>',
       to: to,
       subject: subject,
       text: text || '',

@@ -147,7 +147,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('GMAIL_USER', 'rtaxdt@gmail.com')
 EMAIL_HOST_PASSWORD = os.environ.get('GMAIL_APP_PASSWORD', 'trqbrkhvayuwyckj')
 EMAIL_TIMEOUT = 3
-DEFAULT_FROM_EMAIL = f"ระบบบริหารจัดการและจองสถานที่อัจฉริยะ <{EMAIL_HOST_USER}>"
+DEFAULT_FROM_EMAIL = f"VH - Vacations & Hotel <{EMAIL_HOST_USER}>"
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True

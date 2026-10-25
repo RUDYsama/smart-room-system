@@ -88,15 +88,15 @@ def _send_email_async(subject, message, recipient_list, html_message):
                 logger.error(f"Direct Django SMTP delivery failed for {recipient}: {e}")
 
 def send_pin_email(email, pin, username):
-    subject = f"[VH Smart Room] รหัสยืนยันการลงทะเบียน (OTP PIN): {pin}"
-    message = f"สวัสดีคุณ {username}\n\nรหัสยืนยัน PIN 6 หลักของคุณคือ: {pin}\nรหัสนี้มีอายุการใช้งาน 10 นาที\n\nระบบบริหารจัดการและจองสถานที่อัจฉริยะ (Void Hunter)"
+    subject = f"[VH - Vacations & Hotel] รหัสยืนยันการลงทะเบียน (OTP PIN): {pin}"
+    message = f"สวัสดีคุณ {username}\n\nรหัสยืนยัน PIN 6 หลักของคุณคือ: {pin}\nรหัสนี้มีอายุการใช้งาน 10 นาที\n\nระบบบริหารจัดการและจองสถานที่และห้องพัก (VH - Vacations & Hotel)"
     html_message = f"""
     <div style="font-family: 'Sarabun', Arial, sans-serif; padding: 24px; border: 1px solid #cbd5e1; border-radius: 12px; max-width: 520px; margin: auto; background-color: #ffffff;">
-        <h2 style="color: #1e3a8a; margin-top: 0; font-size: 22px;">ระบบบริหารจัดการและจองสถานที่อัจฉริยะ</h2>
-        <p style="color: #64748b; font-size: 14px; margin-top: -6px;">Void Hunter (VH) Smart Space, Workspace & Venue Reservation System</p>
+        <h2 style="color: #1e3a8a; margin-top: 0; font-size: 22px;">ระบบบริหารจัดการและจองสถานที่และห้องพัก</h2>
+        <p style="color: #64748b; font-size: 14px; margin-top: -6px;">VH - Vacations & Hotel Reservation System</p>
         <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 16px 0;">
         <p style="font-size: 15px; color: #334155;">เรียน คุณ <strong>{username}</strong>,</p>
-        <p style="font-size: 15px; color: #334155;">คุณได้ทำการลงทะเบียนเข้าใช้งานระบบบริหารจัดการและจองสถานที่อัจฉริยะ รหัสยืนยัน PIN 6 หลักสำหรับการยืนยันตัวตนและเปิดใช้งานบัญชีของคุณคือ:</p>
+        <p style="font-size: 15px; color: #334155;">คุณได้ทำการลงทะเบียนเข้าใช้งานระบบบริหารจัดการและจองสถานที่และห้องพัก รหัสยืนยัน PIN 6 หลักสำหรับการยืนยันตัวตนและเปิดใช้งานบัญชีของคุณคือ:</p>
         <div style="background-color: #f8fafc; border: 2px dashed #3b82f6; border-radius: 8px; padding: 18px; text-align: center; margin: 20px 0;">
             <span style="font-size: 38px; font-weight: bold; letter-spacing: 8px; color: #1e3a8a;">{pin}</span>
         </div>
