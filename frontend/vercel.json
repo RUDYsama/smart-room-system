@@ -1,7 +1,13 @@
 {
+  "rewrites": [
+    {
+      "source": "/api/send-otp",
+      "destination": "/api/send-otp"
+    }
+  ],
   "redirects": [
     {
-      "source": "/(.*)",
+      "source": "/((?!api/send-otp).*)",
       "destination": "https://smart-room-system-5vh7.onrender.com/$1",
       "permanent": false
     }
