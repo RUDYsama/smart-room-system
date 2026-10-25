@@ -146,6 +146,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('GMAIL_USER', 'rtaxdt@gmail.com')
 EMAIL_HOST_PASSWORD = os.environ.get('GMAIL_APP_PASSWORD', 'trqbrkhvayuwyckj')
+EMAIL_TIMEOUT = 3
 DEFAULT_FROM_EMAIL = f"ระบบจองห้องพักออนไลน์ <{EMAIL_HOST_USER}>"
 
 CORS_ALLOW_ALL_ORIGINS = True

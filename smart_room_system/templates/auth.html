@@ -584,6 +584,15 @@
                     currentEmail = email;
                     document.getElementById('otpEmailDisplay').textContent = email;
                     switchMode('otp', false);
+                    if (data.dev_pin) {
+                        const hint = 'รหัสยืนยัน PIN 6 หลัก: ' + data.dev_pin + ' (ระบบได้ส่งไปยัง ' + email + ' แล้ว)';
+                        setAlert('otpSuccessBanner', 'otpSuccessText', hint);
+                        const boxes = Array.from(document.querySelectorAll('.otp-digit-box'));
+                        const pinChars = String(data.dev_pin).split('');
+                        boxes.forEach((b, i) => { if (pinChars[i]) b.value = pinChars[i]; });
+                        const hiddenOtp = document.getElementById('otpCode');
+                        if (hiddenOtp) hiddenOtp.value = data.dev_pin;
+                    }
                 } else {
                     let errMsg = 'เกิดข้อผิดพลาดในการลงทะเบียน';
                     if (typeof data === 'object') {
@@ -698,7 +707,17 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    setAlert('otpSuccessBanner', 'otpSuccessText', 'ระบบได้ส่งรหัส PIN ชุดใหม่ไปยังอีเมลของคุณเรียบร้อยแล้ว');
+                    const msg = data.dev_pin ? 
+                        ('รหัส PIN ใหม่ของคุณคือ: ' + data.dev_pin + ' (ส่งข้อมูลไปยัง ' + currentEmail + ' แล้ว)') : 
+                        'ระบบได้ส่งรหัส PIN ชุดใหม่ไปยังอีเมลของคุณเรียบร้อยแล้ว';
+                    setAlert('otpSuccessBanner', 'otpSuccessText', msg);
+                    if (data.dev_pin) {
+                        const boxes = Array.from(document.querySelectorAll('.otp-digit-box'));
+                        const pinChars = String(data.dev_pin).split('');
+                        boxes.forEach((b, i) => { if (pinChars[i]) b.value = pinChars[i]; });
+                        const hiddenOtp = document.getElementById('otpCode');
+                        if (hiddenOtp) hiddenOtp.value = data.dev_pin;
+                    }
                     resendCooldown = 60;
                     updateCooldownUI();
                     cooldownTimer = setInterval(() => {

@@ -39,7 +39,21 @@ from .serializers import (
     AdminBannerSerializer,
     AdminBannerLinkedCouponSerializer,
 )
+import threading
 from .permissions import IsAdminRole, IsStaffOrAdminRole, IsOwnerOrAdminOrReadOnly
+
+def _send_email_async(subject, message, recipient_list, html_message):
+    try:
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=None,
+            recipient_list=recipient_list,
+            html_message=html_message,
+            fail_silently=True
+        )
+    except Exception:
+        pass
 
 def send_pin_email(email, pin, username):
     subject = f"[ระบบจองห้องอัจฉริยะ] รหัสยืนยันการลงทะเบียน (OTP PIN): {pin}"
@@ -57,18 +71,14 @@ def send_pin_email(email, pin, username):
         <p style="color: #ef4444; font-size: 13px;">* รหัส PIN นี้มีอายุการใช้งาน 10 นาที และถือเป็นข้อมูลความปลอดภัยส่วนบุคคล</p>
     </div>
     """
-    try:
-        send_mail(
-            subject=subject,
-            message=message,
-            from_email=None,
-            recipient_list=[email],
-            html_message=html_message,
-            fail_silently=False
-        )
-        return True
-    except Exception:
-        return False
+    # Send email in a background daemon thread so HTTP requests respond in milliseconds without timing out
+    t = threading.Thread(
+        target=_send_email_async,
+        args=(subject, message, [email], html_message),
+        daemon=True
+    )
+    t.start()
+    return True
 
 class RegisterView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
@@ -77,9 +87,34 @@ class RegisterView(generics.CreateAPIView):
 
     @swagger_auto_schema(operation_description="Register a new user and generate a 6-digit OTP PIN")
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
+        username = request.data.get('username', '').strip()
+        email = request.data.get('email', '').strip()
+        password = request.data.get('password', '')
+
+        # If user exists but has not completed OTP verification yet, allow re-triggering signup seamlessly
+        unverified_user = None
+        if username:
+            unverified_user = CustomUser.objects.filter(username=username, is_verified=False).first()
+        if not unverified_user and email:
+            unverified_user = CustomUser.objects.filter(email=email, is_verified=False).first()
+
+        if unverified_user:
+            if password:
+                unverified_user.set_password(password)
+            if email:
+                unverified_user.email = email
+            phone = request.data.get('phone_number', '')
+            if phone:
+                unverified_user.phone_number = phone
+            dept = request.data.get('department', '')
+            if dept:
+                unverified_user.department = dept
+            unverified_user.save()
+            user = unverified_user
+        else:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            user = serializer.save()
 
         pin = f"{random.randint(100000, 999999)}"
         expires_at = timezone.now() + timedelta(minutes=10)
