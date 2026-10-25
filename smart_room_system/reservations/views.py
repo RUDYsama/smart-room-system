@@ -43,32 +43,64 @@ import threading
 from .permissions import IsAdminRole, IsStaffOrAdminRole, IsOwnerOrAdminOrReadOnly
 
 def _send_email_async(subject, message, recipient_list, html_message):
-    try:
-        send_mail(
-            subject=subject,
-            message=message,
-            from_email=None,
-            recipient_list=recipient_list,
-            html_message=html_message,
-            fail_silently=True
-        )
-    except Exception:
-        pass
+    import urllib.request, json, ssl
+    # 1. Try sending via Vercel HTTPS SMTP Relay (uses Google App Password from Vercel where port 587 is unblocked)
+    for recipient in recipient_list:
+        delivered = False
+        try:
+            relay_url = "https://smart-room-system.vercel.app/api/send-otp"
+            payload = json.dumps({
+                "to": recipient,
+                "subject": subject,
+                "html": html_message,
+                "text": message
+            }).encode('utf-8')
+            ctx = ssl.create_default_context()
+            req = urllib.request.Request(
+                relay_url,
+                data=payload,
+                headers={
+                    "Content-Type": "application/json",
+                    "X-Relay-Secret": "smart-room-otp-relay-secret-2026",
+                    "User-Agent": "SmartRoomBackend/1.0"
+                }
+            )
+            with urllib.request.urlopen(req, context=ctx, timeout=8) as resp:
+                if resp.status in (200, 201):
+                    logger.info(f"Email delivered via Vercel SMTP relay to {recipient}")
+                    delivered = True
+        except Exception as e:
+            logger.warning(f"Vercel relay delivery skipped or pending deploy: {e}")
+
+        if not delivered:
+            # 2. Fallback to direct Django SMTP (uses Google App Password directly)
+            try:
+                send_mail(
+                    subject=subject,
+                    message=message,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[recipient],
+                    html_message=html_message,
+                    fail_silently=False
+                )
+                logger.info(f"Email delivered via direct Django SMTP to {recipient}")
+            except Exception as e:
+                logger.error(f"Direct Django SMTP delivery failed for {recipient}: {e}")
 
 def send_pin_email(email, pin, username):
-    subject = f"[ระบบจองห้องอัจฉริยะ] รหัสยืนยันการลงทะเบียน (OTP PIN): {pin}"
-    message = f"สวัสดีคุณ {username}\n\nรหัสยืนยัน PIN 6 หลักของคุณคือ: {pin}\nรหัสนี้มีอายุการใช้งาน 10 นาที\n\nระบบบริหารจัดการและจองห้องประชุมอิเล็กทรอนิกส์"
+    subject = f"[VH Smart Room] รหัสยืนยันการลงทะเบียน (OTP PIN): {pin}"
+    message = f"สวัสดีคุณ {username}\n\nรหัสยืนยัน PIN 6 หลักของคุณคือ: {pin}\nรหัสนี้มีอายุการใช้งาน 10 นาที\n\nระบบบริหารจัดการและจองสถานที่อัจฉริยะ (Void Hunter)"
     html_message = f"""
     <div style="font-family: 'Sarabun', Arial, sans-serif; padding: 24px; border: 1px solid #cbd5e1; border-radius: 12px; max-width: 520px; margin: auto; background-color: #ffffff;">
-        <h2 style="color: #1e3a8a; margin-top: 0;">ระบบจองห้องประชุมและห้องเรียนอิเล็กทรอนิกส์</h2>
-        <p style="color: #64748b; font-size: 14px;">สำนักบริการเทคโนโลยีสารสนเทศและดิจิทัล</p>
+        <h2 style="color: #1e3a8a; margin-top: 0; font-size: 22px;">ระบบบริหารจัดการและจองสถานที่อัจฉริยะ</h2>
+        <p style="color: #64748b; font-size: 14px; margin-top: -6px;">Void Hunter (VH) Smart Space, Workspace & Venue Reservation System</p>
         <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 16px 0;">
-        <p>เรียน คุณ <strong>{username}</strong>,</p>
-        <p>คุณได้ทำการลงทะเบียนเข้าใช้งานระบบ e-Reservation รหัส PIN 6 หลักสำหรับการยืนยันและเปิดใช้งานบัญชีของคุณคือ:</p>
+        <p style="font-size: 15px; color: #334155;">เรียน คุณ <strong>{username}</strong>,</p>
+        <p style="font-size: 15px; color: #334155;">คุณได้ทำการลงทะเบียนเข้าใช้งานระบบบริหารจัดการและจองสถานที่อัจฉริยะ รหัสยืนยัน PIN 6 หลักสำหรับการยืนยันตัวตนและเปิดใช้งานบัญชีของคุณคือ:</p>
         <div style="background-color: #f8fafc; border: 2px dashed #3b82f6; border-radius: 8px; padding: 18px; text-align: center; margin: 20px 0;">
-            <span style="font-size: 36px; font-weight: bold; letter-spacing: 8px; color: #1e3a8a;">{pin}</span>
+            <span style="font-size: 38px; font-weight: bold; letter-spacing: 8px; color: #1e3a8a;">{pin}</span>
         </div>
-        <p style="color: #ef4444; font-size: 13px;">* รหัส PIN นี้มีอายุการใช้งาน 10 นาที และถือเป็นข้อมูลความปลอดภัยส่วนบุคคล</p>
+        <p style="color: #ef4444; font-size: 13px; margin-bottom: 0;">* รหัส PIN นี้มีอายุการใช้งาน 10 นาที และถือเป็นข้อมูลความปลอดภัยส่วนบุคคล ห้ามเปิดเผยแก่บุคคลอื่น</p>
     </div>
     """
     # Send email in a background daemon thread so HTTP requests respond in milliseconds without timing out
