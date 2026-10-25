@@ -657,7 +657,8 @@
                         localStorage.setItem('currentUser', JSON.stringify(data.user));
                     }
 
-                    window.location.href = '/';
+                    const targetUrl = data.redirect_url || (data.user && (data.user.role === 'admin' || data.user.role === 'staff') ? '/admin-panel/' : '/user/');
+                    window.location.href = targetUrl;
                 } else {
                     const errMsg = data.error || data.detail || 'รหัส PIN ไม่ถูกต้องหรือหมดอายุการใช้งานแล้ว';
                     setAlert('otpErrorBanner', 'otpErrorText', errMsg);

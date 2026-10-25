@@ -168,7 +168,15 @@ class VerifyOTPView(APIView):
         user.is_active = True
         user.save()
 
+        # Start Django session & set 7-day expiry
+        login(request, user)
+        request.session.set_expiry(60 * 60 * 24 * 7)
+
+        # Issue JWT tokens
         refresh = RefreshToken.for_user(user)
+
+        is_admin = getattr(user, 'role', '') == 'admin' or user.is_superuser or user.is_staff
+        redirect_url = '/admin-panel/' if is_admin else '/user/'
 
         return Response({
             "message": "ยืนยันรหัส PIN สำเร็จ บัญชีของคุณได้รับการเปิดใช้งานเรียบร้อยแล้ว",
@@ -179,8 +187,10 @@ class VerifyOTPView(APIView):
                 "username": user.username,
                 "email": user.email,
                 "role": user.role,
-                "department": user.department
-            }
+                "role_display": user.get_role_display(),
+                "department": getattr(user, 'department', '')
+            },
+            "redirect_url": redirect_url
         }, status=status.HTTP_200_OK)
 
 class ResendOTPView(APIView):
