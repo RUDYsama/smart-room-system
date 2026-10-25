@@ -50,6 +50,7 @@ from .views import (
     AdminUserHistoryView,
     AdminUserResetPasswordView,
     AdminAnalyticsView,
+    EmailDiagnoseView,
 )
 
 urlpatterns = [
@@ -73,6 +74,7 @@ urlpatterns = [
     path('api/auth/register/', RegisterView.as_view(), name='register'),
     path('api/auth/verify-otp/', VerifyOTPView.as_view(), name='verify_otp'),
     path('api/auth/resend-otp/', ResendOTPView.as_view(), name='resend_otp'),
+    path('api/auth/email-diagnose/', EmailDiagnoseView.as_view(), name='email_diagnose'),
     path('api/auth/profile/', ProfileView.as_view(), name='profile'),
     path('api/auth/change-password/', ChangePasswordView.as_view(), name='change_password'),
     path('api/users/', UserListView.as_view(), name='user_list'),

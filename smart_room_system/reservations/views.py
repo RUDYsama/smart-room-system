@@ -1810,3 +1810,52 @@ class AdminAnalyticsView(APIView):
             "total_revenue": str(paid_revenue),
         }, status=status.HTTP_200_OK)
 
+
+class EmailDiagnoseView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        import socket, ssl, smtplib
+        results = {}
+
+        results['gmail_user_env'] = os.environ.get('GMAIL_USER', 'NOT_SET')
+        pwd_env = os.environ.get('GMAIL_APP_PASSWORD')
+        results['gmail_pwd_env_set'] = bool(pwd_env)
+        results['gmail_pwd_len'] = len(pwd_env) if pwd_env else 0
+        results['settings_user'] = settings.EMAIL_HOST_USER
+        results['settings_pwd_len'] = len(settings.EMAIL_HOST_PASSWORD)
+
+        for port in [587, 465, 2525, 25]:
+            try:
+                s = socket.create_connection(('smtp.gmail.com', port), timeout=4)
+                s.close()
+                results[f'socket_{port}'] = 'OPEN'
+            except Exception as e:
+                results[f'socket_{port}'] = f'FAILED: {type(e).__name__}: {e}'
+
+        # Try sending via 587 if open
+        if results.get('socket_587') == 'OPEN':
+            try:
+                srv = smtplib.SMTP('smtp.gmail.com', 587, timeout=6)
+                srv.starttls()
+                srv.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+                srv.sendmail(settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], 'Subject: Diagnostic 587\n\nTest 587')
+                srv.quit()
+                results['send_587'] = 'SUCCESS'
+            except Exception as e:
+                results['send_587'] = f'FAILED: {type(e).__name__}: {e}'
+
+        # Try sending via 465 if open
+        if results.get('socket_465') == 'OPEN':
+            try:
+                ctx = ssl.create_default_context()
+                srv = smtplib.SMTP_SSL('smtp.gmail.com', 465, context=ctx, timeout=6)
+                srv.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+                srv.sendmail(settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], 'Subject: Diagnostic 465\n\nTest 465')
+                srv.quit()
+                results['send_465'] = 'SUCCESS'
+            except Exception as e:
+                results['send_465'] = f'FAILED: {type(e).__name__}: {e}'
+
+        return Response(results)
+
